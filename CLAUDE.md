@@ -2,6 +2,8 @@
 
 Premium luxury villa landing page for **Horizons Sandhills** — 126-acre private nature retreat at 423 Woodmen Rd, Patrick SC 29584. Single-page marketing site, no backend, no auth. Aesthetic: editorial magazine (Aman Journal, Garden & Gun). Every design decision prioritises feel over feature density.
 
+**Replacing or updating a photo?** See [`IMAGE_MAP.md`](./IMAGE_MAP.md) first — it maps every image on the site to its exact file path and code location, notes which sections are currently dead code, and gives the resize/convert-to-webp procedure. Keep it updated when you touch images.
+
 ---
 
 ## Commands
