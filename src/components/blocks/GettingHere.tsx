@@ -24,7 +24,7 @@ export default function GettingHere() {
   const [routeLoading, setRouteLoading] = useState(false);
 
   useEffect(() => {
-    if (!mapContainerRef.current) return;
+    if (!mapContainerRef.current || !MAPBOX_TOKEN) return;
     mapboxgl.accessToken = MAPBOX_TOKEN;
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
@@ -169,6 +169,27 @@ export default function GettingHere() {
               boxShadow: '0 20px 60px rgba(31,36,32,0.18), 0 8px 24px rgba(31,36,32,0.10)',
             }}>
               <div ref={mapContainerRef} style={{ position: 'absolute', inset: 0 }} />
+              {!MAPBOX_TOKEN && (
+                <div
+                  className="font-eyebrow"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    textAlign: 'center',
+                    padding: 24,
+                    background: '#EAE3D3',
+                    color: 'rgba(90,86,80,0.7)',
+                    fontSize: 12,
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  Map preview unavailable — set VITE_MAPBOX_TOKEN
+                </div>
+              )}
             </div>
             <a
               href="https://www.google.com/maps/dir/?api=1&destination=423+Woodmen+Rd,+Patrick+SC+29584"
