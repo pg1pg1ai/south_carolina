@@ -151,7 +151,7 @@ export default function GettingHere() {
   };
 
   return (
-    <section data-zone="light" className="bg-bone py-20 px-6 md:py-24 md:px-12 lg:px-16">
+    <section id="getting-here" data-zone="light" className="bg-bone py-20 px-6 md:py-24 md:px-12 lg:px-16" style={{ scrollMarginTop: '80px' }}>
       <div className="max-w-content mx-auto">
         <p className="font-eyebrow text-ink2 mb-8" style={{ fontSize: 13, letterSpacing: '0.22em', textTransform: 'uppercase', fontWeight: 600 }}>
           Getting here
