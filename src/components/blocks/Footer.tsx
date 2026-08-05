@@ -86,17 +86,18 @@ export default function Footer() {
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 mb-12 max-w-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 sm:gap-[74px] mb-12 max-w-3xl">
           {cols.map((col) => (
             <div key={col.title}>
               <p className="eyebrow text-linen/40 mb-5">{col.title}</p>
-              <ul className="space-y-3 list-none p-0 m-0">
+              {/* Desktop: links flow into 2 columns of 2; mobile keeps a single stack */}
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-y-3 md:gap-x-6 list-none p-0 m-0">
                 {col.links.map((l) => (
                   <li key={l.label}>
                     <a
                       href={l.href ?? '#'}
                       onClick={l.onClick ? (e) => { e.preventDefault(); l.onClick!(); } : undefined}
-                      className="text-linen/60 text-sm hover:text-linen transition-colors focus-visible:outline-none focus-visible:text-linen"
+                      className="text-linen/60 text-sm hover:text-linen transition-colors focus-visible:outline-none focus-visible:text-linen whitespace-nowrap"
                     >
                       {l.label}
                     </a>
