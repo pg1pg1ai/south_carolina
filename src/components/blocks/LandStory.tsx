@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { sendInquiry } from '../../lib/sendInquiry';
 
 // ── Decorative text fill styles ───────────────────────────────────────────────
 
@@ -111,14 +112,20 @@ export default function LandStory() {
   const [when, setWhen] = useState('');
   const [phoneError, setPhoneError] = useState(false);
   const [activeMilestone, setActiveMilestone] = useState<number | null>(null);
+  const [sending, setSending] = useState(false);
+  const [sendFailed, setSendFailed] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name || !phone) {
       setPhoneError(true);
       setTimeout(() => setPhoneError(false), 1200);
       return;
     }
-    setSubmitted(true);
+    setSending(true);
+    setSendFailed(false);
+    const ok = await sendInquiry('booking-interest', { name, phone, when });
+    setSending(false);
+    if (ok) { setSubmitted(true); } else { setSendFailed(true); setTimeout(() => setSendFailed(false), 2500); }
   };
 
   return (
@@ -331,10 +338,11 @@ export default function LandStory() {
 
                 <button
                   onClick={handleSubmit}
-                  className="w-full font-eyebrow font-light text-linen bg-signal hover:bg-signal2 transition-colors py-3 mt-1"
-                  style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0 }}
+                  disabled={sending}
+                  className="w-full font-eyebrow font-light text-linen bg-signal hover:bg-signal2 transition-colors py-3 mt-1 disabled:opacity-60 disabled:cursor-default"
+                  style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0, background: sendFailed ? '#9A2E22' : undefined }}
                 >
-                  Call me about Sandhills
+                  {sending ? 'Sending…' : sendFailed ? "Couldn't send — try again" : 'Call me about Sandhills'}
                 </button>
                 <p className="font-eyebrow font-light text-ink2/50 text-center mt-4" style={{ fontSize: 10, letterSpacing: '0.08em' }}>
                   No spam. No pressure. Just a conversation.

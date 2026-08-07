@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { sendInquiry } from '../../lib/sendInquiry';
 
 /** Fire from any private-hire / corporate CTA to open the inquiry form. */
 export const openPrivateEvent = () => window.dispatchEvent(new CustomEvent('open-private-event'));
@@ -29,6 +30,8 @@ export default function PrivateEventModal() {
   const [details, setDetails] = useState('');
   const [done, setDone] = useState(false);
   const [err, setErr] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendFailed, setSendFailed] = useState(false);
 
   useEffect(() => {
     const onOpen = () => { setDone(false); setOpen(true); };
@@ -43,9 +46,13 @@ export default function PrivateEventModal() {
     return () => window.removeEventListener('keydown', onKey);
   }, [open]);
 
-  const submit = () => {
+  const submit = async () => {
     if (!company || !name || !email) { setErr(true); setTimeout(() => setErr(false), 1200); return; }
-    setDone(true);
+    setSending(true);
+    setSendFailed(false);
+    const ok = await sendInquiry('private-event', { company, name, email, guests, details });
+    setSending(false);
+    if (ok) { setDone(true); } else { setSendFailed(true); setTimeout(() => setSendFailed(false), 2500); }
   };
 
   return createPortal(
@@ -84,8 +91,8 @@ export default function PrivateEventModal() {
                   <Field label="Work email"     type="email" ph="you@company.com" val={email} set={setEmail} err={err && !email} />
                   <Field label="Estimated guests" type="number" ph="e.g. 40" val={guests} set={setGuests} />
                   <Field label="Tell us more"   ph="Dates, headcount, what you have in mind…" val={details} set={setDetails} multiline />
-                  <button onClick={submit} className="w-full font-eyebrow font-light text-white hover:brightness-110 transition-all py-3 mt-1" style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0, border: 'none', cursor: 'pointer', background: ACCENT }}>
-                    Send request →
+                  <button onClick={submit} disabled={sending} className="w-full font-eyebrow font-light text-white hover:brightness-110 transition-all py-3 mt-1 disabled:opacity-60 disabled:cursor-default" style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0, border: 'none', cursor: sending ? 'default' : 'pointer', background: sendFailed ? '#B05329' : ACCENT }}>
+                    {sending ? 'Sending…' : sendFailed ? "Couldn't send — try again" : 'Send request →'}
                   </button>
                 </motion.div>
               )}
