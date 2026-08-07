@@ -47,7 +47,13 @@ export default function SandhillsLanding() {
     if (meta) meta.setAttribute('content', d.meta.description);
 
     const hash = window.location.hash;
-    if (hash) {
+    if (hash === '#gallery') {
+      // Arrived from another route (e.g. /guide nav) asking for the gallery modal.
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('open-gallery'));
+        history.replaceState(null, '', window.location.pathname);
+      }, 400);
+    } else if (hash) {
       const id = hash.replace('#', '');
       const el = document.getElementById(id);
       if (el) {

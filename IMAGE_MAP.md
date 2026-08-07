@@ -197,6 +197,23 @@ commented out and never reach the page.
   If asked to fix The House's gallery, you need brand-new photos — there is
   nothing to just re-point.
 
+## Other live route: `/guide` (Guest Guide)
+
+- **Page:** `src/pages/GuestGuide.tsx` · **Data:** `src/components/data/guide.ts`
+  (all guide image paths live in `guideData`, not in components)
+
+| Use | Path | Where set |
+|---|---|---|
+| Hero background (lake, barrel sauna, dock at golden hour) | `/images/guide/hero-sandhills-lake.webp` (1700px, q82; png sibling alongside) | `guideData.hero.photo` |
+| Arrival section illustrated property map | `/images/guide/property-map.webp` (1168×802, q82; png sibling alongside) | hardcoded in `src/components/guide/PropertyMap.tsx` |
+| Amenities featured card (sauna interior) | `/images/villa/04_Sauna/1.webp` | `guideData.amenities.featured.photo` |
+
+- `04_Sauna/1.webp` is **shared** with the Forest Villa's Sauna room gallery —
+  replacing the file changes both pages at once; if the guide should diverge,
+  give it its own copy and re-point `guide.ts`.
+- `public/map.svg` is an earlier, now-**unreferenced** vector version of the same
+  map (recolored to our tokens); safe to delete or keep as a source.
+
 ---
 
 ## Dead / not currently rendered

@@ -4,18 +4,18 @@ const cols = [
   {
     title: 'Stay',
     links: [
-      { label: 'The Forest Villa', href: '#stays' },
-      { label: 'Rates & Availability', href: '#reserve' },
+      { label: 'The Forest Villa', href: '/#stays' },
+      { label: 'Rates & Availability', href: '/#reserve' },
       { label: 'Gift Cards', href: '#' },
     ],
   },
   {
     title: 'Explore',
     links: [
-      { label: 'The Land', href: '#land' },
-      { label: 'Activities', href: '#day' },
-      { label: 'Why We', href: '#table' },
-      { label: 'Gallery', href: '#gallery' },
+      { label: 'The Land', href: '/#land' },
+      { label: 'Activities', href: '/#day' },
+      { label: 'Why We', href: '/#table' },
+      { label: 'Gallery', href: '/#gallery' },
     ],
   },
   {
