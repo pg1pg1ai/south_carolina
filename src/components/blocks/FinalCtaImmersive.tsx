@@ -172,20 +172,7 @@ function QuestionModal({ onClose }: { onClose: () => void }) {
         ) : (
           <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="px-8 py-10">
             <p className="font-display italic text-ink mb-1" style={{ fontSize: '1.4rem', lineHeight: 1.25 }}>Ask us anything.</p>
-            <p className="font-eyebrow font-light text-ink2 mb-5" style={{ fontSize: 12, letterSpacing: '0.1em' }}>We respond within 24 hours.</p>
-
-            {/* FAQ nudge */}
-            <a
-              href="/faq"
-              className="flex items-center justify-between w-full mb-6 px-4 py-3 rounded-sm transition-colors hover:bg-boneWarm"
-              style={{ background: 'rgba(212,200,180,0.25)', border: '1px solid rgba(212,200,180,0.6)', textDecoration: 'none' }}
-            >
-              <div>
-                <span className="font-eyebrow font-light block" style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#5A5650' }}>Before you ask</span>
-                <span className="font-display text-ink" style={{ fontSize: '0.95rem' }}>Browse our FAQ →</span>
-              </div>
-              <span className="font-eyebrow text-signal/50" style={{ fontSize: 18 }}>?</span>
-            </a>
+            <p className="font-eyebrow font-light text-ink2 mb-7" style={{ fontSize: 12, letterSpacing: '0.1em' }}>We respond within 24 hours.</p>
 
             <Field label="Your name"     ph="First name"        val={name}     set={setName}     err={err && !name} />
             <Field label="Email address" type="email" ph="you@example.com" val={email} set={setEmail} err={err && !email} />
