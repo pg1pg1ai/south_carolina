@@ -13,6 +13,8 @@ const DEFAULT_TO_EMAIL = 'aiartificial.horizons@gmail.com';
 const FORM_LABELS: Record<string, string> = {
   'private-event': 'Private Event Inquiry',
   'booking-interest': 'Booking Interest',
+  'corporate-quote': 'Corporate Quotation Request',
+  'question': 'Website Question',
 };
 
 function escapeHtml(value: string): string {

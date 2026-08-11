@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Button from '../primitives/Button';
 import { openBooking } from '../data/booking';
+import { sendInquiry } from '../../lib/sendInquiry';
 
 interface Props {
   sub: string;
@@ -148,10 +149,16 @@ function QuestionModal({ onClose }: { onClose: () => void }) {
   const [question, setQuestion] = useState('');
   const [done, setDone]         = useState(false);
   const [err, setErr]           = useState(false);
+  const [sending, setSending]   = useState(false);
+  const [sendFailed, setSendFailed] = useState(false);
 
-  const submit = () => {
+  const submit = async () => {
     if (!name || !email || !question) { setErr(true); setTimeout(() => setErr(false), 1200); return; }
-    setDone(true);
+    setSending(true);
+    setSendFailed(false);
+    const ok = await sendInquiry('question', { name, email, question });
+    setSending(false);
+    if (ok) { setDone(true); } else { setSendFailed(true); setTimeout(() => setSendFailed(false), 2500); }
   };
 
   return (
@@ -183,8 +190,8 @@ function QuestionModal({ onClose }: { onClose: () => void }) {
             <Field label="Your name"     ph="First name"        val={name}     set={setName}     err={err && !name} />
             <Field label="Email address" type="email" ph="you@example.com" val={email} set={setEmail} err={err && !email} />
             <Field label="Your question" ph="What would you like to know?" val={question} set={setQuestion} err={err && !question} multiline />
-            <button onClick={submit} className="w-full font-eyebrow font-light text-linen bg-signal hover:bg-signal2 transition-colors py-3 mt-1" style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0, border: 'none', cursor: 'pointer' }}>
-              Send my question →
+            <button onClick={submit} disabled={sending} className="w-full font-eyebrow font-light text-linen bg-signal hover:bg-signal2 transition-colors py-3 mt-1 disabled:opacity-60 disabled:cursor-default" style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0, border: 'none', cursor: sending ? 'default' : 'pointer', background: sendFailed ? '#9A2E22' : undefined }}>
+              {sending ? 'Sending…' : sendFailed ? "Couldn't send — try again" : 'Send my question →'}
             </button>
           </motion.div>
         )}
@@ -203,10 +210,16 @@ function CorpModal({ onClose }: { onClose: () => void }) {
   const [details, setDetails]   = useState('');
   const [done, setDone]         = useState(false);
   const [err, setErr]           = useState(false);
+  const [sending, setSending]   = useState(false);
+  const [sendFailed, setSendFailed] = useState(false);
 
-  const submit = () => {
+  const submit = async () => {
     if (!company || !name || !email) { setErr(true); setTimeout(() => setErr(false), 1200); return; }
-    setDone(true);
+    setSending(true);
+    setSendFailed(false);
+    const ok = await sendInquiry('corporate-quote', { company, name, email, guests, details });
+    setSending(false);
+    if (ok) { setDone(true); } else { setSendFailed(true); setTimeout(() => setSendFailed(false), 2500); }
   };
 
   return (
@@ -230,8 +243,8 @@ function CorpModal({ onClose }: { onClose: () => void }) {
             <Field label="Work email"     type="email" ph="you@company.com" val={email} set={setEmail} err={err && !email} />
             <Field label="Estimated guests" type="number" ph="e.g. 12" val={guests} set={setGuests} />
             <Field label="Tell us more"   ph="Dates, needs, questions…" val={details} set={setDetails} multiline />
-            <button onClick={submit} className="w-full font-eyebrow font-light text-white hover:brightness-110 transition-all py-3 mt-1" style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0, border: 'none', cursor: 'pointer', background: '#2E6AB5' }}>
-              Send quotation request →
+            <button onClick={submit} disabled={sending} className="w-full font-eyebrow font-light text-white hover:brightness-110 transition-all py-3 mt-1 disabled:opacity-60 disabled:cursor-default" style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0, border: 'none', cursor: sending ? 'default' : 'pointer', background: sendFailed ? '#B05329' : '#2E6AB5' }}>
+              {sending ? 'Sending…' : sendFailed ? "Couldn't send — try again" : 'Send quotation request →'}
             </button>
           </motion.div>
         )}
