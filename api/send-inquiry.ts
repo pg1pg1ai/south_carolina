@@ -51,7 +51,7 @@ export default async function handler(req: any, res: any) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Horizons Sandhills Website <onboarding@resend.dev>',
+        from: 'Horizons Sandhills Website <inquiries@gohorizons.com>',
         to: [toEmail],
         subject: `${title} — Horizons Sandhills`,
         html: `<h2>${escapeHtml(title)}</h2><table>${rows}</table>`,
