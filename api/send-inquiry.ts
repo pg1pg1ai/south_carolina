@@ -3,12 +3,11 @@
 // Env vars (Vercel project settings, server-side only — no VITE_ prefix,
 // they must never reach the browser bundle):
 //   RESEND_API_KEY   — from resend.com (required)
-//   INQUIRY_TO_EMAIL — optional override of the recipient below
+//   INQUIRY_TO_EMAIL — optional override; comma-separated for several recipients
 
-// Temporary: routed to the Resend account owner's inbox while access to
-// hello@gohorizons.com is unavailable. Switch back once that mailbox is
-// confirmed to receive (or just set INQUIRY_TO_EMAIL in Vercel, no deploy needed).
-const DEFAULT_TO_EMAIL = 'aiartificial.horizons@gmail.com';
+// Every submission goes to both inboxes at once (one Resend call, multiple
+// recipients — each address gets its own copy).
+const DEFAULT_TO_EMAILS = ['hello@gohorizons.com', 'aiartificial.horizons@gmail.com'];
 
 const FORM_LABELS: Record<string, string> = {
   'private-event': 'Private Event Inquiry',
@@ -28,7 +27,10 @@ export default async function handler(req: any, res: any) {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  const toEmail = process.env.INQUIRY_TO_EMAIL || DEFAULT_TO_EMAIL;
+  const override = process.env.INQUIRY_TO_EMAIL;
+  const toEmails = override
+    ? override.split(',').map((s) => s.trim()).filter(Boolean)
+    : DEFAULT_TO_EMAILS;
   if (!apiKey) {
     res.status(500).json({ error: 'Inquiry email is not configured' });
     return;
@@ -57,7 +59,7 @@ export default async function handler(req: any, res: any) {
       },
       body: JSON.stringify({
         from: 'Horizons Sandhills Website <inquiries@gohorizons.com>',
-        to: [toEmail],
+        to: toEmails,
         subject: `${title} — Horizons Sandhills`,
         html: `<h2>${escapeHtml(title)}</h2><table>${rows}</table>`,
       }),
