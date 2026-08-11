@@ -3,9 +3,12 @@
 // Env vars (Vercel project settings, server-side only — no VITE_ prefix,
 // they must never reach the browser bundle):
 //   RESEND_API_KEY   — from resend.com (required)
-//   INQUIRY_TO_EMAIL — optional override; defaults to hello@gohorizons.com
+//   INQUIRY_TO_EMAIL — optional override of the recipient below
 
-const DEFAULT_TO_EMAIL = 'hello@gohorizons.com';
+// Temporary: routed to the Resend account owner's inbox while access to
+// hello@gohorizons.com is unavailable. Switch back once that mailbox is
+// confirmed to receive (or just set INQUIRY_TO_EMAIL in Vercel, no deploy needed).
+const DEFAULT_TO_EMAIL = 'aiartificial.horizons@gmail.com';
 
 const FORM_LABELS: Record<string, string> = {
   'private-event': 'Private Event Inquiry',
