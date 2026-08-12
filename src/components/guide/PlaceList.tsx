@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
 import RevealOnScroll from '../primitives/RevealOnScroll';
+import DistanceChip from './DistanceChip';
 import { mapsDir, type GuideCategory, type GuidePlace } from '../data/guide';
 
 export function PlaceRow({ place }: { place: GuidePlace }) {
@@ -11,7 +12,7 @@ export function PlaceRow({ place }: { place: GuidePlace }) {
       <div className="mt-3 flex items-end justify-between gap-3 border-t border-divider pt-3">
         <div>
           <p className="text-[12px] text-ink2">{place.address}</p>
-          <p className="mt-0.5 eyebrow text-ink2">{place.distance} · {place.drive}</p>
+          <div className="mt-1.5"><DistanceChip distance={place.distance} drive={place.drive} /></div>
         </div>
         <a
           href={mapsDir(`${place.name}, ${place.address}`)}
@@ -67,7 +68,7 @@ export default function PlaceList({ categories }: { categories: GuideCategory[] 
               </h3>
               <p className="mt-2 max-w-text text-[14px] leading-relaxed text-ink2">{featured.blurb}</p>
               <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
-                <span className="eyebrow text-ink2">{featured.distance} · {featured.drive}</span>
+                <DistanceChip distance={featured.distance} drive={featured.drive} />
                 <span className="text-[12px] text-ink2">{featured.address}</span>
                 <a
                   href={mapsDir(`${featured.name}, ${featured.address}`)}

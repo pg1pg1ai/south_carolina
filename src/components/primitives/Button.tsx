@@ -8,6 +8,8 @@ interface Props {
   variant?: Variant;
   children: ReactNode;
   className?: string;
+  /** Opens the link in a new tab. Ignored when no `href` is given. */
+  newTab?: boolean;
 }
 
 const base = 'inline-flex items-center justify-center font-eyebrow font-medium uppercase text-[11px] tracking-[0.22em] px-8 py-4 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 outline-none min-h-[44px]';
@@ -18,10 +20,19 @@ const variants: Record<Variant, string> = {
   'ghost-light': 'border border-linen/60 text-linen hover:bg-linen/10 active:scale-[0.98]',
 };
 
-export default function Button({ href, onClick, variant = 'primary', children, className = '' }: Props) {
+export default function Button({ href, onClick, variant = 'primary', children, className = '', newTab = false }: Props) {
   const cls = `${base} ${variants[variant]} ${className}`;
   if (href) {
-    return <a href={href} className={cls}>{children}</a>;
+    return (
+      <a
+        href={href}
+        className={cls}
+        target={newTab ? '_blank' : undefined}
+        rel={newTab ? 'noopener noreferrer' : undefined}
+      >
+        {children}
+      </a>
+    );
   }
   return <button onClick={onClick} className={cls}>{children}</button>;
 }

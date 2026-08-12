@@ -25,6 +25,28 @@ export interface GuideCategory {
   places: GuidePlace[];
 }
 
+export type MapCategory = 'stays' | 'parking' | 'amenities' | 'service' | 'nature';
+
+export interface MapPin {
+  id: string;
+  label: string;
+  category: MapCategory;
+  /** Percentage of the map image's width, 0–100. */
+  x: number;
+  /** Percentage of the map image's height, 0–100. */
+  y: number;
+}
+
+// Chip colours are raw hex rather than Tailwind classes because the pin dots are
+// rendered as inline styles inside a transformed layer.
+export const mapCategories: { id: MapCategory; label: string; color: string }[] = [
+  { id: 'stays', label: 'Stays', color: '#1F2420' },
+  { id: 'amenities', label: 'Amenities', color: '#B05329' },
+  { id: 'parking', label: 'Parking & Arrival', color: '#3E4F3A' },
+  { id: 'service', label: 'Service', color: '#A67C52' },
+  { id: 'nature', label: 'Nature', color: '#2A3A2A' },
+];
+
 export const guideData = {
   meta: {
     title: 'Guest Guide — Horizons Sandhills',
@@ -73,6 +95,51 @@ export const guideData = {
     ],
   },
 
+  // Pin coordinates are derived from map.pdf's text layer: each label's centre in
+  // page space, transformed by x/1440*100 and (y-66.6)/662.25*100 into
+  // percentages of the map image's box. They are only valid for the current
+  // property-map.webp — see IMAGE_MAP.md before replacing it.
+  mapPins: [
+    { id: 'forest-villa-1', label: 'Forest Villa 1', category: 'stays', x: 54.88, y: 82.43 },
+    { id: 'forest-villa-2', label: 'Forest Villa 2', category: 'stays', x: 54.37, y: 77.84 },
+    { id: 'forest-villa-3', label: 'Forest Villa 3', category: 'stays', x: 53.23, y: 73.76 },
+    { id: 'forest-villa-4', label: 'Forest Villa 4', category: 'stays', x: 53.05, y: 86.09 },
+    { id: 'forest-villa-5', label: 'Forest Villa 5', category: 'stays', x: 50.55, y: 82.43 },
+    { id: 'forest-villa-6', label: 'Forest Villa 6', category: 'stays', x: 48.49, y: 77.84 },
+    { id: 'guest-house-1', label: 'Guest House 1', category: 'stays', x: 71.34, y: 87.01 },
+    { id: 'guest-house-2', label: 'Guest House 2', category: 'stays', x: 58.65, y: 83.41 },
+    { id: 'rv-hookups', label: 'RV hookups', category: 'stays', x: 77.40, y: 57.17 },
+    { id: 'parking-a', label: 'Parking A — EV chargers', category: 'parking', x: 49.93, y: 89.30 },
+    { id: 'parking-b', label: 'Parking B', category: 'parking', x: 51.86, y: 90.33 },
+    { id: 'parking-c', label: 'Parking C', category: 'parking', x: 55.33, y: 89.62 },
+    { id: 'parking-d', label: 'Parking D — overflow', category: 'parking', x: 52.53, y: 93.23 },
+    { id: 'main-sign', label: 'Main sign', category: 'parking', x: 1.89, y: 80.54 },
+    { id: 'sauna', label: 'Sauna', category: 'amenities', x: 40.46, y: 72.07 },
+    { id: 'gazebo', label: 'Gazebo & cold plunge', category: 'amenities', x: 40.46, y: 77.75 },
+    { id: 'outdoor-shower', label: 'Outdoor shower', category: 'amenities', x: 38.00, y: 72.34 },
+    { id: 'dock', label: 'Dock', category: 'amenities', x: 38.47, y: 68.96 },
+    { id: 'pool', label: 'Pool', category: 'amenities', x: 71.39, y: 65.29 },
+    { id: 'pool-pavillion', label: 'Pool pavillion', category: 'amenities', x: 72.33, y: 70.64 },
+    { id: 'beach-sports-courts', label: 'Beach sports courts', category: 'amenities', x: 71.20, y: 76.36 },
+    // Offset from its label (y 65.81) so the pin covers a leftover Google
+    // "saved place" marker on the same building.
+    { id: 'stage-pavillion', label: 'Stage pavillion', category: 'amenities', x: 85.34, y: 61.60 },
+    { id: 'kitchen-dining', label: 'Kitchen & dining area', category: 'amenities', x: 64.03, y: 80.59 },
+    { id: 'fireplace-lounge-deck', label: 'Fireplace lounge deck', category: 'amenities', x: 66.50, y: 90.77 },
+    { id: 'crabird-sculpture', label: 'Crabird sculpture', category: 'amenities', x: 66.06, y: 85.75 },
+    { id: 'apiary', label: 'Apiary', category: 'amenities', x: 98.19, y: 73.85 },
+    { id: 'front-desk', label: 'Front desk', category: 'service', x: 65.23, y: 89.78 },
+    { id: 'managers-house', label: "Manager's house", category: 'service', x: 64.03, y: 89.42 },
+    { id: 'laundry-room', label: 'Laundry room', category: 'service', x: 63.78, y: 71.21 },
+    { id: 'storage-west', label: 'Storage — west', category: 'service', x: 49.53, y: 68.84 },
+    { id: 'storage-east', label: 'Storage — east', category: 'service', x: 73.22, y: 45.68 },
+    { id: 'water-shed-west', label: 'Water shed — west', category: 'service', x: 55.49, y: 65.97 },
+    { id: 'water-shed-east', label: 'Water shed — east', category: 'service', x: 67.01, y: 73.46 },
+    { id: 'pool-shed', label: 'Pool shed', category: 'service', x: 71.20, y: 61.73 },
+    { id: 'mclean-pond', label: 'McLean Pond', category: 'nature', x: 35.03, y: 62.17 },
+    { id: 'mt-prong-creek', label: 'Mt Prong Creek', category: 'nature', x: 52.78, y: 12.59 },
+  ] as MapPin[],
+
   access: {
     steps: [
       { title: 'Enter through the front gate', body: 'Follow Woodmen Rd to the property entrance. Signage marks the turn in.' },
@@ -81,7 +148,15 @@ export const guideData = {
       { title: 'Enter, breathe, settle in', body: 'Take a moment on the porch. Let the trip melt off your shoulders.' },
       { title: 'Lock behind you', body: 'When leaving, close all doors and lock up.' },
     ],
-    video: { id: 'byRKmNIeT2c', title: 'How to Access Your Cabin', duration: '1:24', kicker: 'Watch in 90 seconds' },
+    // Placeholder imagery pending real cabin-access photos. Captions are matched
+    // to the five written steps above and are safe to reword when they land.
+    slides: [
+      { src: '/images/guide/slide-1.webp', caption: 'The turn off Woodmen Rd — watch for the sign after the last farmhouse.' },
+      { src: '/images/guide/slide-2.webp', caption: 'The front gate. Use the code from your arrival message.' },
+      { src: '/images/guide/slide-3.webp', caption: 'Past the gate, continue to your assigned parking area.' },
+      { src: '/images/guide/slide-4.webp', caption: 'Your cabin is numbered, with parking close by.' },
+      { src: '/images/guide/slide-5.webp', caption: 'Keypad by the door — then settle in.' },
+    ],
     trouble: {
       title: 'Trouble with the code?',
       body: 'Do not force the lock. Wait thirty seconds and try again. Still stuck? Call Guest Support and we will help right away.',
@@ -91,7 +166,7 @@ export const guideData = {
   amenities: {
     featured: {
       name: 'Cedar Barrel Sauna',
-      photo: '/images/villa/04_Sauna/1.webp',
+      photo: '/images/guide/sauna.webp',
       kicker: 'Featured amenity',
       body: 'Wood fired and tucked between the pines. Give it fifteen minutes to warm up, then let the forest do the rest.',
       // NOTE: capacity value carried over from the client's prototype — flagged for client verification.
@@ -101,33 +176,13 @@ export const guideData = {
         { label: 'Best time', value: 'Dusk' },
       ],
     },
+    // `icon` keys into AMENITY_ICONS in GuestGuide.tsx.
     cards: [
-      { name: 'Patio Umbrella', note: 'Crank umbrella on the deck for shade.' },
-      { name: 'Grill', note: 'Propane grill on the back patio.' },
-      { name: 'Firepit', note: 'Wood-burning firepit in the clearing.' },
-      { name: 'Outdoor Furniture', note: 'Lounge chairs, dining set, and hammocks.' },
-      { name: 'EV Charger', note: 'Level 2 charger at Parking A.' },
-    ],
-  },
-
-  safety: {
-    emergency: {
-      title: 'Emergency',
-      body: 'For a life-threatening emergency, call 911 first. Then notify Guest Support.',
-    },
-    cards: [
-      { title: 'Fire safety', body: 'Locate the extinguisher near the kitchen. Never leave the firepit unattended.' },
-      { title: 'Wildlife awareness', body: 'Keep food indoors and doors closed at night. Deer and wild turkey are common.' },
-      { title: 'Severe weather', body: 'In a tornado warning, move to the interior bathroom on the ground floor.' },
-      { title: 'Water and children', body: 'The lake and dock are unsupervised. Please watch children closely.' },
-    ],
-    facts: [
-      'Property address and GPS are in Start Here',
-      'First aid kit is under the kitchen sink',
-      'Emergency assembly point is at the front gate',
-      'For a power outage, check the breaker panel first',
-      'If you are locked out, call Guest Support',
-      'Nearest hospital is in the Medical section',
+      { name: 'Patio Umbrella', note: 'Crank umbrella on the deck for shade.', icon: 'umbrella' },
+      { name: 'Grill', note: 'Propane grill on the back patio.', icon: 'utensils' },
+      { name: 'Firepit', note: 'Wood-burning firepit in the clearing.', icon: 'flame' },
+      { name: 'Outdoor Furniture', note: 'Lounge chairs, dining set, and hammocks.', icon: 'armchair' },
+      { name: 'EV Charger', note: 'Level 2 charger at Parking A.', icon: 'plug-zap' },
     ],
   },
 
@@ -143,21 +198,11 @@ export const guideData = {
     { title: 'Nature', note: 'Please do not disturb wildlife or vegetation.' },
   ],
 
+  // The Checkout section was removed; what remains feeds the hero's Checkout card.
   checkout: {
     time: '12:00 PM',
-    sub: 'A short list. No need to strip beds or clean. Just the essentials before you head home.',
     lateNote: 'Late checkout is available on request, depending on availability. An extra fee of 10% of the nightly rate applies.',
-    items: [
-      'Turn off the lights, sauna, and appliances',
-      'Close and lock all windows and doors',
-      'Return keys, if applicable',
-      'Bag trash and drop it in the marked bins',
-      'Leave used towels in the bathroom',
-      'Check for personal belongings',
-      'Send a message confirming departure',
-    ],
     lateSms: 'Hi Daniil, we would like to request a late checkout for our stay at Horizons Sandhills. Is that possible?',
-    doneSms: 'Hi Daniil, we have checked out of Horizons Sandhills. Thank you for a wonderful stay!',
   },
 
   localGuide: [
@@ -298,7 +343,7 @@ export const guideData = {
     { q: 'How do I use the sauna?', a: 'See the Cedar Barrel Sauna card under Amenities — give it about fifteen minutes to warm up.' },
     { q: 'Where should I park?', a: 'Use your assigned lot: A or B for the Forest Villa, C for the Guest House, D for overflow. EV chargers are at Parking A.' },
     { q: 'Where is the nearest grocery store?', a: 'The Markette in Patrick (8–10 min) covers essentials; Piggly Wiggly in Chesterfield (17–20 min) is the closest full grocery store.' },
-    { q: 'Can I request late checkout?', a: 'Yes — tap Request Late Checkout in the Checkout section. It depends on availability, and an extra fee of 10% of the nightly rate applies.' },
+    { q: 'Can I request late checkout?', a: 'Yes — tap Request Late Checkout on the Checkout card at the top of this page. It depends on availability, and an extra fee of 10% of the nightly rate applies.' },
     { q: 'Are pets allowed?', a: 'Please confirm the pet policy with Guest Support before arriving with animals.' },
     { q: 'What should I do if the power goes out?', a: 'Check the breaker panel first, then contact Guest Support if power does not return.' },
     { q: "What should I do if I'm locked out?", a: 'Call Guest Support. We can share access instructions or send help.' },

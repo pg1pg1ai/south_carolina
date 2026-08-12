@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { Copy, Check } from 'lucide-react';
 
-export default function CopyButton({ value, label = 'Copy' }: { value: string; label?: string }) {
+interface Props {
+  value: string;
+  label?: string;
+  accent?: 'orange';
+}
+
+export default function CopyButton({ value, label = 'Copy', accent }: Props) {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
@@ -14,10 +20,14 @@ export default function CopyButton({ value, label = 'Copy' }: { value: string; l
     }
   };
 
+  const tone = accent === 'orange'
+    ? 'border-signal/40 text-signal hover:bg-signal/10'
+    : 'border-ink/20 text-ink2 hover:bg-ink/5';
+
   return (
     <button
       onClick={copy}
-      className="no-print inline-flex items-center gap-1.5 rounded-full border border-ink/20 px-3 py-1.5 eyebrow text-ink2 hover:bg-ink/5 transition-colors"
+      className={`no-print inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 eyebrow transition-colors ${tone}`}
       aria-label={`${label}: ${value}`}
     >
       {copied ? <Check size={12} strokeWidth={2} className="text-signal" /> : <Copy size={12} strokeWidth={1.6} />}
