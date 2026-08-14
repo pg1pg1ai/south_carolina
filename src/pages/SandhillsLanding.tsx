@@ -282,7 +282,7 @@ export default function SandhillsLanding() {
       >
         <div>
           <p className="text-linen font-medium text-sm">From $450 / night</p>
-          <p className="text-linen/50 text-xs">Forest Villa · 2-night minimum</p>
+          <p className="text-linen/50 text-xs">Forest Villa · 1-night minimum</p>
         </div>
         <button
           onClick={openBooking}

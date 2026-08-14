@@ -38,7 +38,7 @@ export const sandhillsData = {
     { value: '18', label: 'Acre lake' },
     { value: '7', label: 'Units total' },
     { value: '12', label: 'Miles of trails' },
-    { value: '2', label: 'Night minimum' },
+    { value: '1', label: 'Night minimum' },
     { value: '∞', label: 'Open year-round' },
     { value: '90', label: 'Min from Charlotte' },
   ],

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Users, X } from 'lucide-react';
+import { MIN_NIGHTS } from '../data/booking';
 
 interface Props {
   propertyId: string;
@@ -82,8 +83,6 @@ export default function BookingWidget({ propertyId, roomTypeId, maxGuests, price
     return { year: d.getFullYear(), month: d.getMonth() };
   });
 
-  const MIN_NIGHTS = 2;
-
   const handleDayClick = (d: Date) => {
     if (pickMode === 'in') {
       setCheckIn(d);
@@ -141,7 +140,7 @@ export default function BookingWidget({ propertyId, roomTypeId, maxGuests, price
           </span>
           <span className="font-eyebrow text-sm text-ink2">/ night</span>
         </div>
-        <span className="font-eyebrow text-xs text-ink2/50">2-night min</span>
+        <span className="font-eyebrow text-xs text-ink2/50">{MIN_NIGHTS}-night min</span>
       </div>
 
       {/* Date fields */}
