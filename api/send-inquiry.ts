@@ -10,6 +10,7 @@ const DEFAULT_TO_EMAIL = 'hello@gohorizons.com';
 const FORM_LABELS: Record<string, string> = {
   'private-event': 'Private Event Inquiry',
   'booking-interest': 'Booking Interest',
+  'labor-day-offer': 'Labor Day Offer',
 };
 
 function escapeHtml(value: string): string {
