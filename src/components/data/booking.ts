@@ -7,7 +7,7 @@
 export const CLOUDBEDS_RESERVATION_URL = 'https://us2.cloudbeds.com/en/reservation/Dc79Gd/';
 
 export const MAX_GUESTS = 4;
-export const MIN_NIGHTS = 2;
+export const MIN_NIGHTS = 1;
 
 /** Local YYYY-MM-DD (avoids the UTC day-shift that toISOString causes). */
 export function fmtIso(d: Date): string {

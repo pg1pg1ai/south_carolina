@@ -692,7 +692,7 @@ export default function VillaCascade() {
         </div>
 
         {/* ── Act 2 — Comfort ─────────────────────────────────────────────── */}
-        <div ref={act2Ref} className="relative flex flex-col px-6 pb-6 pt-3 md:px-12 md:pb-12 md:pt-5 lg:px-16 lg:pb-16 lg:pt-6" style={{ zIndex: 1 }}>
+        <div id="inside" ref={act2Ref} className="relative flex flex-col px-6 pb-6 pt-3 md:px-12 md:pb-12 md:pt-5 lg:px-16 lg:pb-16 lg:pt-6" style={{ zIndex: 1, scrollMarginTop: '80px' }}>
           <div className="w-full max-w-content mx-auto">
           <div>
             {/* Typographic interlude — mixed scale */}
@@ -750,7 +750,7 @@ export default function VillaCascade() {
         </div>
 
         {/* ── Act 4 — Discovery ───────────────────────────────────────────── */}
-        <div ref={act4Ref} className="relative flex flex-col px-6 pb-6 pt-2 md:px-12 md:pb-12 md:pt-3 lg:px-16 lg:pb-16 lg:pt-4" style={{ zIndex: 1 }}>
+        <div id="nearby" ref={act4Ref} className="relative flex flex-col px-6 pb-6 pt-2 md:px-12 md:pb-12 md:pt-3 lg:px-16 lg:pb-16 lg:pt-4" style={{ zIndex: 1, scrollMarginTop: '80px' }}>
           <div className="w-full max-w-content mx-auto">
           <div className="max-w-[52rem]">
             <motion.h2 className="font-display mb-3 md:mb-4" style={{ fontVariationSettings: '"opsz" 144, "SOFT" 50, "WONK" 0', fontWeight: 380, fontSize: 'clamp(2rem, 4.5vw, 3.8rem)', lineHeight: 1.05, letterSpacing: '-0.02em', color: act4HeadingColor }}>
@@ -779,7 +779,7 @@ export default function VillaCascade() {
         </div>
 
         {/* ── B2B — Private hire (frosted matte glass, colors invert with bg) ── */}
-        <div ref={b2bRef} className="relative flex flex-col px-6 pb-14 pt-6 md:px-12 md:pb-24 md:pt-10 lg:px-16" style={{ zIndex: 1 }}>
+        <div id="events" ref={b2bRef} className="relative flex flex-col px-6 pb-14 pt-6 md:px-12 md:pb-24 md:pt-10 lg:px-16" style={{ zIndex: 1, scrollMarginTop: '80px' }}>
           <div className="w-full max-w-content mx-auto">
             {/* Headline — sits on the page, outside the panel */}
             <motion.h2 className="font-display" style={{ fontVariationSettings: '"opsz" 144, "SOFT" 50, "WONK" 0', fontWeight: 380, fontSize: 'clamp(2.1rem, 4.5vw, 3.7rem)', lineHeight: 1.06, letterSpacing: '-0.02em', maxWidth: '20ch', marginBottom: 'clamp(20px, 3vh, 34px)', color: b2bText }}>

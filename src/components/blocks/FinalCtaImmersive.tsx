@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Button from '../primitives/Button';
 import { openBooking } from '../data/booking';
+import { sendInquiry } from '../../lib/sendInquiry';
 
 interface Props {
   sub: string;
@@ -148,10 +149,16 @@ function QuestionModal({ onClose }: { onClose: () => void }) {
   const [question, setQuestion] = useState('');
   const [done, setDone]         = useState(false);
   const [err, setErr]           = useState(false);
+  const [sending, setSending]   = useState(false);
+  const [sendFailed, setSendFailed] = useState(false);
 
-  const submit = () => {
+  const submit = async () => {
     if (!name || !email || !question) { setErr(true); setTimeout(() => setErr(false), 1200); return; }
-    setDone(true);
+    setSending(true);
+    setSendFailed(false);
+    const ok = await sendInquiry('question', { name, email, question });
+    setSending(false);
+    if (ok) { setDone(true); } else { setSendFailed(true); setTimeout(() => setSendFailed(false), 2500); }
   };
 
   return (
@@ -165,26 +172,13 @@ function QuestionModal({ onClose }: { onClose: () => void }) {
         ) : (
           <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="px-8 py-10">
             <p className="font-display italic text-ink mb-1" style={{ fontSize: '1.4rem', lineHeight: 1.25 }}>Ask us anything.</p>
-            <p className="font-eyebrow font-light text-ink2 mb-5" style={{ fontSize: 12, letterSpacing: '0.1em' }}>We respond within 24 hours.</p>
-
-            {/* FAQ nudge */}
-            <a
-              href="/faq"
-              className="flex items-center justify-between w-full mb-6 px-4 py-3 rounded-sm transition-colors hover:bg-boneWarm"
-              style={{ background: 'rgba(212,200,180,0.25)', border: '1px solid rgba(212,200,180,0.6)', textDecoration: 'none' }}
-            >
-              <div>
-                <span className="font-eyebrow font-light block" style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#5A5650' }}>Before you ask</span>
-                <span className="font-display text-ink" style={{ fontSize: '0.95rem' }}>Browse our FAQ →</span>
-              </div>
-              <span className="font-eyebrow text-signal/50" style={{ fontSize: 18 }}>?</span>
-            </a>
+            <p className="font-eyebrow font-light text-ink2 mb-7" style={{ fontSize: 12, letterSpacing: '0.1em' }}>We respond within 24 hours.</p>
 
             <Field label="Your name"     ph="First name"        val={name}     set={setName}     err={err && !name} />
             <Field label="Email address" type="email" ph="you@example.com" val={email} set={setEmail} err={err && !email} />
             <Field label="Your question" ph="What would you like to know?" val={question} set={setQuestion} err={err && !question} multiline />
-            <button onClick={submit} className="w-full font-eyebrow font-light text-linen bg-signal hover:bg-signal2 transition-colors py-3 mt-1" style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0, border: 'none', cursor: 'pointer' }}>
-              Send my question →
+            <button onClick={submit} disabled={sending} className="w-full font-eyebrow font-light text-linen bg-signal hover:bg-signal2 transition-colors py-3 mt-1 disabled:opacity-60 disabled:cursor-default" style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0, border: 'none', cursor: sending ? 'default' : 'pointer', background: sendFailed ? '#9A2E22' : undefined }}>
+              {sending ? 'Sending…' : sendFailed ? "Couldn't send — try again" : 'Send my question →'}
             </button>
           </motion.div>
         )}
@@ -203,10 +197,16 @@ function CorpModal({ onClose }: { onClose: () => void }) {
   const [details, setDetails]   = useState('');
   const [done, setDone]         = useState(false);
   const [err, setErr]           = useState(false);
+  const [sending, setSending]   = useState(false);
+  const [sendFailed, setSendFailed] = useState(false);
 
-  const submit = () => {
+  const submit = async () => {
     if (!company || !name || !email) { setErr(true); setTimeout(() => setErr(false), 1200); return; }
-    setDone(true);
+    setSending(true);
+    setSendFailed(false);
+    const ok = await sendInquiry('corporate-quote', { company, name, email, guests, details });
+    setSending(false);
+    if (ok) { setDone(true); } else { setSendFailed(true); setTimeout(() => setSendFailed(false), 2500); }
   };
 
   return (
@@ -230,8 +230,8 @@ function CorpModal({ onClose }: { onClose: () => void }) {
             <Field label="Work email"     type="email" ph="you@company.com" val={email} set={setEmail} err={err && !email} />
             <Field label="Estimated guests" type="number" ph="e.g. 12" val={guests} set={setGuests} />
             <Field label="Tell us more"   ph="Dates, needs, questions…" val={details} set={setDetails} multiline />
-            <button onClick={submit} className="w-full font-eyebrow font-light text-white hover:brightness-110 transition-all py-3 mt-1" style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0, border: 'none', cursor: 'pointer', background: '#2E6AB5' }}>
-              Send quotation request →
+            <button onClick={submit} disabled={sending} className="w-full font-eyebrow font-light text-white hover:brightness-110 transition-all py-3 mt-1 disabled:opacity-60 disabled:cursor-default" style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0, border: 'none', cursor: sending ? 'default' : 'pointer', background: sendFailed ? '#B05329' : '#2E6AB5' }}>
+              {sending ? 'Sending…' : sendFailed ? "Couldn't send — try again" : 'Send quotation request →'}
             </button>
           </motion.div>
         )}
