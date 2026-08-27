@@ -76,8 +76,8 @@ export default function LaborDayPopup() {
             <AnimatePresence mode="wait">
               {done ? (
                 <motion.div key="done" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center px-10 py-14">
-                  <p className="font-display italic mb-2" style={{ fontSize: '1.5rem', color: ACCENT }}>Offer request received.</p>
-                  <p className="font-eyebrow font-light text-ink2" style={{ fontSize: 12, letterSpacing: '0.1em' }}>We'll be in touch with your special Labor Day offer shortly.</p>
+                  <p className="font-display italic mb-2" style={{ fontSize: '1.5rem', color: ACCENT }}>Thank you!</p>
+                  <p className="font-eyebrow font-light text-ink2" style={{ fontSize: 12, letterSpacing: '0.1em' }}>Our team will get back to you shortly.</p>
                 </motion.div>
               ) : (
                 <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="px-8 py-10">
