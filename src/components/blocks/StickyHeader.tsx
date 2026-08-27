@@ -6,14 +6,27 @@ import { openBooking } from '../data/booking';
 
 const openGallery = () => window.dispatchEvent(new CustomEvent('open-gallery'));
 
-const navLinks = [
-  { label: 'Stays',    href: '#stays',   onClick: undefined },
-  { label: 'The Land', href: '#land',    onClick: undefined },
-  { label: 'Gallery',  href: '#',        onClick: openGallery },
-  { label: 'Reserve',  href: '#reserve', onClick: undefined },
+type NavLink = { label: string; href: string; onClick?: () => void };
+
+const landingLinks: NavLink[] = [
+  { label: 'Stays',    href: '#stays' },
+  { label: 'The Land', href: '#land' },
+  { label: 'Gallery',  href: '#', onClick: openGallery },
+  { label: 'Guide',    href: '/guide' },
+  { label: 'Reserve',  href: '#reserve' },
 ];
 
-export default function StickyHeader() {
+const pageLinks: NavLink[] = [
+  { label: 'Stays',    href: '/#stays' },
+  { label: 'The Land', href: '/#land' },
+  { label: 'Gallery',  href: '/#gallery' },
+  { label: 'Guide',    href: '/guide' },
+  { label: 'Reserve',  href: '/#reserve' },
+];
+
+export default function StickyHeader({ variant = 'landing' }: { variant?: 'landing' | 'page' } = {}) {
+  const isPage = variant === 'page';
+  const navLinks = isPage ? pageLinks : landingLinks;
   const [overDark, setOverDark] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -69,6 +82,7 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
     />
 
     {/* Top gradient scrim */}
+    {!isPage && (
     <motion.div
       style={{
         position: 'fixed', top: 0, left: 0, right: 0, height: 'clamp(100px, 14vh, 140px)',
@@ -78,8 +92,10 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
         pointerEvents: 'none',
       }}
     />
+    )}
 
     {/* Sun glow backdrop — circle exactly matching sun diameter */}
+    {!isPage && (
     <motion.div
       className="hidden md:block"
       style={{
@@ -98,8 +114,10 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
         pointerEvents: 'none',
       }}
     />
+    )}
 
     {/* Large hero logo — outside masked header so bottom isn't clipped */}
+    {!isPage && (
     <motion.div
       className="hidden md:block"
       style={{
@@ -118,18 +136,21 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
         style={{ height: largLogoH, width: 'auto', display: 'block' }}
       />
     </motion.div>
+    )}
 
     <motion.header
       className="fixed top-0 left-0 right-0 z-[200] transition-colors duration-500"
       style={{
-        paddingBottom: headerPb,
-        // The soft-fade mask must be off while the mobile menu is open —
-        // otherwise it dissolves the expanded menu into transparency.
-        WebkitMaskImage: menuOpen ? 'none' : 'linear-gradient(to bottom, black 50%, transparent 100%)',
-        maskImage: menuOpen ? 'none' : 'linear-gradient(to bottom, black 50%, transparent 100%)',
+        paddingBottom: isPage ? 0 : headerPb,
+        // Page variant gets a solid bone bar over light content; the soft-fade
+        // mask must be off for it (and while the mobile menu is open —
+        // otherwise it dissolves the expanded menu into transparency).
+        backgroundColor: isPage && !overDark ? '#F2EDE3' : 'transparent',
+        WebkitMaskImage: menuOpen || (isPage && !overDark) ? 'none' : 'linear-gradient(to bottom, black 50%, transparent 100%)',
+        maskImage: menuOpen || (isPage && !overDark) ? 'none' : 'linear-gradient(to bottom, black 50%, transparent 100%)',
         boxShadow: overDark ? 'none' : '0 1px 0 rgba(0,0,0,0.06)',
-        // The bar itself is transparent — don't let it swallow clicks meant for
-        // content underneath; interactive children re-enable pointer events.
+        // The bar itself is click-transparent — don't let it swallow clicks meant
+        // for content underneath; interactive children re-enable pointer events.
         pointerEvents: 'none',
       }}
     >
@@ -137,10 +158,10 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
 
         {/* Logo — grows in hero, shrinks on scroll */}
         <a
-          href="#"
+          href={isPage ? '/' : '#'}
           className="flex items-center pointer-events-auto"
           style={{ transform: 'translateX(max(-100px, min(-16px, calc(684px - 50vw))))' }}
-          onClick={(e) => {
+          onClick={isPage ? undefined : (e) => {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
             history.replaceState(null, '', window.location.pathname);
@@ -153,7 +174,7 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
               height: 'clamp(26px, 2.2vw, 36px)',
               width: 'auto',
               filter: overDark ? 'brightness(0) invert(1)' : 'brightness(0)',
-              opacity: smallLogoOpacity,
+              opacity: isPage ? 1 : smallLogoOpacity,
             }}
           />
         </a>
@@ -161,7 +182,7 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
         {/* Nav */}
         <motion.nav
           className="hidden md:flex items-center gap-8 pointer-events-auto"
-          style={{ opacity: navOpacity, x: navX }}
+          style={isPage ? undefined : { opacity: navOpacity, x: navX }}
         >
           {navLinks.map((l) => (
             <a key={l.label} href={l.href} onClick={l.onClick ? (e) => { e.preventDefault(); l.onClick!(); } : undefined} className={`eyebrow transition-colors hover:opacity-60 ${textColor}`}>
@@ -171,7 +192,7 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
         </motion.nav>
 
         {/* Book button */}
-        <motion.div className="hidden md:flex justify-end pointer-events-auto" style={{ opacity: bookOpacity }}>
+        <motion.div className="hidden md:flex justify-end pointer-events-auto" style={isPage ? undefined : { opacity: bookOpacity }}>
           <Button onClick={openBooking} variant={overDark ? 'ghost-light' : 'primary'} className="!py-2 !px-5 !min-h-0">
             Book
           </Button>
@@ -187,6 +208,7 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
       </div>
 
       {/* View gallery — glass pill */}
+      {!isPage && (
       <motion.a
         href="#"
         onClick={(e) => { e.preventDefault(); openGallery(); }}
@@ -208,6 +230,7 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
       >
         View gallery
       </motion.a>
+      )}
 
       <AnimatePresence>
         {menuOpen && (

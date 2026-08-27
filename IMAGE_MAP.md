@@ -197,6 +197,35 @@ commented out and never reach the page.
   If asked to fix The House's gallery, you need brand-new photos — there is
   nothing to just re-point.
 
+## Other live route: `/guide` (Guest Guide)
+
+- **Page:** `src/pages/GuestGuide.tsx` · **Data:** `src/components/data/guide.ts`
+  (all guide image paths live in `guideData`, not in components)
+
+| Use | Path | Where set |
+|---|---|---|
+| Hero background (lake, barrel sauna, dock at golden hour) | `/images/guide/hero-sandhills-lake.webp` (1700px, q82; png sibling alongside) | `guideData.hero.photo` |
+| Arrival section aerial property map | `/images/guide/property-map.webp` (2230×1026, q82, 459 KB) | `MAP_SRC` in `src/components/guide/PropertyMapPanel.tsx` |
+| Amenities featured card (sauna interior) | `/images/guide/sauna.webp` (1600×893, q85) | `guideData.amenities.featured.photo` |
+| Cabin Access slideshow, 5 slides | `/images/guide/slide-1.webp` … `slide-5.webp` (1600×893, q85) | `guideData.access.slides[].src` |
+
+- The property map is **generated**, not hand-drawn. Its source was `map.pdf`, a
+  Google MyMaps export whose label layer sat separately from the satellite
+  raster. `scripts/build-guide-assets.mjs` converts the extracted, retouched
+  aerial; the extraction and retouch commands are recorded in
+  `docs/superpowers/plans/2026-08-12-guide-page-client-revisions.md` Task 1.
+  Every marker on it is drawn by us from `guideData.mapPins` — the image itself
+  carries no property labels, only Google's own place names (McLean Pond,
+  Mt Prong Creek, Woodmen Rd). **Replacing this image invalidates the pin
+  coordinates**, which are percentages of its 2230×1026 box.
+- The guide's sauna photo is now its **own** file. It was previously
+  `/images/villa/04_Sauna/1.webp`, shared with the Forest Villa's Sauna room
+  gallery; the two no longer move together.
+- Slides are placeholders pending real cabin-access photos. Swapping them is a
+  data edit in `guideData.access.slides` — captions live there too.
+- `public/map.svg` is an earlier, now-**unreferenced** vector version of the same
+  map (recolored to our tokens); safe to delete or keep as a source.
+
 ---
 
 ## Dead / not currently rendered

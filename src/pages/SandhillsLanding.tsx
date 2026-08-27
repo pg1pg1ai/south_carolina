@@ -23,6 +23,7 @@ import GettingHere from '../components/blocks/GettingHere';
 import Footer from '../components/blocks/Footer';
 import BookingModal from '../components/blocks/BookingModal';
 import PrivateEventModal from '../components/blocks/PrivateEventModal';
+import LaborDayPopup from '../components/blocks/LaborDayPopup';
 import { openBooking } from '../components/data/booking';
 import StackCard from '../components/primitives/StackCard';
 
@@ -47,7 +48,13 @@ export default function SandhillsLanding() {
     if (meta) meta.setAttribute('content', d.meta.description);
 
     const hash = window.location.hash;
-    if (hash) {
+    if (hash === '#gallery') {
+      // Arrived from another route (e.g. /guide nav) asking for the gallery modal.
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('open-gallery'));
+        history.replaceState(null, '', window.location.pathname);
+      }, 400);
+    } else if (hash) {
       const id = hash.replace('#', '');
       const el = document.getElementById(id);
       if (el) {
@@ -294,6 +301,7 @@ export default function SandhillsLanding() {
 
       <BookingModal />
       <PrivateEventModal />
+      <LaborDayPopup />
     </>
   );
 }

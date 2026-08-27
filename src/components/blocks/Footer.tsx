@@ -1,6 +1,4 @@
-import { Calendar } from 'lucide-react';
 import { openBooking } from '../data/booking';
-import Button from '../primitives/Button';
 
 // Monochrome brand glyphs — lucide-react doesn't ship brand/social icons, so
 // these are small self-contained filled-path SVGs (fill: currentColor).
@@ -52,19 +50,19 @@ const cols: { title: string; links: FooterLink[] }[] = [
   {
     title: 'Explore',
     links: [
-      { label: 'The Forest Villa', href: '#stays' },
-      { label: 'Step Inside', href: '#inside' },
-      { label: 'On The Property', href: '#land' },
-      { label: 'Nearby', href: '#nearby' },
+      { label: 'The Forest Villa', href: '/#stays' },
+      { label: 'Step Inside', href: '/#inside' },
+      { label: 'On The Property', href: '/#land' },
+      { label: 'Nearby', href: '/#nearby' },
     ],
   },
   {
     title: 'Plan Your Stay',
     links: [
       { label: 'Check Availability', onClick: openBooking },
-      { label: 'Getting Here', href: '#getting-here' },
-      { label: 'Private Events', href: '#events' },
-      { label: 'Contact Us', href: '#reserve' },
+      { label: 'Getting Here', href: '/#getting-here' },
+      { label: 'Private Events', href: '/#events' },
+      { label: 'Contact Us', href: '/#reserve' },
     ],
   },
 ];
@@ -73,19 +71,9 @@ export default function Footer() {
   return (
     <footer data-zone="dark" className="bg-nightWarm text-linen/70 pt-16 pb-10 px-6">
       <div className="max-w-content mx-auto">
-        {/* Booking CTA — opens the same date-picker popup as the header Book button */}
-        <div className="mb-12 pb-12" style={{ borderBottom: '1px solid rgba(231,222,199,0.10)' }}>
-          <p className="eyebrow text-linen/40 mb-3">Ready when you are</p>
-          <p className="font-display font-light text-linen text-xl mb-6"
-            style={{ fontVariationSettings: '"SOFT" 30, "opsz" 24', letterSpacing: '-0.01em' }}>
-            Pick your dates — the pines will handle the rest.
-          </p>
-          <Button onClick={openBooking} variant="primary">
-            <Calendar size={15} strokeWidth={2} style={{ marginRight: 10 }} />
-            Book Your Stay
-          </Button>
-        </div>
-
+        {/* The booking CTA block was removed at 2026-08-12.
+            "Check Availability" in the Plan Your Stay column still opens the
+            date-picker popup. */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 sm:gap-[74px] mb-12 max-w-3xl">
           {cols.map((col) => (
             <div key={col.title}>

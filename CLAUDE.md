@@ -88,6 +88,40 @@ directions[3], gallery[16], reviews[3], pressQuote, nearby[4], faq[7], finalCta
 
 ---
 
+## Guest Guide (`/guide`)
+
+`src/pages/GuestGuide.tsx` — a flat, non-stacking page, unlike the landing page.
+Copy and structured content live in `src/components/data/guide.ts`; the
+components under `src/components/guide/` stay presentational.
+
+Nine sections, numbered `01`–`09` via `GuideSection`'s `index` prop, mirrored in
+`GuideSectionNav`'s `NAV_ITEMS`. **Both lists must stay in sync** — the nav's
+IntersectionObserver looks sections up by `id`:
+
+| # | id | Notes |
+|---|-----|-------|
+| 01 | `start` | 4 `GuideCard`s with alternating green/orange accent bars |
+| 02 | `arrival` | Steps + parking A–D cards + `PropertyMapPanel` |
+| 03 | `access` | `AccessSlideshow` (placeholder photos) |
+| 04 | `amenities` | Featured sauna + 5 icon cards |
+| 05 | `house-rules` | |
+| 06 | `food` | `PlaceList` + `DistanceChip` |
+| 07 | `things-to-do` | `PlaceList` + `DistanceChip` |
+| 08 | `medical` | Also the target of the hero's Emergency quick action |
+| 09 | `support` | FAQ + farewell |
+
+**`PropertyMapPanel`** is the interactive map: a static aerial with zoom, pan,
+five category filters, ~36 pins, and a jump-to-spot list. Pin positions come from
+`guideData.mapPins` as percentages of the map image's box — **replacing
+`property-map.webp` invalidates every coordinate**. See `IMAGE_MAP.md`.
+
+Removed at the client's request (2026-08-12) and **not** to be reinstated without
+asking: a Safety section, a Checkout section with its checklist, and the
+`Footer` booking CTA block (removed site-wide, so the landing page lost it too).
+Late checkout now lives only on the hero's Checkout card.
+
+---
+
 ## VillaCascade — Core Component
 
 `src/components/blocks/VillaCascade.tsx` is the main content engine (~1,500 lines).

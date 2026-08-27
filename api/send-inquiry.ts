@@ -14,6 +14,7 @@ const FORM_LABELS: Record<string, string> = {
   'booking-interest': 'Booking Interest',
   'corporate-quote': 'Corporate Quotation Request',
   'question': 'Website Question',
+  'labor-day-offer': 'Labor Day Offer',
 };
 
 function escapeHtml(value: string): string {
