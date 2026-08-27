@@ -6,8 +6,8 @@ import { sendInquiry } from '../../lib/sendInquiry';
 const ACCENT = '#B05329';
 const DISMISSED_KEY = 'laborDayOfferDismissed';
 const SHOW_DELAY_MS = 15000;
-const PHONE_HREF = 'tel:+18035550180';
-const PHONE_DISPLAY = '(803) 555-0180';
+const PHONE_HREF = 'tel:+17546679090';
+const PHONE_DISPLAY = '(754) 667-9090';
 
 function Field({ label, type, ph, val, set, err }: { label: string; type?: string; ph: string; val: string; set: (v: string) => void; err?: boolean }) {
   const cls = `w-full bg-boneWarm text-ink font-eyebrow font-light text-sm px-3 py-2.5 outline-none border transition-colors ${err ? 'border-signal' : 'border-divider focus:border-signal'}`;
@@ -92,7 +92,7 @@ export default function LaborDayPopup() {
                     <span className="font-eyebrow font-light" style={{ fontSize: 10, letterSpacing: '0.26em', textTransform: 'uppercase', color: ACCENT }}>Limited Labor Day offer</span>
                   </div>
                   <p className="font-display italic text-ink mb-1" style={{ fontSize: '1.4rem', lineHeight: 1.25 }}>Have plans for Labor Day?</p>
-                  <p className="font-eyebrow font-light text-ink2 mb-6" style={{ fontSize: 12, letterSpacing: '0.1em' }}>Contact us now to get your special Labor Day offer, or leave your details and our team will get back to you.</p>
+                  <p className="font-eyebrow font-light text-ink2 mb-6" style={{ fontSize: 12, letterSpacing: '0.1em' }}>Contact us now to get your <strong className="font-medium text-ink">special Labor Day offer</strong>, or leave your details and our team will get back to you.</p>
                   <a
                     href={PHONE_HREF}
                     className="eyebrow flex items-center justify-center w-full text-white hover:brightness-110 transition-all mb-6"
@@ -106,7 +106,7 @@ export default function LaborDayPopup() {
                     <span style={{ height: 1, flex: 1, background: '#D9CEB8' }} />
                   </div>
                   <Field label="Name"  ph="First and last"    val={name}  set={setName}  err={err && !name} />
-                  <Field label="Phone" type="tel"   ph="(803) 555-0180"   val={phone} set={setPhone} err={err && !phone} />
+                  <Field label="Phone" type="tel"   ph="(754) 667-9090"   val={phone} set={setPhone} err={err && !phone} />
                   <Field label="Email (optional)" type="email" ph="you@example.com" val={email} set={setEmail} />
                   <button onClick={submit} disabled={sending} className="w-full font-eyebrow font-light text-white hover:brightness-110 transition-all py-3 mt-1 disabled:opacity-60 disabled:cursor-default" style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0, border: 'none', cursor: sending ? 'default' : 'pointer', background: sendFailed ? '#9A2E22' : ACCENT }}>
                     {sending ? 'Sending…' : sendFailed ? "Couldn't send — try again" : 'Get my special offer'}
