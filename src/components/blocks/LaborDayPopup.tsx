@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { sendInquiry } from '../../lib/sendInquiry';
 
 const ACCENT = '#B05329';
-const DISMISSED_KEY = 'laborDayOfferDismissed';
 const SHOW_DELAY_MS = 15000;
 const PHONE_HREF = 'tel:+17546679090';
 const PHONE_DISPLAY = '(754) 667-9090';
@@ -30,15 +29,11 @@ export default function LaborDayPopup() {
   const [sendFailed, setSendFailed] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem(DISMISSED_KEY)) return;
     const timer = setTimeout(() => setOpen(true), SHOW_DELAY_MS);
     return () => clearTimeout(timer);
   }, []);
 
-  const dismiss = () => {
-    localStorage.setItem(DISMISSED_KEY, '1');
-    setOpen(false);
-  };
+  const dismiss = () => setOpen(false);
 
   useEffect(() => {
     if (!open) return;
@@ -54,7 +49,6 @@ export default function LaborDayPopup() {
     const ok = await sendInquiry('labor-day-offer', { name, phone, email });
     setSending(false);
     if (ok) {
-      localStorage.setItem(DISMISSED_KEY, '1');
       setDone(true);
     } else {
       setSendFailed(true);
