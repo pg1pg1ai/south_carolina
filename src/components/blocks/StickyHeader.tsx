@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import Button from '../primitives/Button';
+import ContactDropdown from './ContactDropdown';
 import { openBooking } from '../data/booking';
+import { CONTACT_PHONE_HREF, CONTACT_SMS_HREF } from '../../lib/contact';
 
 const openGallery = () => window.dispatchEvent(new CustomEvent('open-gallery'));
 
@@ -191,9 +193,10 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
           ))}
         </motion.nav>
 
-        {/* Book button */}
-        <motion.div className="hidden md:flex justify-end pointer-events-auto" style={isPage ? undefined : { opacity: bookOpacity }}>
-          <Button onClick={openBooking} variant={overDark ? 'ghost-light' : 'primary'} className="!py-2 !px-5 !min-h-0">
+        {/* Contact + Book buttons */}
+        <motion.div className="hidden md:flex justify-end items-center gap-3 pointer-events-auto" style={isPage ? undefined : { opacity: bookOpacity }}>
+          <ContactDropdown overDark={overDark} />
+          <Button onClick={openBooking} variant={overDark ? 'ghost-light' : 'primary'} className="!py-2 !px-5 !min-h-0 flex-shrink-0 whitespace-nowrap">
             Book
           </Button>
         </motion.div>
@@ -284,12 +287,15 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
                 </motion.a>
               ))}
               <motion.div
+                className="flex flex-wrap items-center gap-3 mt-5"
                 variants={{
                   open: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } },
                   closed: { opacity: 0, y: 10 },
                 }}
               >
-                <Button onClick={() => { setMenuOpen(false); openBooking(); }} variant="primary" className="self-start mt-5">Book a Stay</Button>
+                <Button onClick={() => { setMenuOpen(false); openBooking(); }} variant="primary">Book a Stay</Button>
+                <Button href={CONTACT_PHONE_HREF} variant="ghost-light" onClick={() => setMenuOpen(false)}>Call Us</Button>
+                <Button href={CONTACT_SMS_HREF} variant="ghost-light" onClick={() => setMenuOpen(false)}>Chat Us</Button>
               </motion.div>
             </motion.div>
           </>

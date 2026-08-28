@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { sendInquiry } from '../../lib/sendInquiry';
+import { CONTACT_PHONE_HREF, CONTACT_PHONE_DISPLAY } from '../../lib/contact';
 
 const ACCENT = '#B05329';
 const SHOW_DELAY_MS = 15000;
-const PHONE_HREF = 'tel:+17546679090';
-const PHONE_DISPLAY = '(754) 667-9090';
+const PHONE_HREF = CONTACT_PHONE_HREF;
+const PHONE_DISPLAY = CONTACT_PHONE_DISPLAY;
 
 function Field({ label, type, ph, val, set, err }: { label: string; type?: string; ph: string; val: string; set: (v: string) => void; err?: boolean }) {
   const cls = `w-full bg-boneWarm text-ink font-eyebrow font-light text-sm px-3 py-2.5 outline-none border transition-colors ${err ? 'border-signal' : 'border-divider focus:border-signal'}`;

@@ -26,6 +26,7 @@ export default function Button({ href, onClick, variant = 'primary', children, c
     return (
       <a
         href={href}
+        onClick={onClick}
         className={cls}
         target={newTab ? '_blank' : undefined}
         rel={newTab ? 'noopener noreferrer' : undefined}

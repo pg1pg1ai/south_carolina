@@ -1,0 +1,3 @@
+export const CONTACT_PHONE_HREF = 'tel:+17546679090';
+export const CONTACT_PHONE_DISPLAY = '(754) 667-9090';
+export const CONTACT_SMS_HREF = 'sms:+17546679090';
