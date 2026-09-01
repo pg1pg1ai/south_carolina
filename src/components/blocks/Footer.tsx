@@ -1,7 +1,7 @@
 import { Calendar } from 'lucide-react';
 import { openBooking } from '../data/booking';
 import Button from '../primitives/Button';
-import { CONTACT_PHONE_HREF, CONTACT_SMS_HREF } from '../../lib/contact';
+import { CONTACT_PHONE_HREF } from '../../lib/contact';
 
 // Monochrome brand glyphs — lucide-react doesn't ship brand/social icons, so
 // these are small self-contained filled-path SVGs (fill: currentColor).
@@ -87,7 +87,7 @@ export default function Footer() {
               Book Your Stay
             </Button>
             <Button href={CONTACT_PHONE_HREF} variant="ghost-light">Call Us</Button>
-            <Button href={CONTACT_SMS_HREF} variant="ghost-light">Text Us</Button>
+            <Button href="https://wa.me/17546679090" variant="ghost-light" newTab>Text Us</Button>
           </div>
         </div>
 

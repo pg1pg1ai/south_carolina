@@ -145,6 +145,7 @@ function Field({ label, type, ph, val, set, err, multiline }: { label: string; t
 
 function QuestionModal({ onClose }: { onClose: () => void }) {
   const [name, setName]         = useState('');
+  const [phone, setPhone]       = useState('');
   const [email, setEmail]       = useState('');
   const [question, setQuestion] = useState('');
   const [done, setDone]         = useState(false);
@@ -153,10 +154,10 @@ function QuestionModal({ onClose }: { onClose: () => void }) {
   const [sendFailed, setSendFailed] = useState(false);
 
   const submit = async () => {
-    if (!name || !email || !question) { setErr(true); setTimeout(() => setErr(false), 1200); return; }
+    if (!name || !phone || !email || !question) { setErr(true); setTimeout(() => setErr(false), 1200); return; }
     setSending(true);
     setSendFailed(false);
-    const ok = await sendInquiry('question', { name, email, question });
+    const ok = await sendInquiry('question', { name, phone, email, question });
     setSending(false);
     if (ok) { setDone(true); } else { setSendFailed(true); setTimeout(() => setSendFailed(false), 2500); }
   };
@@ -175,6 +176,7 @@ function QuestionModal({ onClose }: { onClose: () => void }) {
             <p className="font-eyebrow font-light text-ink2 mb-7" style={{ fontSize: 12, letterSpacing: '0.1em' }}>We respond within 24 hours.</p>
 
             <Field label="Your name"     ph="First name"        val={name}     set={setName}     err={err && !name} />
+            <Field label="Phone number"  type="tel" ph="+1 (___) ___-____" val={phone} set={setPhone} err={err && !phone} />
             <Field label="Email address" type="email" ph="you@example.com" val={email} set={setEmail} err={err && !email} />
             <Field label="Your question" ph="What would you like to know?" val={question} set={setQuestion} err={err && !question} multiline />
             <button onClick={submit} disabled={sending} className="w-full font-eyebrow font-light text-linen bg-signal hover:bg-signal2 transition-colors py-3 mt-1 disabled:opacity-60 disabled:cursor-default" style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0, border: 'none', cursor: sending ? 'default' : 'pointer', background: sendFailed ? '#9A2E22' : undefined }}>
@@ -192,6 +194,7 @@ function QuestionModal({ onClose }: { onClose: () => void }) {
 function CorpModal({ onClose }: { onClose: () => void }) {
   const [company, setCompany]   = useState('');
   const [name, setName]         = useState('');
+  const [phone, setPhone]       = useState('');
   const [email, setEmail]       = useState('');
   const [guests, setGuests]     = useState('');
   const [details, setDetails]   = useState('');
@@ -201,10 +204,10 @@ function CorpModal({ onClose }: { onClose: () => void }) {
   const [sendFailed, setSendFailed] = useState(false);
 
   const submit = async () => {
-    if (!company || !name || !email) { setErr(true); setTimeout(() => setErr(false), 1200); return; }
+    if (!company || !name || !phone || !email) { setErr(true); setTimeout(() => setErr(false), 1200); return; }
     setSending(true);
     setSendFailed(false);
-    const ok = await sendInquiry('corporate-quote', { company, name, email, guests, details });
+    const ok = await sendInquiry('corporate-quote', { company, name, phone, email, guests, details });
     setSending(false);
     if (ok) { setDone(true); } else { setSendFailed(true); setTimeout(() => setSendFailed(false), 2500); }
   };
@@ -227,6 +230,7 @@ function CorpModal({ onClose }: { onClose: () => void }) {
             <p className="font-eyebrow font-light text-ink2 mb-7" style={{ fontSize: 12, letterSpacing: '0.1em' }}>Full-property buyouts, team retreats, executive offsites.</p>
             <Field label="Company"        ph="Company name"      val={company} set={setCompany} err={err && !company} />
             <Field label="Your name"      ph="First and last"    val={name}    set={setName}    err={err && !name} />
+            <Field label="Phone number"   type="tel" ph="+1 (___) ___-____" val={phone} set={setPhone} err={err && !phone} />
             <Field label="Work email"     type="email" ph="you@company.com" val={email} set={setEmail} err={err && !email} />
             <Field label="Estimated guests" type="number" ph="e.g. 12" val={guests} set={setGuests} />
             <Field label="Tell us more"   ph="Dates, needs, questions…" val={details} set={setDetails} multiline />

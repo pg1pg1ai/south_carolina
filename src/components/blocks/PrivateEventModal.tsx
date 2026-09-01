@@ -25,6 +25,7 @@ export default function PrivateEventModal() {
   const [open, setOpen] = useState(false);
   const [company, setCompany] = useState('');
   const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [guests, setGuests] = useState('');
   const [details, setDetails] = useState('');
@@ -47,10 +48,10 @@ export default function PrivateEventModal() {
   }, [open]);
 
   const submit = async () => {
-    if (!company || !name || !email) { setErr(true); setTimeout(() => setErr(false), 1200); return; }
+    if (!company || !name || !phone || !email) { setErr(true); setTimeout(() => setErr(false), 1200); return; }
     setSending(true);
     setSendFailed(false);
-    const ok = await sendInquiry('private-event', { company, name, email, guests, details });
+    const ok = await sendInquiry('private-event', { company, name, phone, email, guests, details });
     setSending(false);
     if (ok) { setDone(true); } else { setSendFailed(true); setTimeout(() => setSendFailed(false), 2500); }
   };
@@ -88,6 +89,7 @@ export default function PrivateEventModal() {
                   <p className="font-eyebrow font-light text-ink2 mb-7" style={{ fontSize: 12, letterSpacing: '0.1em' }}>Full-property buyouts, team retreats, celebrations & events.</p>
                   <Field label="Company / Group" ph="Company or group name" val={company} set={setCompany} err={err && !company} />
                   <Field label="Your name"      ph="First and last"    val={name}    set={setName}    err={err && !name} />
+                  <Field label="Phone number"   type="tel" ph="+1 (___) ___-____" val={phone} set={setPhone} err={err && !phone} />
                   <Field label="Work email"     type="email" ph="you@company.com" val={email} set={setEmail} err={err && !email} />
                   <Field label="Estimated guests" type="number" ph="e.g. 40" val={guests} set={setGuests} />
                   <Field label="Tell us more"   ph="Dates, headcount, what you have in mind…" val={details} set={setDetails} multiline />

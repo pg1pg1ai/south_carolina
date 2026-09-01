@@ -210,29 +210,20 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
         </button>
       </div>
 
-      {/* View gallery — glass pill */}
+      {/* Contact Us — replaces the old "View gallery" glass pill */}
       {!isPage && (
-      <motion.a
-        href="#"
-        onClick={(e) => { e.preventDefault(); openGallery(); }}
-        className="hidden md:flex items-center eyebrow text-linen/90 hover:text-linen transition-colors pointer-events-auto"
+      <motion.div
+        className="hidden md:block pointer-events-auto"
         style={{
           opacity: galleryOpacity,
           position: 'absolute',
           right: 40,
           top: '50%',
           transform: 'translateY(-50%)',
-          backdropFilter: 'blur(14px)',
-          WebkitBackdropFilter: 'blur(14px)',
-          background: 'rgba(255,255,255,0.10)',
-          border: '1px solid rgba(255,255,255,0.18)',
-          borderRadius: '999px',
-          padding: '8px 20px',
-          textDecoration: 'none',
         }}
       >
-        View gallery
-      </motion.a>
+        <ContactDropdown overDark={overDark} />
+      </motion.div>
       )}
 
       <AnimatePresence>
