@@ -4,7 +4,6 @@ import { createPortal } from 'react-dom';
 import Button from '../primitives/Button';
 import { openBooking } from '../data/booking';
 import { sendInquiry } from '../../lib/sendInquiry';
-import { CONTACT_PHONE_HREF, CONTACT_SMS_HREF } from '../../lib/contact';
 
 interface Props {
   sub: string;
@@ -83,8 +82,6 @@ export default function FinalCtaImmersive({ sub, image }: Props) {
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
             <Button onClick={openBooking} variant="primary">Reserve Your Stay</Button>
-            <Button href={CONTACT_PHONE_HREF} variant="ghost-light" className="backdrop-blur-md">Call Us</Button>
-            <Button href={CONTACT_SMS_HREF} variant="ghost-light" className="backdrop-blur-md">Chat Us</Button>
             <Button onClick={() => setCorpOpen(true)} variant="ghost-light" className="backdrop-blur-md">Plan a Private Event</Button>
             <Button onClick={() => setQuestionOpen(true)} variant="ghost-light" className="backdrop-blur-md">Ask a Question</Button>
           </div>

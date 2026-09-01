@@ -295,7 +295,7 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
               >
                 <Button onClick={() => { setMenuOpen(false); openBooking(); }} variant="primary">Book a Stay</Button>
                 <Button href={CONTACT_PHONE_HREF} variant="ghost-light" onClick={() => setMenuOpen(false)}>Call Us</Button>
-                <Button href={CONTACT_SMS_HREF} variant="ghost-light" onClick={() => setMenuOpen(false)}>Chat Us</Button>
+                <Button href={CONTACT_SMS_HREF} variant="ghost-light" onClick={() => setMenuOpen(false)}>Text Us</Button>
               </motion.div>
             </motion.div>
           </>

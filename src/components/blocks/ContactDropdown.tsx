@@ -80,7 +80,7 @@ export default function ContactDropdown({ overDark, className }: { overDark: boo
             style={{ borderTop: '1px solid #D9CEB8' }}
           >
             <MessageCircle size={15} strokeWidth={1.8} className="text-signal" />
-            Chat Us
+            Text Us
           </a>
         </div>,
         document.body,
