@@ -169,13 +169,21 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
             history.replaceState(null, '', window.location.pathname);
           }}
         >
-          <motion.img
-            src="/logo.svg"
-            alt="Horizons Sandhills"
+          <motion.div
+            role="img"
+            aria-label="Horizons Sandhills"
             style={{
               height: 'clamp(26px, 2.2vw, 36px)',
-              width: 'auto',
-              filter: overDark ? 'brightness(0) invert(1)' : 'brightness(0)',
+              aspectRatio: '173.882 / 47.856',
+              backgroundColor: overDark ? '#B05329' : '#1F2420',
+              WebkitMaskImage: 'url(/logo.svg)',
+              maskImage: 'url(/logo.svg)',
+              WebkitMaskSize: 'contain',
+              maskSize: 'contain',
+              WebkitMaskRepeat: 'no-repeat',
+              maskRepeat: 'no-repeat',
+              WebkitMaskPosition: 'left center',
+              maskPosition: 'left center',
               opacity: isPage ? 1 : smallLogoOpacity,
             }}
           />

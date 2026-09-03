@@ -17,7 +17,7 @@ import VillaCascade from '../components/blocks/VillaCascade';
 // import GalleryMasonry from '../components/blocks/GalleryMasonry';
 // import ProofSocial from '../components/blocks/ProofSocial';
 // import NearbyGrid from '../components/blocks/NearbyGrid';
-// import FaqAccordion from '../components/blocks/FaqAccordion';
+import FaqAccordion from '../components/blocks/FaqAccordion';
 import FinalCtaImmersive from '../components/blocks/FinalCtaImmersive';
 import GettingHere from '../components/blocks/GettingHere';
 import Footer from '../components/blocks/Footer';
@@ -26,6 +26,7 @@ import PrivateEventModal from '../components/blocks/PrivateEventModal';
 import LaborDayPopup from '../components/blocks/LaborDayPopup';
 import { openBooking } from '../components/data/booking';
 import StackCard from '../components/primitives/StackCard';
+import RoundedEntry from '../components/primitives/RoundedEntry';
 
 
 export default function SandhillsLanding() {
@@ -272,6 +273,11 @@ export default function SandhillsLanding() {
             image={d.finalCta.image}
           />
         </StackCard>
+
+        {/* ── FAQ — cascades over the CTA (z-50), covered by Footer (z-60) ── */}
+        <RoundedEntry style={{ position: 'relative', zIndex: 55 }}>
+          <FaqAccordion items={d.faq} />
+        </RoundedEntry>
       </main>
 
       {/* Footer: z-index 60 — наезжает поверх WAITING */}

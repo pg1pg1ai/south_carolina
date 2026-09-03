@@ -62,6 +62,7 @@ directions[3], gallery[16], reviews[3], pressQuote, nearby[4], faq[7], finalCta
 | 200 | StickyHeader |
 | 100 | Mobile sticky booking bar (fixed bottom-0, hardcoded in SandhillsLanding) |
 | 60 | Footer (RoundedEntry z-60) |
+| 55 | RoundedEntry → FaqAccordion — must sit between 50 and 60 or it renders hidden under the still-sticky CTA |
 | 50 | StackCard → FinalCtaImmersive (`id="reserve"`) |
 | 40 | *(commented out — Worth It content)* |
 | 30 | *(commented out — Worth It ChapterOpener)* |
@@ -77,13 +78,14 @@ directions[3], gallery[16], reviews[3], pressQuote, nearby[4], faq[7], finalCta
 5. `<VillaCascade />` (z-20 wrapper)
 6. `<RoundedEntry z=20>` — LAND chapter: `ChapterOpener id="land"` + `LandStory` + `AtAGlance`
 7. `<StackCard z=50>` → `<FinalCtaImmersive />`
-8. `<Footer />` (z-60)
-9. Mobile sticky bar (fixed z-100)
+8. `<RoundedEntry z=55>` → `<FaqAccordion items={d.faq} />` — last section before the footer
+9. `<Footer />` (z-60)
+10. Mobile sticky bar (fixed z-100)
 
 **Commented out:**
 - `DayScenes`
 - `NearbyGrid`
-- Entire Worth It chapter: StackCard z-30 + RoundedEntry z-40 containing `DiningEditorial`, `MapBlock`, `GalleryMasonry`, `ProofSocial`, `FaqAccordion`
+- Entire Worth It chapter: StackCard z-30 + RoundedEntry z-40 containing `DiningEditorial`, `MapBlock`, `GalleryMasonry`, `ProofSocial`
 - Inside STAYS RoundedEntry: `IncludedList`, `ActivitiesGrid`, `NearbyGrid`
 
 ---

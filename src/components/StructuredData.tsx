@@ -131,58 +131,66 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'Can we bring our dog?',
+      name: 'What is Horizons Sandhills?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Dogs are welcome in three of our six Forest Villas for a one-time $75 cleaning fee. The House is not dog-friendly. Trails are all dog-friendly leashed.',
+        text: 'Horizons Sandhills is a private getaway surrounded by nature, designed for relaxing getaways, family trips, group stays, celebrations, and outdoor experiences. The resort combines comfortable accommodations with a private lake, and 20+ complimentary wellness, recreation, and sports amenities, trails, and plenty of forested space to enjoy the outdoors.',
       },
     },
     {
       '@type': 'Question',
-      name: 'What should I pack?',
+      name: 'How many people can stay at Horizons Sandhills?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: "Whatever you'd bring to a friend's lake house. A headlamp. Bug spray in summer. A sweater even in July — nights cool fast.",
+        text: 'Our 6 Forest Villas accommodate up to 4 guests each, and our Guest House accommodates up to 8 guests, for a total overnight capacity of 32 guests. We also have 16 RV hookups, so bringing RVs in maximizes the capacity up to 100 guests overnight.',
       },
     },
     {
       '@type': 'Question',
-      name: "How's cell reception?",
+      name: 'What amenities and activities are included with my stay?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Honest answer: patchy. Verizon works in about half the property. We have Wi-Fi in The House and at the sauna. The Forest Villas are intentionally offline.',
+        text: 'Guests have access to a wide range of resort amenities and recreational activities, including a private lake with swimming, fishing, kayaks, paddleboards, water bikes, wood-fired sauna, cold plunge, outdoor shower, lakeside gazebo and lounge area, beach volleyball field, beach soccer field, beach tennis field, badminton, table tennis, cornhole, walking and running trails, shared lounge area with a fireplace and a grilling area.',
       },
     },
     {
       '@type': 'Question',
-      name: 'When is the best time to visit Horizons Sandhills?',
+      name: 'Can I book Horizons Sandhills for a group?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'October–November for pine gold. March–April for bird migration. July–August for lake swimming. December–February is our quietest — and cheapest.',
+        text: 'Yes. We welcome family gatherings, friend groups, retreats, corporate groups, celebrations, and other private stays. Unlike smaller stays, group reservations can be booked year-round through our customer service team: +1 (754) 667-9090. To reserve the entire property just for your group, a reservation of 6 forest villas is required.',
       },
     },
     {
       '@type': 'Question',
-      name: "What's your cancellation policy?",
+      name: 'Can we host an event at Horizons Sandhills?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Full refund 14 days out. 50% refund 7–13 days. No refund inside 7 days.',
+        text: 'Yes. The property offers indoor and outdoor spaces suitable for private events and gatherings. Also, Horizons Sandhills does not have any neighbors or noise restrictions for group reservations.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Are kids welcome?',
+      name: 'Do you have an indoor event space?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Yes. The House sleeps families — four bedrooms, bunks in one. Forest Villas are couples-first but kids over ten are fine.',
+        text: 'Yes. We have two indoor event spaces: one with a professional kitchen and a bathroom for around 70 guests comfortably, and another one with a bathroom and for around 30 guests comfortably, with an adjacent lounge area, fireplace, and grilling area deck.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Can we host a wedding or retreat at Horizons Sandhills?',
+      name: 'Are pets allowed?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Yes — weddings up to 40, retreats and buyouts up to 20. We have a dedicated planner. Contact us to discuss your event.',
+        text: "Yes. Horizons Sandhills is pet-friendly. Guests may bring up to 3 pets per accommodation for a $60 pet fee per stay. For everyone's safety, we require that pets are leashed while in common areas.",
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Is there a manager on-site?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. Our property manager is available on-site 24/7 to assist guests throughout their stay.',
       },
     },
   ],

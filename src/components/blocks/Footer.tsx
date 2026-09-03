@@ -115,10 +115,22 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8">
           <a href="#" className="inline-flex items-center" aria-label="Horizons Sandhills">
-            <img
-              src="/logo.svg"
-              alt="Horizons Sandhills"
-              style={{ height: 32, width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }}
+            <div
+              role="img"
+              aria-label="Horizons Sandhills"
+              style={{
+                height: 32,
+                aspectRatio: '173.882 / 47.856',
+                backgroundColor: '#B05329',
+                WebkitMaskImage: 'url(/logo.svg)',
+                maskImage: 'url(/logo.svg)',
+                WebkitMaskSize: 'contain',
+                maskSize: 'contain',
+                WebkitMaskRepeat: 'no-repeat',
+                maskRepeat: 'no-repeat',
+                WebkitMaskPosition: 'left center',
+                maskPosition: 'left center',
+              }}
             />
           </a>
 
