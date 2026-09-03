@@ -226,6 +226,18 @@ commented out and never reach the page.
 - `public/map.svg` is an earlier, now-**unreferenced** vector version of the same
   map (recolored to our tokens); safe to delete or keep as a source.
 
+## Other live route: `/blog` and `/blog/:slug`
+
+- **Pages:** `src/pages/BlogIndex.tsx` (grid), `src/pages/ArticlePage.tsx` (article)
+- **Data:** `src/components/data/blog.ts`, `blogArticles` array — each entry's `cover`
+  field is used both as the index-grid card thumbnail and the article page's
+  full-bleed masthead; body `image` blocks are inline content photos.
+- No nav link yet — reachable only by direct URL (`/blog`, `/blog/<slug>`).
+
+| Article | Cover | Inline image |
+|---|---|---|
+| Why Outdoor Hospitality Is Redefining Luxury | `/images/blog/outdoor-hospitality-cover.webp` (png sibling alongside) | `/images/blog/lake-sauna-inline.webp` (jpeg sibling alongside) |
+
 ---
 
 ## Dead / not currently rendered

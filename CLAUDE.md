@@ -24,7 +24,7 @@ npm run preview    # preview production build
 - **Tailwind CSS 3.4** — design tokens in `tailwind.config.ts`; raw `rgba`/hex used in inline styles for motion values only
 - **Lucide React** — utility icons (chevrons, close, etc.)
 - **@phosphor-icons/react** — decorative duotone icons in HeroImmersive GLANCE block only; use `Icon` suffix (e.g. `TreeEvergreenIcon`)
-- **React Router 7** — two routes: `/` → `SandhillsLanding`, `/stays/:slug` → `StayDetail`
+- **React Router 7** — five routes: `/` → `SandhillsLanding`, `/stays/:slug` → `StayDetail`, `/guide` → `GuestGuide`, `/blog` → `BlogIndex`, `/blog/:slug` → `ArticlePage`
 
 ---
 

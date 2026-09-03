@@ -194,10 +194,11 @@ export default function HeroImmersive({ primaryCta, secondaryCta }: Props) {
         {/* ── Hero content — exits at natural scroll speed ── */}
         <motion.div style={{ position: 'absolute', inset: 0, zIndex: 2, y: heroY, opacity: heroOpacity }}>
 
-          {/* Mobile logo — top left, immediately visible */}
-          <div
-            role="img"
-            aria-label="Horizons Sandhills"
+          {/* Mobile logo — top left, immediately visible. Unfiltered, same
+              native two-tone treatment as the desktop hero logo. */}
+          <img
+            src="/logo.svg"
+            alt="Horizons Sandhills"
             className="md:hidden"
             style={{
               position: 'absolute',
@@ -205,16 +206,7 @@ export default function HeroImmersive({ primaryCta, secondaryCta }: Props) {
               left: 24,
               zIndex: 12,
               height: 44,
-              aspectRatio: '173.882 / 47.856',
-              backgroundColor: '#B05329',
-              WebkitMaskImage: 'url(/logo.svg)',
-              maskImage: 'url(/logo.svg)',
-              WebkitMaskSize: 'contain',
-              maskSize: 'contain',
-              WebkitMaskRepeat: 'no-repeat',
-              maskRepeat: 'no-repeat',
-              WebkitMaskPosition: 'left center',
-              maskPosition: 'left center',
+              width: 'auto',
               pointerEvents: 'none',
             }}
           />

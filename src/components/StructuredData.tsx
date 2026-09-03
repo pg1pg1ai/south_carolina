@@ -1,3 +1,5 @@
+import type { BlogArticle } from './data/blog';
+
 const SITE_URL = 'https://horizonssandhills.com';
 
 const resort = {
@@ -221,6 +223,28 @@ export function StayBreadcrumb({ name, slug }: { name: string; slug: string }) {
       { '@type': 'ListItem', position: 2, name: 'Stays', item: `${SITE_URL}/#stays` },
       { '@type': 'ListItem', position: 3, name, item: `${SITE_URL}/stays/${slug}` },
     ],
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+/* BlogPosting schema for article pages */
+export function BlogPostingSchema({ article }: { article: BlogArticle }) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: article.title,
+    description: article.excerpt,
+    image: `${SITE_URL}${article.cover}`,
+    datePublished: article.date,
+    url: `${SITE_URL}/blog/${article.slug}`,
+    author: { '@type': 'Organization', name: 'Horizons Sandhills' },
+    publisher: { '@type': 'Organization', name: 'Horizons Sandhills', url: SITE_URL },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/blog/${article.slug}` },
   };
   return (
     <script

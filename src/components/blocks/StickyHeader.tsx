@@ -175,7 +175,7 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
             style={{
               height: 'clamp(26px, 2.2vw, 36px)',
               aspectRatio: '173.882 / 47.856',
-              backgroundColor: overDark ? '#B05329' : '#1F2420',
+              backgroundColor: '#B05329',
               WebkitMaskImage: 'url(/logo.svg)',
               maskImage: 'url(/logo.svg)',
               WebkitMaskSize: 'contain',
