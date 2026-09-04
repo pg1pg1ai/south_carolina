@@ -45,31 +45,6 @@ const SOCIALS = [
   { name: 'Reddit', href: 'https://www.reddit.com/user/HorizonsGetaway/', Icon: RedditIcon },
 ] as const;
 
-// Two nav columns — every link targets a real block anchor on the page,
-// in the order the blocks appear while scrolling.
-type FooterLink = { label: string; href?: string; onClick?: () => void };
-
-const cols: { title: string; links: FooterLink[] }[] = [
-  {
-    title: 'Explore',
-    links: [
-      { label: 'The Forest Villa', href: '/#stays' },
-      { label: 'Step Inside', href: '/#inside' },
-      { label: 'On The Property', href: '/#land' },
-      { label: 'Nearby', href: '/#nearby' },
-    ],
-  },
-  {
-    title: 'Plan Your Stay',
-    links: [
-      { label: 'Check Availability', onClick: openBooking },
-      { label: 'Getting Here', href: '/#getting-here' },
-      { label: 'Private Events', href: '/#events' },
-      { label: 'Contact Us', href: '/#reserve' },
-    ],
-  },
-];
-
 export default function Footer() {
   return (
     <footer data-zone="dark" className="bg-nightWarm text-linen/70 pt-16 pb-10 px-6">
@@ -89,28 +64,6 @@ export default function Footer() {
             <Button href={CONTACT_PHONE_HREF} variant="ghost-light">Call Us</Button>
             <Button href="https://wa.me/17546679090" variant="ghost-light" newTab>Text Us</Button>
           </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 sm:gap-[74px] mb-12 max-w-3xl">
-          {cols.map((col) => (
-            <div key={col.title}>
-              <p className="eyebrow text-linen/40 mb-5">{col.title}</p>
-              {/* Desktop: links flow into 2 columns of 2; mobile keeps a single stack */}
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-y-3 md:gap-x-6 list-none p-0 m-0">
-                {col.links.map((l) => (
-                  <li key={l.label}>
-                    <a
-                      href={l.href ?? '#'}
-                      onClick={l.onClick ? (e) => { e.preventDefault(); l.onClick!(); } : undefined}
-                      className="text-linen/60 text-sm hover:text-linen transition-colors focus-visible:outline-none focus-visible:text-linen whitespace-nowrap"
-                    >
-                      {l.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8">

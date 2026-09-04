@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import StickyHeader from '../components/blocks/StickyHeader';
 import Footer from '../components/blocks/Footer';
 import BookingModal from '../components/blocks/BookingModal';
@@ -30,15 +31,23 @@ export default function BlogIndex() {
 
       <div className="max-w-content mx-auto px-4 md:px-8 pt-40 pb-20 md:pb-28">
         <div className="mb-12 md:mb-16">
-          <p className="font-eyebrow text-ink2/60 text-xs uppercase tracking-widest mb-3">
-            Journal
-          </p>
+          <Link
+            to="/"
+            className="font-eyebrow text-ink2/60 hover:text-ink2 text-xs uppercase tracking-widest transition-colors"
+          >
+            ← Horizons Sandhills
+          </Link>
+
           <h1
-            className="font-display font-light text-ink text-[clamp(32px,5vw,56px)]"
+            className="mt-6 font-display font-light text-ink text-[clamp(32px,5vw,56px)]"
             style={{ letterSpacing: '-0.025em', fontVariationSettings: '"SOFT" 40, "opsz" 72' }}
           >
-            Stories from the Sandhills
+            The Horizons Journal
           </h1>
+          <p className="mt-4 max-w-text text-ink2 text-[15px] md:text-lg">
+            We explore hospitality, leisure, travel, and the changing business and culture of
+            getting away.
+          </p>
         </div>
 
         {sorted.length === 0 ? (

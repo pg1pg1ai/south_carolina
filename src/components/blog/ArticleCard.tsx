@@ -17,7 +17,7 @@ export default function ArticleCard({ article }: { article: BlogArticle }) {
     >
       {/* Matches the cover's native ratio — cover art has the title baked into
           the pixels, so cropping to a different ratio truncates the text. */}
-      <div className="overflow-hidden" style={{ aspectRatio: '1953 / 805' }}>
+      <div className="overflow-hidden" style={{ aspectRatio: '16 / 9' }}>
         <img
           src={article.cover}
           alt={article.title}

@@ -61,6 +61,13 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
   const navX             = useTransform(scrollY, [0, trigger], [32, 0]);
   const galleryOpacity   = useTransform(scrollY, [0, trigger * 0.35], [1, 0]);
   const bookOpacity      = useTransform(scrollY, [trigger * 0.4, trigger], [0, 1]);
+  // Framer Motion's opacity:0 doesn't disable clicks — these two elements
+  // occupy overlapping screen space at different scroll ranges, so each must
+  // go pointer-events:none while faded out or it silently steals clicks
+  // meant for the other (e.g. the invisible Book button intercepting clicks
+  // aimed at the visible Contact Us pill).
+  const galleryPointerEvents = useTransform(galleryOpacity, (v) => (v > 0.05 ? 'auto' : 'none'));
+  const bookPointerEvents    = useTransform(bookOpacity, (v) => (v > 0.05 ? 'auto' : 'none'));
   const headerPb         = useTransform(scrollY, [0, trigger], [0, 40]);
   const largLogoH        = useTransform(scrollY, [0, trigger * 0.5], [64, 32]);
   const smallLogoOpacity = useTransform(scrollY, [trigger * 0.15, trigger * 0.5], [0, 1]);
@@ -202,7 +209,7 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
         </motion.nav>
 
         {/* Contact + Book buttons */}
-        <motion.div className="hidden md:flex justify-end items-center gap-3 pointer-events-auto" style={isPage ? undefined : { opacity: bookOpacity }}>
+        <motion.div className="hidden md:flex justify-end items-center gap-3 pointer-events-auto" style={isPage ? undefined : { opacity: bookOpacity, pointerEvents: bookPointerEvents }}>
           <ContactDropdown overDark={overDark} />
           <Button onClick={openBooking} variant={overDark ? 'ghost-light' : 'primary'} className="!py-2 !px-5 !min-h-0 flex-shrink-0 whitespace-nowrap">
             Book
@@ -224,6 +231,7 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
         className="hidden md:block pointer-events-auto"
         style={{
           opacity: galleryOpacity,
+          pointerEvents: galleryPointerEvents,
           position: 'absolute',
           right: 40,
           top: '50%',
