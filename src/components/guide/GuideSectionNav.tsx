@@ -4,6 +4,7 @@ import { useReducedMotion } from 'framer-motion';
 const NAV_ITEMS = [
   { id: 'start', label: 'Start Here' },
   { id: 'arrival', label: 'Arrival' },
+  { id: 'know-before', label: 'Know Before' },
   { id: 'access', label: 'Cabin' },
   { id: 'amenities', label: 'Amenities' },
   { id: 'house-rules', label: 'Rules' },

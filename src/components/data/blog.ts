@@ -59,4 +59,44 @@ export const blogArticles: BlogArticle[] = [
       },
     ],
   },
+  {
+    slug: 'why-people-dont-remember-hotels-they-remember-experiences',
+    title: "Why People Don't Remember Hotels. They Remember Experiences",
+    excerpt:
+      'Comfort and reliable service matter, but on their own they rarely make a trip unforgettable — the moments guests actually remember come from somewhere else.',
+    cover: '/images/blog/why-people-dont-remember-hotels-cover.webp',
+    date: '2026-09-08',
+    body: [
+      {
+        type: 'paragraph',
+        text: 'The value of a trip lies not in the number of amenities or the size of the room, but in the memories people create together. It can be as simple as everyone gathering around the fire after a long day, when a casual conversation becomes the part of the trip they remember most.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Comfort and reliable service are undoubtedly important, but on their own, they are not enough to make a destination unforgettable.',
+      },
+      { type: 'heading', text: 'Hospitality Beyond Accommodation' },
+      {
+        type: 'paragraph',
+        text: 'At Horizons Sandhills, we believe a successful retreat should give guests an opportunity to slow down, connect with their surroundings, and spend meaningful time with others. This creates a clear contrast between everyday life and time away. For this reason, we believe architecture, comfort, and landscape should work in harmony rather than exist as separate elements of the experience.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The surrounding environment has a powerful influence on the memories people create. A private terrace overlooking the forest offers an entirely different atmosphere from a balcony facing a busy city.',
+      },
+      {
+        type: 'paragraph',
+        text: 'We believe amenities reveal their full potential when they invite guests to participate in the experience. What begins as an activity can continue into a conversation, a shared routine, or simply more time in each other’s company.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Our approach is to create the conditions for memorable stories to emerge without trying to control every moment. Guests may leave with photographs, but what makes them remember the place are the feelings connected to those images: comfort, freedom, closeness, and time spent together.',
+      },
+      { type: 'heading', text: 'What Guests Take With Them' },
+      {
+        type: 'paragraph',
+        text: 'It’s not the destination itself that determines which moments guests will remember, but rather the conditions under which the likelihood of experiencing those emotions is heightened. This is what we aim to create at Horizons Sandhills: an environment where amenities, design, and atmosphere come together in harmony, so even the most ordinary moments of a trip can become unforgettable. This is precisely where the value of hospitality lies: in creating an environment that allows guests to experience a story they’ll take home with them and remember forever.',
+      },
+    ],
+  },
 ];

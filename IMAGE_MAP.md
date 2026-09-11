@@ -207,7 +207,7 @@ commented out and never reach the page.
 | Hero background (lake, barrel sauna, dock at golden hour) | `/images/guide/hero-sandhills-lake.webp` (1700px, q82; png sibling alongside) | `guideData.hero.photo` |
 | Arrival section aerial property map | `/images/guide/property-map.webp` (2230×1026, q82, 459 KB) | `MAP_SRC` in `src/components/guide/PropertyMapPanel.tsx` |
 | Amenities featured card (sauna interior) | `/images/guide/sauna.webp` (1600×893, q85) | `guideData.amenities.featured.photo` |
-| Cabin Access slideshow, 5 slides | `/images/guide/slide-1.webp` … `slide-5.webp` (1600×893, q85) | `guideData.access.slides[].src` |
+| Cabin Access walkthrough video | `/images/guide/access-walkthrough.mp4` (640×1138, portrait, muted, ~4.9 MB) + poster `/images/guide/access-walkthrough-poster.webp` | `guideData.access.video` |
 
 - The property map is **generated**, not hand-drawn. Its source was `map.pdf`, a
   Google MyMaps export whose label layer sat separately from the satellite
@@ -221,8 +221,11 @@ commented out and never reach the page.
 - The guide's sauna photo is now its **own** file. It was previously
   `/images/villa/04_Sauna/1.webp`, shared with the Forest Villa's Sauna room
   gallery; the two no longer move together.
-- Slides are placeholders pending real cabin-access photos. Swapping them is a
-  data edit in `guideData.access.slides` — captions live there too.
+- The walkthrough video is a real guest-facing clip (converted from a phone-shot
+  `.MOV` with ffmpeg — H.264, muted, no audio track — plus a poster frame pulled
+  with ffmpeg and converted to webp with sharp). It's portrait (9:16), rendered by
+  `AccessWalkthrough.tsx` at `max-w-[340px]`, not full column width. Swapping it
+  is a data edit in `guideData.access.video`.
 - `public/map.svg` is an earlier, now-**unreferenced** vector version of the same
   map (recolored to our tokens); safe to delete or keep as a source.
 
@@ -286,6 +289,8 @@ detail page, which IS a live route).
 
 Not urgent to clean up, but don't be surprised finding these — they're not "the
 right file that's just misnamed," they're simply unused:
+`public/images/guide/slide-1.webp` … `slide-5.webp` (superseded by the
+`access-walkthrough` video above),
 `qGBP68_WYGc6iPdsayAE4_EqosgDho.{jpg,webp}`, `tQujJzxhwVManasll_NAR_ggQ1SVvm.{jpg,webp}`,
 `Sandhills logo.svg`, `Sandhills_.{png,webp}`, `postmark.{jpg,webp}`,
 `public/images/press/conde-nast.*`, `public/images/nearby/Great_PeeDee_River.*`

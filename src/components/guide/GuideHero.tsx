@@ -61,7 +61,7 @@ export default function GuideHero() {
               <div className="guide-card h-full rounded-2xl border border-linen/20 bg-night/25 p-5" style={{ backdropFilter: 'blur(8px)' }}>
                 <p className="eyebrow text-linen/60">{c.label}</p>
                 <p className="mt-2 font-display font-light text-linen text-2xl">{c.value}</p>
-                <p className="mt-1 text-linen/60 text-[13px] leading-snug">{c.note}</p>
+                {c.note && <p className="mt-1 text-linen/60 text-[13px] leading-snug">{c.note}</p>}
                 {c.support && (
                   <div className="no-print mt-3 flex gap-2">
                     <a href={telHref} className="eyebrow rounded-full border border-linen/40 px-4 py-2 text-linen hover:bg-linen/10 transition-colors">Call</a>

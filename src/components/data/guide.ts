@@ -62,7 +62,7 @@ export const guideData = {
     title: 'Horizons Sandhills',
     sub: 'Everything you need for your stay, gathered in one place.',
     cards: {
-      checkIn: { label: 'Check-in', value: '2:00 PM', note: 'Check-in instructions will be sent to you.' },
+      checkIn: { label: 'Check-in', value: '2:00 PM', note: '' },
       checkOut: { label: 'Checkout', value: '12:00 PM', note: 'Late checkout available on request.' },
       support: { label: 'Guest Support', note: 'We are available around the clock.' },
     },
@@ -78,8 +78,8 @@ export const guideData = {
   arrival: {
     steps: [
       'Follow your GPS to the property address. Set navigation before you leave — cell service gets weaker as you approach.',
-      'Watch for the marked entrance on the right. The sign is subtle, so slow down after the last farmhouse.',
-      'Approach the gate slowly. Use the code sent in your arrival message.',
+      'Park in the designated parking space.',
+      'Guests are not permitted to drive on premises.',
       'Continue past the gate to your assigned parking lot.',
       'Please avoid driving on unmarked paths. They are for walking only.',
     ],
@@ -140,23 +140,33 @@ export const guideData = {
     { id: 'mt-prong-creek', label: 'Mt Prong Creek', category: 'nature', x: 52.78, y: 12.59 },
   ] as MapPin[],
 
+  knowBeforeVisit: [
+    {
+      title: 'Security Deposit',
+      note: 'A $300 refundable security deposit is required and will be returned within 5–10 business days after check-out, provided no damages inflicted by guests are found during the property inspection.',
+    },
+    {
+      title: 'ID Requirement',
+      note: 'A valid physical ID is required at check-in for reservation verification and waiver signatures.',
+    },
+    {
+      title: 'Pets',
+      note: 'Max. 3 per cabin with a $60 pet fee per cabin. Pets must be leashed in common areas. Please inform us in advance if you are bringing any. To ensure guest comfort and prevent snakes and pests from entering the facility, the territory is treated with a repellent — if consumed by pets, it may induce sickness.',
+    },
+  ],
+
   access: {
     steps: [
-      { title: 'Enter through the front gate', body: 'Follow Woodmen Rd to the property entrance. Signage marks the turn in.' },
-      { title: 'Find your assigned cabin', body: 'Each cabin is clearly numbered, with parking nearby.' },
-      { title: 'Use your keypad or key', body: 'The 4-digit code or key location was sent in your arrival message.' },
+      { title: 'Enter the premises and park in the designated parking space', body: 'Follow Woodmen Rd to the property entrance. Signage marks the turn in.' },
+      { title: 'Our manager Daniil will help with navigating your forest villa', body: 'Use the luggage carts to help you pull your suitcases to your forest villa.' },
+      { title: 'Use your keypad or key', body: 'The 4-digit code will be shared with you by Daniil at check-in.' },
       { title: 'Enter, breathe, settle in', body: 'Take a moment on the porch. Let the trip melt off your shoulders.' },
       { title: 'Lock behind you', body: 'When leaving, close all doors and lock up.' },
     ],
-    // Placeholder imagery pending real cabin-access photos. Captions are matched
-    // to the five written steps above and are safe to reword when they land.
-    slides: [
-      { src: '/images/guide/slide-1.webp', caption: 'The turn off Woodmen Rd — watch for the sign after the last farmhouse.' },
-      { src: '/images/guide/slide-2.webp', caption: 'The front gate. Use the code from your arrival message.' },
-      { src: '/images/guide/slide-3.webp', caption: 'Past the gate, continue to your assigned parking area.' },
-      { src: '/images/guide/slide-4.webp', caption: 'Your cabin is numbered, with parking close by.' },
-      { src: '/images/guide/slide-5.webp', caption: 'Keypad by the door — then settle in.' },
-    ],
+    video: {
+      src: '/images/guide/access-walkthrough.mp4',
+      poster: '/images/guide/access-walkthrough-poster.webp',
+    },
     trouble: {
       title: 'Trouble with the code?',
       body: 'Do not force the lock. Wait thirty seconds and try again. Still stuck? Call Guest Support and we will help right away.',
@@ -184,13 +194,30 @@ export const guideData = {
       { name: 'Outdoor Furniture', note: 'Lounge chairs, dining set, and hammocks.', icon: 'armchair' },
       { name: 'EV Charger', note: 'Level 2 charger at Parking A.', icon: 'plug-zap' },
     ],
+
+    saunaGuidelines: {
+      hours: '5:00 PM – 10:00 PM, daily',
+      heatingNote: 'To avoid unnecessary heating, we prepare the sauna only when guests would like to use it. Please let our team know if you are interested, and we will be happy to get it ready.',
+      sharedNote: 'During regular operating hours, the sauna is a shared amenity available to all guests staying at the property. We kindly ask everyone to be respectful of other guests and help us create a relaxing atmosphere for all.',
+      privateNote: 'If you would like to enjoy the sauna exclusively for yourself, your family, or your group outside of regular operating hours, private sessions may be available. Please speak with a manager in advance to arrange a private booking.',
+      privateSession: { label: 'Private Session', duration: 'Up to 2 hours', price: '$250', note: 'Subject to availability' },
+      extension: { label: 'Extension', duration: 'Additional 2 hours', price: '$250', note: 'Subject to availability' },
+      safety: [
+        'Use the sauna at your own risk.',
+        'Stay hydrated and take breaks as needed.',
+        'Children must be supervised by an adult at all times.',
+        'Please respect other guests and keep noise to a minimum.',
+        'No glass containers inside the sauna.',
+        'Management reserves the right to limit sauna access due to weather, maintenance, or safety considerations.',
+      ],
+    },
   },
 
   rules: [
     { title: 'Quiet Hours', note: '10 PM to 8 AM. We share the woods with neighbors and wildlife.' },
-    { title: 'Smoking & Vaping', note: 'Not permitted anywhere on the property.' },
+    { title: 'Indoor Smoking & Vaping', note: 'Not permitted anywhere on the property. $350 fine per violation.' },
     { title: 'Visitors', note: 'Overnight guests are limited to booked occupancy.' },
-    { title: 'Pets', note: 'Please confirm the pet policy with Guest Support before arriving.' },
+    { title: 'Grill', note: 'Please clean the grill after use to avoid a $50 cleaning fee deducted from your deposit.' },
     { title: 'Parties & Events', note: 'Not permitted without prior written approval.' },
     { title: 'Parking', note: 'Use your assigned parking area only.' },
     { title: 'Firepit', note: 'Fully extinguish before leaving it unattended.' },

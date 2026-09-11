@@ -4,6 +4,7 @@ import StayDetail from './pages/StayDetail';
 import GuestGuide from './pages/GuestGuide';
 import BlogIndex from './pages/BlogIndex';
 import ArticlePage from './pages/ArticlePage';
+import PreviewHomepageWidgets from './pages/PreviewHomepageWidgets';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/guide" element={<GuestGuide />} />
         <Route path="/blog" element={<BlogIndex />} />
         <Route path="/blog/:slug" element={<ArticlePage />} />
+        <Route path="/preview/homepage-widgets" element={<PreviewHomepageWidgets />} />
       </Routes>
     </BrowserRouter>
   );

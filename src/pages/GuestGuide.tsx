@@ -9,7 +9,7 @@ import GuideSection from '../components/guide/GuideSection';
 import CopyButton from '../components/guide/CopyButton';
 import GuideCard from '../components/guide/GuideCard';
 import PropertyMap, { ParkingCards, ParkingNotes } from '../components/guide/PropertyMap';
-import AccessSlideshow from '../components/guide/AccessSlideshow';
+import AccessWalkthrough from '../components/guide/AccessWalkthrough';
 import PlaceList, { PlaceRow } from '../components/guide/PlaceList';
 import Button from '../components/primitives/Button';
 import RevealOnScroll from '../components/primitives/RevealOnScroll';
@@ -132,7 +132,22 @@ export default function GuestGuide() {
           </RevealOnScroll>
         </GuideSection>
 
-        <GuideSection id="access" index="03" eyebrow="Cabin Access" title="Getting into your cabin"
+        <GuideSection id="know-before" index="03" eyebrow="Know Before You Visit" title="A few things to plan around"
+          sub="Deposit, ID, and pet policy — all in one place, so nothing is a surprise at check-in.">
+          <RevealOnScroll variant="stagger-parent" className="grid gap-3 sm:grid-cols-3">
+            {g.knowBeforeVisit.map((item, i) => (
+              <RevealOnScroll variant="stagger-child" key={item.title}>
+                <div className="guide-card h-full rounded-xl border border-divider bg-bone p-5">
+                  <p className="numeral text-signal">{String(i + 1).padStart(2, '0')}</p>
+                  <p className="mt-2 font-eyebrow text-sm text-ink">{item.title}</p>
+                  <p className="mt-1 text-[13px] leading-snug text-ink2">{item.note}</p>
+                </div>
+              </RevealOnScroll>
+            ))}
+          </RevealOnScroll>
+        </GuideSection>
+
+        <GuideSection id="access" index="04" eyebrow="Cabin Access" title="Getting into your forest villa"
           sub="From your car to the porch in five steps. Read them first, then swipe through the photos.">
           <div className="grid gap-10 lg:grid-cols-2">
             <RevealOnScroll>
@@ -149,19 +164,19 @@ export default function GuestGuide() {
               </ol>
             </RevealOnScroll>
             <RevealOnScroll delay={0.15}>
-              <AccessSlideshow />
-              <div className="guide-card mt-4 rounded-2xl border border-signal/30 bg-signal/5 p-5">
-                <p className="font-eyebrow text-sm text-ink">{g.access.trouble.title}</p>
-                <p className="mt-1.5 text-[14px] leading-relaxed text-ink2">{g.access.trouble.body}</p>
-                <a href={telHref} className="no-print eyebrow mt-3 inline-block rounded-full bg-signal px-5 py-2.5 text-linen hover:bg-signal2 transition-colors">
-                  Call Guest Support
-                </a>
-              </div>
+              <AccessWalkthrough />
             </RevealOnScroll>
           </div>
+          <RevealOnScroll className="guide-card mt-8 rounded-2xl border border-signal/30 bg-signal/5 p-5">
+            <p className="font-eyebrow text-sm text-ink">{g.access.trouble.title}</p>
+            <p className="mt-1.5 text-[14px] leading-relaxed text-ink2">{g.access.trouble.body}</p>
+            <a href={telHref} className="no-print eyebrow mt-3 inline-block rounded-full bg-signal px-5 py-2.5 text-linen hover:bg-signal2 transition-colors">
+              Call Guest Support
+            </a>
+          </RevealOnScroll>
         </GuideSection>
 
-        <GuideSection id="amenities" index="04" eyebrow="Amenities" title="Using the property" band
+        <GuideSection id="amenities" index="05" eyebrow="Amenities" title="Using the property" band
           sub="Cedar barrel sauna, firepit, grill, EV chargers, and the small comforts that make the stay easy.">
           {/* Featured: sauna */}
           <RevealOnScroll className="guide-card overflow-hidden rounded-2xl border border-divider bg-white/40 lg:grid lg:grid-cols-2">
@@ -196,9 +211,50 @@ export default function GuestGuide() {
               );
             })}
           </RevealOnScroll>
+
+          {/* Sauna guidelines */}
+          <RevealOnScroll className="guide-card mt-4 rounded-2xl border border-divider bg-white/40 p-6 md:p-8">
+            <p className="eyebrow text-signal">Sauna Guidelines</p>
+            <h3 className="display-h2 mt-2 text-ink text-[clamp(20px,2.4vw,28px)]">Wood-fired, and shared with care</h3>
+
+            <div className="mt-6 grid gap-6 md:grid-cols-2">
+              <div>
+                <p className="font-eyebrow text-sm text-ink">Regular Sauna Hours</p>
+                <p className="mt-1 text-[14px] leading-relaxed text-ink2">{g.amenities.saunaGuidelines.hours}</p>
+                <p className="mt-2 text-[13px] leading-relaxed text-ink2">{g.amenities.saunaGuidelines.heatingNote}</p>
+
+                <p className="mt-5 font-eyebrow text-sm text-ink">Shared Sauna Experience</p>
+                <p className="mt-1 text-[13px] leading-relaxed text-ink2">{g.amenities.saunaGuidelines.sharedNote}</p>
+              </div>
+
+              <div>
+                <p className="font-eyebrow text-sm text-ink">Private Sauna Sessions</p>
+                <p className="mt-1 text-[13px] leading-relaxed text-ink2">{g.amenities.saunaGuidelines.privateNote}</p>
+
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                  {[g.amenities.saunaGuidelines.privateSession, g.amenities.saunaGuidelines.extension].map((s) => (
+                    <div key={s.label} className="rounded-xl border border-divider bg-bone p-4">
+                      <p className="eyebrow text-ink2">{s.label}</p>
+                      <p className="mt-2 font-display font-light text-ink text-xl">{s.price}</p>
+                      <p className="mt-1 text-[12px] leading-snug text-ink2">{s.duration} · {s.note}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 border-t border-divider pt-5">
+              <p className="font-eyebrow text-sm text-ink">Safety & Courtesy</p>
+              <ul className="mt-2 grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
+                {g.amenities.saunaGuidelines.safety.map((s) => (
+                  <li key={s} className="text-[13px] leading-snug text-ink2">{s}</li>
+                ))}
+              </ul>
+            </div>
+          </RevealOnScroll>
         </GuideSection>
 
-        <GuideSection id="house-rules" index="05" eyebrow="House Rules" title="A calm place for everyone"
+        <GuideSection id="house-rules" index="06" eyebrow="House Rules" title="A calm place for everyone"
           sub="A short list. Please treat the cabin the way you would want the next guest to treat it.">
           <RevealOnScroll variant="stagger-parent" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {g.rules.map((r, i) => (
@@ -213,17 +269,17 @@ export default function GuestGuide() {
           </RevealOnScroll>
         </GuideSection>
 
-        <GuideSection id="food" index="06" eyebrow="Local Guide" title="Nearby, curated" band
+        <GuideSection id="food" index="07" eyebrow="Local Guide" title="Nearby, curated" band
           sub="Where we send friends. One pick per category — tap “Show all” for the full list.">
           <PlaceList categories={g.localGuide} />
         </GuideSection>
 
-        <GuideSection id="things-to-do" index="07" eyebrow="Things To Do" title="Explore the Sandhills"
+        <GuideSection id="things-to-do" index="08" eyebrow="Things To Do" title="Explore the Sandhills"
           sub="Trails, parks, and quiet detours worth the drive.">
           <PlaceList categories={g.thingsToDo} />
         </GuideSection>
 
-        <GuideSection id="medical" index="08" eyebrow="Medical" title="Care nearby" band sub={g.medical.note}>
+        <GuideSection id="medical" index="09" eyebrow="Medical" title="Care nearby" band sub={g.medical.note}>
           <RevealOnScroll className="mb-4">
             <div className="no-print flex gap-2">
               <a href="tel:911" className="eyebrow rounded-full bg-signal px-5 py-2.5 text-linen hover:bg-signal2 transition-colors">Call 911</a>
@@ -235,7 +291,7 @@ export default function GuestGuide() {
           </RevealOnScroll>
         </GuideSection>
 
-        <GuideSection id="support" index="09" eyebrow="Help" title="Questions & guest support"
+        <GuideSection id="support" index="10" eyebrow="Help" title="Questions & guest support"
           sub="Common questions. If yours is not here, we are one tap away.">
           <div className="grid gap-10 lg:grid-cols-[1fr_360px]">
             <RevealOnScroll>
