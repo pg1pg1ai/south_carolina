@@ -235,11 +235,13 @@ commented out and never reach the page.
 - **Data:** `src/components/data/blog.ts`, `blogArticles` array — each entry's `cover`
   field is used both as the index-grid card thumbnail and the article page's
   full-bleed masthead; body `image` blocks are inline content photos.
-- No nav link yet — reachable only by direct URL (`/blog`, `/blog/<slug>`).
+- Linked from the main nav as "Blog" (`StickyHeader.tsx`, both `landingLinks` and
+  `pageLinks`), in addition to being reachable directly at `/blog`, `/blog/<slug>`.
 
 | Article | Cover | Inline image |
 |---|---|---|
 | Why Outdoor Hospitality Is Redefining Luxury | `/images/blog/outdoor-hospitality-cover.webp` (png sibling alongside) | `/images/blog/lake-sauna-inline.webp` (jpeg sibling alongside) |
+| Why People Don't Remember Hotels. They Remember Experiences | `/images/blog/why-people-dont-remember-hotels-cover.webp` (png sibling alongside) — like the article above, the headline is baked into the image itself | `/images/blog/why-people-dont-remember-hotels-inline.webp` (jpeg sibling alongside) |
 
 ---
 

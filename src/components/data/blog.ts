@@ -97,6 +97,12 @@ export const blogArticles: BlogArticle[] = [
         type: 'paragraph',
         text: 'It’s not the destination itself that determines which moments guests will remember, but rather the conditions under which the likelihood of experiencing those emotions is heightened. This is what we aim to create at Horizons Sandhills: an environment where amenities, design, and atmosphere come together in harmony, so even the most ordinary moments of a trip can become unforgettable. This is precisely where the value of hospitality lies: in creating an environment that allows guests to experience a story they’ll take home with them and remember forever.',
       },
+      {
+        type: 'image',
+        src: '/images/blog/why-people-dont-remember-hotels-inline.webp',
+        alt: 'Guest relaxing on a private terrace at Horizons Sandhills, coffee in hand',
+        caption: 'A quiet morning on the terrace — the kind of moment guests remember long after checkout.',
+      },
     ],
   },
 ];
