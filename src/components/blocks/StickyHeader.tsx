@@ -14,7 +14,6 @@ const landingLinks: NavLink[] = [
   { label: 'Stays',    href: '#stays' },
   { label: 'The Land', href: '#land' },
   { label: 'Gallery',  href: '#', onClick: openGallery },
-  { label: 'Guide',    href: '/guide' },
   { label: 'Blog',     href: '/blog' },
   { label: 'Reserve',  href: '#reserve' },
 ];
@@ -23,7 +22,6 @@ const pageLinks: NavLink[] = [
   { label: 'Stays',    href: '/#stays' },
   { label: 'The Land', href: '/#land' },
   { label: 'Gallery',  href: '/#gallery' },
-  { label: 'Guide',    href: '/guide' },
   { label: 'Blog',     href: '/blog' },
   { label: 'Reserve',  href: '/#reserve' },
 ];
