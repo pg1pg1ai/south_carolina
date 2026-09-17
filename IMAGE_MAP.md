@@ -242,6 +242,8 @@ commented out and never reach the page.
 |---|---|---|
 | Why Outdoor Hospitality Is Redefining Luxury | `/images/blog/outdoor-hospitality-cover.webp` (png sibling alongside) | `/images/blog/lake-sauna-inline.webp` (jpeg sibling alongside) |
 | Why People Don't Remember Hotels. They Remember Experiences | `/images/blog/why-people-dont-remember-hotels-cover.webp` (png sibling alongside) — like the article above, the headline is baked into the image itself | `/images/blog/why-people-dont-remember-hotels-inline.webp` (jpeg sibling alongside) |
+| Building More Than Resorts: Creating Places People Return To | `/images/blog/building-more-than-resorts-cover.webp` (png sibling alongside), headline baked in | `/images/blog/building-more-than-resorts-inline.webp` (jpeg sibling alongside) — same lakeshore/sauna scene as `lake-sauna-inline`, different crop |
+| Why Nature Is Becoming the New Wellness Center | `/images/blog/why-nature-is-becoming-the-new-wellness-center-cover.webp` (png sibling alongside), headline baked in | — none |
 
 ---
 

@@ -105,4 +105,115 @@ export const blogArticles: BlogArticle[] = [
       },
     ],
   },
+  {
+    slug: 'building-more-than-resorts-creating-places-people-return-to',
+    title: 'Building More Than Resorts: Creating Places People Return To',
+    excerpt:
+      'People don’t return to the places that impressed them most. They return to the ones that became part of their memories, relationships, and traditions.',
+    cover: '/images/blog/building-more-than-resorts-cover.webp',
+    date: '2026-09-17',
+    body: [
+      { type: 'heading', text: 'Emotional Connection Drives Return Visits' },
+      {
+        type: 'paragraph',
+        text: 'There is a meaningful difference between places that impress people and places that remain in their memories. This distinction rarely depends on scale, level of comfort, architecture, or the number of guests a destination can accommodate.',
+      },
+      {
+        type: 'paragraph',
+        text: 'We believe people return to places that have become an inseparable part of their memories, relationships, and traditions.',
+      },
+      { type: 'heading', text: 'A Clear Philosophy Comes First' },
+      {
+        type: 'paragraph',
+        text: 'At Horizons Sandhills, a clear philosophy guides every decision, from the overall layout of the property to the smallest details inside each room. The hospitality concepts that guests find most compelling are often built around adventure, wellness, culture, or nature. Their outward appearance may evolve, but the central idea should remain consistent. Without this foundation, a property can become little more than a collection of attractive buildings and comfortable amenities without ever developing a distinct identity.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Design also influences how people behave. A space that brings guests naturally together can turn an ordinary evening into something they begin to associate with the destination itself. Over time, those repeated moments can become part of what draws them back.',
+      },
+      {
+        type: 'paragraph',
+        text: 'We do not see good design as the way to control the guest experience. We create the conditions for connection, movement, and rest.',
+      },
+      {
+        type: 'paragraph',
+        text: 'In outdoor hospitality, nature should remain the main attraction. Constantly adding elaborate features can distract from the very reason guests chose the destination in the first place. Buildings should frame the surrounding environment, while activities should help people experience it more fully. At Horizons Sandhills, we approach development by asking how each new addition can bring guests closer to the environment rather than distract from it. The goal is to expand what people can experience while preserving the character of the landscape that brought them here in the first place.',
+      },
+      {
+        type: 'paragraph',
+        text: 'For us, a destination that gives people the freedom to shape their own experience allows guests to develop personal habits and traditions connected to the place. Over time, this can encourage them to return. A favorite spot by the lake or an evening spent beside the same firepit can gradually become part of a guest’s personal connection to the destination. A successful hospitality business is not simply a place people visit. It is an experience they carry with them, one that gives them a reason to return.',
+      },
+      { type: 'heading', text: 'Building Long-Term Value' },
+      {
+        type: 'image',
+        src: '/images/blog/building-more-than-resorts-inline.webp',
+        alt: 'Cedar barrel sauna, dock, and canoes on the lakeshore at Horizons Sandhills',
+        caption: 'The lakeshore at Horizons Sandhills — a favorite spot many guests come back to.',
+      },
+      {
+        type: 'paragraph',
+        text: 'We see creating a place where people will want to return not as the result of a single element or design decision, but rather as a long-term process that never ends. It requires continuous attention to how the experience can evolve, improve, and offer guests something they have not encountered before. The goal is not to recreate the same emotions with every visit, but to build on them, giving returning guests new reasons to connect with the place and allowing that connection to become even stronger over time.',
+      },
+    ],
+  },
+  {
+    slug: 'why-nature-is-becoming-the-new-wellness-center',
+    title: 'Why Nature Is Becoming the New Wellness Center',
+    excerpt:
+      'Wellness doesn’t always need to be a program on a schedule. In the right setting, it’s simply the freedom to choose how you spend your day.',
+    cover: '/images/blog/why-nature-is-becoming-the-new-wellness-center-cover.webp',
+    date: '2026-09-14',
+    body: [
+      {
+        type: 'paragraph',
+        text: 'At Horizons Sandhills, we believe that in the hospitality industry, the most important aspect is the environment itself, not the list of programs offered. Fitness centers, spas, treatment rooms, and scheduled activities serve as tools that help people enhance their experience, but they are not the only factors that attract guests.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Sometimes, people derive the most enjoyment from their stay when there are fewer demands placed on them, when they spend time outdoors, and when they are free to decide for themselves how to spend their leisure time. A healthy lifestyle doesn’t always need to be added to a stay as a separate activity. In the right setting, it can already be an integral part of it.',
+      },
+      { type: 'heading', text: 'The Environment Changes the Rhythm' },
+      {
+        type: 'paragraph',
+        text: 'One of the core ideas behind Horizons Sandhills is that the surroundings directly influence how guests spend their free time. The morning doesn’t have to start with traffic jams, crowded streets, or a strict schedule. A walk around the grounds doesn’t require a specific destination. An afternoon by the lake can last as long as anyone wishes.',
+      },
+      {
+        type: 'paragraph',
+        text: 'For us, this change in the rhythm of life is of great importance. It gives people the opportunity to decide for themselves whether they want to be active, socialize with others, or simply enjoy some solitude. Leisure ceases to be about conforming to someone else’s idea of well-being and becomes, rather, the freedom to find one’s own rhythm.',
+      },
+      {
+        type: 'paragraph',
+        text: 'We believe that when physical activity is an integral part of the vacation destination itself, it begins to be perceived in a completely different way. Guests should be given the choice of which activity they prefer that day - whether it’s a ride on an electric bike, a kayaking trip on the lake, or simply a walk in the fresh air. This way, the experience doesn’t become just another workout - there are no goals to strive for - but rather an opportunity to spend time in comfort, exactly as you wish.',
+      },
+      {
+        type: 'paragraph',
+        text: 'For us, this distinction is very important. People often come on vacation because they want to take a break from their routine. It is precisely this comfort that makes this freedom possible. Hospitality in nature allows you to be active without feeling like it’s just another obligation.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Being close to nature doesn’t have to mean sacrificing comfort. At Horizons Sandhills, the Forest Villas offer guests a modern, secluded space while allowing them to enjoy the proximity of the lake and the forest. Guests are provided with a wide range of services, from active recreation on electric bikes to relaxing saunas with a view of the lake.',
+      },
+      {
+        type: 'paragraph',
+        text: 'For us, comfort is what makes this kind of freedom possible. Our goal is not to complicate your stay so that it feels more “natural,” but rather to allow you to immerse yourself in the natural environment and freely choose how you spend your vacation without imposing our own rules.',
+      },
+      { type: 'heading', text: 'Wellness Through Choice' },
+      {
+        type: 'paragraph',
+        text: 'We believe that wellness isn’t so much about activities as it is about having a choice. One guest might want to start the day early and spend most of their time outdoors. Others might prefer to take their time over breakfast, sit by the lake for hours, and join the others around the campfire in the evening. A group can spend the weekend together, even though not every member will follow exactly the same schedule.',
+      },
+      {
+        type: 'paragraph',
+        text: 'We believe that a vacation destination should allow room for such differences. Instead of dictating to guests what their vacation should look like, it can give them enough freedom to define it for themselves.',
+      },
+      {
+        type: 'paragraph',
+        text: 'For us, the future of wellness in the hospitality industry lies not only in expanding the range of amenities and programs, but also in creating an environment where guests can spend their time differently than they would at home. We believe that the surrounding amenities and comfort are not separate components of our project, but an integral part of the guest experience and an opportunity offered to every guest.',
+      },
+      {
+        type: 'paragraph',
+        text: 'It is in this direction, in our opinion, that nature-based hospitality can develop: not by turning nature into just another amenity, but by allowing the environment itself to guide guests on how to spend their leisure time.',
+      },
+    ],
+  },
 ];
