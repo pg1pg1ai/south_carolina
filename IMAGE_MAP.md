@@ -207,7 +207,7 @@ commented out and never reach the page.
 | Hero background (lake, barrel sauna, dock at golden hour) | `/images/guide/hero-sandhills-lake.webp` (1700px, q82; png sibling alongside) | `guideData.hero.photo` |
 | Arrival section aerial property map | `/images/guide/property-map.webp` (2230×1026, q82, 459 KB) | `MAP_SRC` in `src/components/guide/PropertyMapPanel.tsx` |
 | Amenities featured card (sauna interior) | `/images/guide/sauna.webp` (1600×893, q85) | `guideData.amenities.featured.photo` |
-| Cabin Access walkthrough video | `/images/guide/access-walkthrough.mp4` (640×1138, portrait, muted, ~4.9 MB) + poster `/images/guide/access-walkthrough-poster.webp` | `guideData.access.video` |
+| How-to videos (8) | `/videos/<name>.mp4` + `/videos/<name>-poster.webp` — see the video table below | `guideVideos` in `src/components/data/guide.ts` |
 
 - The property map is **generated**, not hand-drawn. Its source was `map.pdf`, a
   Google MyMaps export whose label layer sat separately from the satellite
@@ -221,11 +221,35 @@ commented out and never reach the page.
 - The guide's sauna photo is now its **own** file. It was previously
   `/images/villa/04_Sauna/1.webp`, shared with the Forest Villa's Sauna room
   gallery; the two no longer move together.
-- The walkthrough video is a real guest-facing clip (converted from a phone-shot
-  `.MOV` with ffmpeg — H.264, muted, no audio track — plus a poster frame pulled
-  with ffmpeg and converted to webp with sharp). It's portrait (9:16), rendered by
-  `AccessWalkthrough.tsx` at `max-w-[340px]`, not full column width. Swapping it
-  is a data edit in `guideData.access.video`.
+### Guide how-to videos (`public/videos/`)
+
+Phone-shot clips from the client, each opening on a branded title card. Every one
+is portrait 9:16, 720×1280, H.264 **with audio** (they carry spoken instructions),
+converted with ffmpeg at `-crf 30 -preset slow -b:a 80k -movflags +faststart`.
+The poster is a frame grabbed at 1s, 480px wide, webp q78 — the title card, so
+posters are self-labelling.
+
+| Key in `guideVideos` | Files | Shown on |
+|---|---|---|
+| `keypad` | `keypad.mp4` / `-poster.webp` | Cabin Access, right column (`guideData.access.video`) |
+| `curtains` | `curtains.mp4` / `-poster.webp` | Amenities → villa → Sleeping Area |
+| `firepit` | `firepit.mp4` / `-poster.webp` | Amenities → villa → Outside Your Forest Villa |
+| `grill` | `grill.mp4` / `-poster.webp` | same group |
+| `ebikes` | `e-bikes.mp4` / `-poster.webp` | same group |
+| `deckUmbrella` | `deck-umbrella.mp4` / `-poster.webp` | same group |
+| `pelletGrill` | `pellet-grill.mp4` / `-poster.webp` | Amenities → lounge deck → Shared Lounge Deck |
+| — | `retractable-awning.mp4` / `-poster.webp` | **not referenced** — converted and kept, but the client's revision list didn't include it |
+
+- `firepit.mp4` is the former `/images/guide/access-walkthrough.mp4` (muted, no
+  audio track), moved and renamed when the keypad video took its place in the
+  Cabin Access section.
+- Attach a video to any amenity line by adding `video: '<key>'` to that item in
+  `guideData.amenities.*.groups[].items[]`; `AmenityBlock.tsx` collects them into
+  a tile row under the list. `VideoTile.tsx` renders poster-first and only loads
+  the mp4 when a guest taps play.
+- The raw `.MOV` originals live in `video-sources/` at the repo root, which is
+  **gitignored** — they total ~620 MB and must stay out of `public/`, or Vite
+  copies them into every build.
 - `public/map.svg` is an earlier, now-**unreferenced** vector version of the same
   map (recolored to our tokens); safe to delete or keep as a source.
 

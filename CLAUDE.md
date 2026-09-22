@@ -96,21 +96,31 @@ directions[3], gallery[16], reviews[3], pressQuote, nearby[4], faq[7], finalCta
 Copy and structured content live in `src/components/data/guide.ts`; the
 components under `src/components/guide/` stay presentational.
 
-Nine sections, numbered `01`–`09` via `GuideSection`'s `index` prop, mirrored in
+Ten sections, numbered `01`–`10` via `GuideSection`'s `index` prop, mirrored in
 `GuideSectionNav`'s `NAV_ITEMS`. **Both lists must stay in sync** — the nav's
 IntersectionObserver looks sections up by `id`:
 
 | # | id | Notes |
 |---|-----|-------|
 | 01 | `start` | 4 `GuideCard`s with alternating green/orange accent bars |
-| 02 | `arrival` | Steps + parking A–D cards + `PropertyMapPanel` |
-| 03 | `access` | `AccessSlideshow` (placeholder photos) |
-| 04 | `amenities` | Featured sauna + 5 icon cards |
-| 05 | `house-rules` | |
-| 06 | `food` | `PlaceList` + `DistanceChip` |
-| 07 | `things-to-do` | `PlaceList` + `DistanceChip` |
-| 08 | `medical` | Also the target of the hero's Emergency quick action |
-| 09 | `support` | FAQ + farewell |
+| 02 | `arrival` | Steps (incl. the gate code) + parking A–D cards + `PropertyMapPanel` |
+| 03 | `know-before` | Deposit, ID, pets — 3 numbered cards |
+| 04 | `access` | 5 steps + `AccessWalkthrough` (the keypad video) |
+| 05 | `amenities` | 4 `AmenityBlock`s + the sauna — see below |
+| 06 | `house-rules` | 9 numbered cards |
+| 07 | `food` | `PlaceList` + `DistanceChip` |
+| 08 | `things-to-do` | `PlaceList` + `DistanceChip` |
+| 09 | `medical` | Also the target of the hero's Emergency quick action |
+| 10 | `support` | FAQ + farewell |
+
+**Amenities (05)** runs in the order the client set, top to bottom: the forest
+villa (`amenities.villa`), the water (`amenities.water`), then the featured sauna
+card + `saunaGuidelines`, then the lounge deck (`amenities.loungeDeck`), then the
+sports area (`amenities.sports`). The four data blocks share the `AmenityBlockData`
+shape and all render through `AmenityBlock.tsx`; each block is groups of either
+`items[]` (bulleted) or `paras[]` (prose), plus an optional `safety[]` list.
+Attach a how-to video to any item with `video: '<key>'` — see `IMAGE_MAP.md` for
+the video table and the conversion recipe.
 
 **`PropertyMapPanel`** is the interactive map: a static aerial with zoom, pan,
 five category filters, ~36 pins, and a jump-to-spot list. Pin positions come from

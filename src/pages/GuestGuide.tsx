@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Printer, Umbrella, Utensils, Flame, Armchair, PlugZap } from 'lucide-react';
+import { Printer } from 'lucide-react';
 import StickyHeader from '../components/blocks/StickyHeader';
 import Footer from '../components/blocks/Footer';
 import BookingModal from '../components/blocks/BookingModal';
@@ -10,18 +10,11 @@ import CopyButton from '../components/guide/CopyButton';
 import GuideCard from '../components/guide/GuideCard';
 import PropertyMap, { ParkingCards, ParkingNotes } from '../components/guide/PropertyMap';
 import AccessWalkthrough from '../components/guide/AccessWalkthrough';
+import AmenityBlock from '../components/guide/AmenityBlock';
 import PlaceList, { PlaceRow } from '../components/guide/PlaceList';
 import Button from '../components/primitives/Button';
 import RevealOnScroll from '../components/primitives/RevealOnScroll';
 import { guideData as g, mapsDir, telHref, smsHref, GUIDE_PHONE_DISPLAY } from '../components/data/guide';
-
-const AMENITY_ICONS = {
-  umbrella: Umbrella,
-  utensils: Utensils,
-  flame: Flame,
-  armchair: Armchair,
-  'plug-zap': PlugZap,
-} as const;
 
 export default function GuestGuide() {
   useEffect(() => {
@@ -148,7 +141,7 @@ export default function GuestGuide() {
         </GuideSection>
 
         <GuideSection id="access" index="04" eyebrow="Cabin Access" title="Getting into your forest villa"
-          sub="From your car to the porch in five steps. Read them first, then swipe through the photos.">
+          sub="From your car to the porch in five steps. Read them first, then watch a tutorial on how to use a keypad to your forest villa.">
           <div className="grid gap-10 lg:grid-cols-2">
             <RevealOnScroll>
               <ol className="space-y-6">
@@ -177,9 +170,15 @@ export default function GuestGuide() {
         </GuideSection>
 
         <GuideSection id="amenities" index="05" eyebrow="Amenities" title="Using the property" band
-          sub="Cedar barrel sauna, firepit, grill, EV chargers, and the small comforts that make the stay easy.">
+          sub="Cedar barrel sauna, firepit, grill, EV chargers, and the small comforts that make the stay easy, fun, and comfortable.">
+          {/* 1 — The villa, with the how-to videos for what's in and around it */}
+          <AmenityBlock block={g.amenities.villa} />
+
+          {/* 2 — The water, with the sauna nested inside it */}
+          <AmenityBlock block={g.amenities.water} className="mt-4" />
+
           {/* Featured: sauna */}
-          <RevealOnScroll className="guide-card overflow-hidden rounded-2xl border border-divider bg-white/40 lg:grid lg:grid-cols-2">
+          <RevealOnScroll className="guide-card mt-4 overflow-hidden rounded-2xl border border-divider bg-white/40 lg:grid lg:grid-cols-2">
             <img src={g.amenities.featured.photo} alt="Cedar barrel sauna interior" className="h-64 w-full object-cover lg:h-full" />
             <div className="p-6 md:p-8">
               <p className="eyebrow text-signal">{g.amenities.featured.kicker}</p>
@@ -194,22 +193,6 @@ export default function GuestGuide() {
                 ))}
               </div>
             </div>
-          </RevealOnScroll>
-
-          {/* Smaller amenity cards */}
-          <RevealOnScroll variant="stagger-parent" className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {g.amenities.cards.map((c) => {
-              const Icon = AMENITY_ICONS[c.icon as keyof typeof AMENITY_ICONS];
-              return (
-                <RevealOnScroll variant="stagger-child" key={c.name}>
-                  <div className="guide-card h-full rounded-xl border border-divider bg-white/40 p-4">
-                    <Icon size={18} strokeWidth={1.4} className="text-ink2" />
-                    <p className="mt-3 font-eyebrow text-sm text-ink">{c.name}</p>
-                    <p className="mt-1 text-[13px] leading-snug text-ink2">{c.note}</p>
-                  </div>
-                </RevealOnScroll>
-              );
-            })}
           </RevealOnScroll>
 
           {/* Sauna guidelines */}
@@ -252,6 +235,12 @@ export default function GuestGuide() {
               </ul>
             </div>
           </RevealOnScroll>
+
+          {/* 3 — The lounge deck */}
+          <AmenityBlock block={g.amenities.loungeDeck} className="mt-4" />
+
+          {/* 4 — The sports area */}
+          <AmenityBlock block={g.amenities.sports} className="mt-4" />
         </GuideSection>
 
         <GuideSection id="house-rules" index="06" eyebrow="House Rules" title="A calm place for everyone"

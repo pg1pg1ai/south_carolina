@@ -27,6 +27,49 @@ export interface GuideCategory {
 
 export type MapCategory = 'stays' | 'parking' | 'amenities' | 'service' | 'nature';
 
+// How-to videos shot by the client. Sources are the untracked .MOV originals in
+// video-sources/; the web copies here are 720x1280 H.264 with audio — see IMAGE_MAP.md.
+export const guideVideos = {
+  keypad: { src: '/videos/keypad.mp4', poster: '/videos/keypad-poster.webp', title: 'How to use the front door keypad' },
+  curtains: { src: '/videos/curtains.mp4', poster: '/videos/curtains-poster.webp', title: 'How to use the curtains' },
+  firepit: { src: '/videos/firepit.mp4', poster: '/videos/firepit-poster.webp', title: 'How to use the fire pit' },
+  grill: { src: '/videos/grill.mp4', poster: '/videos/grill-poster.webp', title: 'How to use the grill' },
+  ebikes: { src: '/videos/e-bikes.mp4', poster: '/videos/e-bikes-poster.webp', title: 'How to use the e-bike' },
+  deckUmbrella: { src: '/videos/deck-umbrella.mp4', poster: '/videos/deck-umbrella-poster.webp', title: 'How to use the deck umbrella' },
+  pelletGrill: { src: '/videos/pellet-grill.mp4', poster: '/videos/pellet-grill-poster.webp', title: 'How to use the pellet grill' },
+} as const;
+
+export type VideoKey = keyof typeof guideVideos;
+
+/** One line in an amenity list. `video` attaches a how-to tile under the list. */
+export interface AmenityItem {
+  text: string;
+  video?: VideoKey;
+}
+
+export interface AmenityGroup {
+  title: string;
+  /** Sentence above the list. */
+  intro?: string;
+  items?: AmenityItem[];
+  /** Prose-only groups use paras instead of items. */
+  paras?: string[];
+  /** Sentence below the list. */
+  outro?: string;
+  /** Callout card under the group, e.g. the Lounge Deck's free private reservation. */
+  highlight?: { label: string; value: string; note: string };
+}
+
+export interface AmenityBlockData {
+  kicker: string;
+  title: string;
+  sub: string;
+  intro?: string;
+  groups: AmenityGroup[];
+  note?: string;
+  safety?: string[];
+}
+
 export interface MapPin {
   id: string;
   label: string;
@@ -80,7 +123,7 @@ export const guideData = {
       'Follow your GPS to the property address. Set navigation before you leave — cell service gets weaker as you approach.',
       'Park in the designated parking space.',
       'Guests are not permitted to drive on premises.',
-      'Continue past the gate to your assigned parking lot.',
+      'Continue past the gate to your assigned parking lot. The gate code is 6619.',
       'Please avoid driving on unmarked paths. They are for walking only.',
     ],
     parking: [
@@ -163,10 +206,7 @@ export const guideData = {
       { title: 'Enter, breathe, settle in', body: 'Take a moment on the porch. Let the trip melt off your shoulders.' },
       { title: 'Lock behind you', body: 'When leaving, close all doors and lock up.' },
     ],
-    video: {
-      src: '/images/guide/access-walkthrough.mp4',
-      poster: '/images/guide/access-walkthrough-poster.webp',
-    },
+    video: 'keypad' as VideoKey,
     trouble: {
       title: 'Trouble with the code?',
       body: 'Do not force the lock. Wait thirty seconds and try again. Still stuck? Call Guest Support and we will help right away.',
@@ -174,6 +214,220 @@ export const guideData = {
   },
 
   amenities: {
+    // Four blocks, in the order the client asked for: the villa, the water
+    // (sauna included), the lounge deck, then the sports area.
+    villa: {
+      kicker: 'The Forest Villa',
+      title: "What's in Your Forest Villa",
+      sub: 'Everything you need for a comfortable stay',
+      groups: [
+        {
+          title: 'Kitchenette',
+          intro: 'Your Forest Villa includes a fully equipped kitchenette with:',
+          items: [
+            { text: 'Nespresso coffee machine with milk frother' },
+            { text: 'Complimentary Nespresso coffee capsules — 1 capsule per adult guest, per night of the reservation, replenished daily' },
+            { text: 'Complimentary Fiji water' },
+            { text: 'Sea salt and pepper grinders' },
+            { text: 'Olive oil' },
+            { text: 'Honey and sugar' },
+            { text: 'Premium SMEG kitchenware' },
+            { text: 'Utensils' },
+            { text: 'Dishes and glassware' },
+            { text: 'Microwave' },
+            { text: 'Full-size refrigerator' },
+          ],
+        },
+        {
+          title: 'Sleeping Area',
+          items: [
+            { text: 'King-size bed' },
+            { text: 'Queen-size sofa bed' },
+            { text: 'Additional bedding for the queen-size sofa bed is stored in the lower compartments of the king bed' },
+            { text: 'Automatic curtains', video: 'curtains' },
+            { text: 'Robe for each adult guest' },
+          ],
+        },
+        {
+          title: 'Bathroom',
+          items: [
+            { text: 'Complimentary toiletries' },
+            { text: 'Hairdryer' },
+            { text: 'Clothing steamer' },
+          ],
+        },
+        {
+          title: 'Additional In-Villa Amenities',
+          intro: 'For your convenience, the villa also includes:',
+          items: [
+            { text: 'Flashlight' },
+            { text: '2 helmets' },
+            { text: 'Dog bowl for your pet' },
+            { text: 'Bug zapper' },
+            { text: '2 umbrellas' },
+            { text: 'Marshall speaker' },
+          ],
+        },
+        {
+          title: 'Outside Your Forest Villa',
+          intro: 'Each Forest Villa also includes access to:',
+          items: [
+            { text: 'Private fire pit', video: 'firepit' },
+            { text: 'Grill', video: 'grill' },
+            { text: 'E-bikes', video: 'ebikes' },
+            { text: 'Deck umbrella', video: 'deckUmbrella' },
+            { text: 'Cornhole game' },
+          ],
+        },
+      ],
+      note: 'Please return all provided items to the villa after use and leave outdoor equipment in its designated area.',
+    } as AmenityBlockData,
+
+    water: {
+      kicker: 'The Water',
+      title: 'Lake & Lounge Guidelines',
+      sub: 'Relax, explore, and share the lake with care',
+      groups: [
+        {
+          title: 'Lake Activities',
+          intro: 'Guests are welcome to enjoy a variety of activities at the lake, including:',
+          items: [
+            { text: 'Kayaks' },
+            { text: 'Paddleboards' },
+            { text: 'Water bikes' },
+            { text: 'Fishing' },
+            { text: 'Swimming' },
+            { text: 'Sauna' },
+          ],
+        },
+        {
+          title: 'Recreation Equipment',
+          paras: [
+            'To make sure all guests have an opportunity to enjoy the lake, kayaks, paddleboards, and water bikes may be used for up to 1 hour at a time.',
+            'After your session, please return the equipment to its designated area and make it available for other guests.',
+            'If no other guests are waiting, you are welcome to use the equipment again.',
+          ],
+        },
+        {
+          title: 'Shared Lounge Area',
+          paras: [
+            'The lakeside lounge and relaxation area is a shared amenity for all guests staying at the property.',
+            'The area includes outdoor lounge furniture and spaces designed for relaxing and enjoying the lake. We kindly ask guests to be considerate of others and avoid reserving furniture or shared spaces when they are not actively being used.',
+          ],
+        },
+        {
+          title: 'Fishing & Swimming',
+          paras: [
+            'Fishing and swimming are available to property guests during their stay. Guests are encouraged to bring their own fishing rods and bait if willing to fish.',
+            'Please be mindful of other guests using the lake and maintain a safe distance from kayaks, paddleboards, water bikes, and fishing areas.',
+          ],
+        },
+      ],
+      safety: [
+        'Use the lake, swimming areas, and recreational equipment at your own risk.',
+        'Children must be supervised by an adult at all times.',
+        'Life jackets should be worn while using kayaks, paddleboards, and water bikes.',
+        'Please return all recreational equipment after use.',
+        'Do not leave equipment unattended in the water.',
+        'Please respect other guests and keep noise to a reasonable level.',
+        'No glass containers near or on the water.',
+        'Please keep the lake and lounge areas clean and dispose of trash properly.',
+        'Management reserves the right to limit lake or equipment access due to weather, maintenance, water conditions, or safety considerations.',
+      ],
+    } as AmenityBlockData,
+
+    loungeDeck: {
+      kicker: 'The Lounge Deck',
+      title: 'Lounge Deck Guidelines',
+      sub: 'Gather, grill, and relax with care',
+      groups: [
+        {
+          title: 'Shared Lounge Deck',
+          intro: 'The Lounge Deck is a shared amenity available to all guests staying at the property. The deck includes:',
+          items: [
+            { text: 'Fireplace' },
+            { text: 'Large grill' },
+            { text: 'Pellet grill', video: 'pelletGrill' },
+            { text: 'Lounge seating' },
+          ],
+          outro: 'We kindly ask guests to be considerate of others and share the space so everyone has an opportunity to enjoy it.',
+        },
+        {
+          title: 'Private Group Reservations',
+          paras: [
+            'Groups of 10 or more guests may reserve the Lounge Deck exclusively for their group at no additional charge.',
+            'Please notify the property manager in advance so a complimentary reservation can be arranged.',
+            'Outside of a reserved private session, the Lounge Deck remains a shared space available to all property guests.',
+          ],
+          highlight: {
+            label: 'Complimentary Private Reservation',
+            value: 'Up to 4 hours',
+            note: 'Groups of 10+ · Subject to availability',
+          },
+        },
+        {
+          title: 'Grills & Fireplace',
+          paras: [
+            'Guests are welcome to use the fireplace, large grill, and pellet grill during their stay.',
+            'Please use all equipment responsibly and follow any operating instructions provided. After use, please leave the grilling and seating areas clean and ready for the next guests.',
+          ],
+        },
+      ],
+      safety: [
+        'Use the fireplace and grills responsibly and at your own risk.',
+        'Children must be supervised by an adult around the fireplace and cooking equipment.',
+        'Never leave an active fire or grill unattended.',
+        'Please keep flammable items away from the fireplace and grills.',
+        'Please respect other guests and keep noise to a reasonable level.',
+        'Do not reserve tables or seating when they are not actively being used.',
+        'Please dispose of trash and food waste properly after use.',
+        'Management reserves the right to limit use of the deck, fireplace, or grills due to weather, maintenance, or safety considerations.',
+      ],
+    } as AmenityBlockData,
+
+    sports: {
+      kicker: 'The Sports',
+      title: 'Sports Area Guidelines',
+      sub: 'Play, compete, and share the space with care',
+      intro: 'Guests are welcome to enjoy a variety of outdoor sports throughout the property.',
+      groups: [
+        {
+          title: 'Sand Sports Area',
+          intro: 'The sand court can be used for:',
+          items: [
+            { text: 'Beach volleyball' },
+            { text: 'Beach soccer' },
+            { text: 'Beach tennis' },
+            { text: 'Beach badminton' },
+          ],
+          outro: 'Ask the manager for game inventory.',
+        },
+        {
+          title: 'Table Tennis',
+          paras: ['Two outdoor table tennis tables are available for guests. Ask the manager for rackets.'],
+        },
+        {
+          title: 'Shared Sports Areas',
+          paras: [
+            'All sports areas and equipment are shared amenities available to guests staying at the property.',
+            'Please be considerate of other guests waiting to play and avoid occupying a court, field, or table for an extended period when others would like to use it.',
+            'After playing, please return balls, paddles, rackets, and other equipment to their designated storage areas.',
+          ],
+        },
+      ],
+      safety: [
+        'Use all sports areas and equipment at your own risk.',
+        'Children must be supervised by an adult.',
+        'Please wear appropriate footwear for each activity.',
+        'Be mindful of other guests and maintain a safe distance from nearby games and activities.',
+        'Please do not remove sports equipment from its designated activity area.',
+        'Return all equipment after use.',
+        'Please keep the sports areas clean and dispose of trash properly.',
+        'Respect other guests and keep noise to a reasonable level.',
+        'Management reserves the right to limit access to sports areas or equipment due to weather, maintenance, or safety considerations.',
+      ],
+    } as AmenityBlockData,
+
     featured: {
       name: 'Cedar Barrel Sauna',
       photo: '/images/guide/sauna.webp',
@@ -186,18 +440,9 @@ export const guideData = {
         { label: 'Best time', value: 'Dusk' },
       ],
     },
-    // `icon` keys into AMENITY_ICONS in GuestGuide.tsx.
-    cards: [
-      { name: 'Patio Umbrella', note: 'Crank umbrella on the deck for shade.', icon: 'umbrella' },
-      { name: 'Grill', note: 'Propane grill on the back patio.', icon: 'utensils' },
-      { name: 'Firepit', note: 'Wood-burning firepit in the clearing.', icon: 'flame' },
-      { name: 'Outdoor Furniture', note: 'Lounge chairs, dining set, and hammocks.', icon: 'armchair' },
-      { name: 'EV Charger', note: 'Level 2 charger at Parking A.', icon: 'plug-zap' },
-    ],
-
     saunaGuidelines: {
       hours: '5:00 PM – 10:00 PM, daily',
-      heatingNote: 'To avoid unnecessary heating, we prepare the sauna only when guests would like to use it. Please let our team know if you are interested, and we will be happy to get it ready.',
+      heatingNote: 'To avoid unnecessary heating, we prepare the sauna only when guests would like to use it. Please let our team know if you are interested, and we will be happy to get it ready. 1 (one) complimentary sauna session is included in your stay within the operating hours.',
       sharedNote: 'During regular operating hours, the sauna is a shared amenity available to all guests staying at the property. We kindly ask everyone to be respectful of other guests and help us create a relaxing atmosphere for all.',
       privateNote: 'If you would like to enjoy the sauna exclusively for yourself, your family, or your group outside of regular operating hours, private sessions may be available. Please speak with a manager in advance to arrange a private booking.',
       privateSession: { label: 'Private Session', duration: 'Up to 2 hours', price: '$250', note: 'Subject to availability' },
@@ -216,12 +461,12 @@ export const guideData = {
   rules: [
     { title: 'Quiet Hours', note: '10 PM to 8 AM. We share the woods with neighbors and wildlife.' },
     { title: 'Indoor Smoking & Vaping', note: 'Not permitted anywhere on the property. $350 fine per violation.' },
-    { title: 'Visitors', note: 'Overnight guests are limited to booked occupancy.' },
+    { title: 'Visitors', note: 'Overnight guests are limited to booked occupancy. Our forest villa accommodates up to 4 people. Our guest house accommodates up to 8 people. To bring a child under 5 y.o. into the same residence, choose this fee. Limited to two additional children under 5 y.o. per reservation.' },
     { title: 'Grill', note: 'Please clean the grill after use to avoid a $50 cleaning fee deducted from your deposit.' },
     { title: 'Parties & Events', note: 'Not permitted without prior written approval.' },
     { title: 'Parking', note: 'Use your assigned parking area only.' },
-    { title: 'Firepit', note: 'Fully extinguish before leaving it unattended.' },
-    { title: 'Trash & Recycling', note: 'Bag trash and drop it at the marked bins near the drive.' },
+    { title: 'First-Aid Kit', note: 'A basic First-Aid Kit is available on property. Please ask Daniil for help locating it. For life-threatening emergencies, please call 911.' },
+    { title: 'Baby Crib & Bedding', note: 'If you are traveling with a child under 3 years old and are in need of a crib and bedding, please ask Daniil for complimentary installation in your room.' },
     { title: 'Nature', note: 'Please do not disturb wildlife or vegetation.' },
   ],
 
