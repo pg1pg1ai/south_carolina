@@ -6,7 +6,10 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  // docs/cloudbeds-popup holds paste-ready snippets for the Cloudbeds
+  // dashboard, not project source — popup.js ships wrapped in <script>
+  // tags, which is a parse error here.
+  globalIgnores(['dist', 'docs/cloudbeds-popup']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [

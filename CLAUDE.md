@@ -51,6 +51,14 @@ directions[3], gallery[16], reviews[3], pressQuote, nearby[4], faq[7], finalCta
 - `REPLACE_WITH_FOREST_VILLA_ROOM_TYPE_ID`
 - `REPLACE_WITH_THE_HOUSE_ROOM_TYPE_ID`
 
+**Booking hand-off** — the site never embeds the Cloudbeds widget. Every CTA
+fires `openBooking()` (`data/booking.ts`) → `BookingModal` → a hand-off to
+`CLOUDBEDS_RESERVATION_URL` with dates pre-filled. Anything that has to run
+*inside* the booking engine therefore lives in the Cloudbeds dashboard, not
+here — see [`docs/cloudbeds-popup/`](./docs/cloudbeds-popup/README.md) for the
+farm-box promo pop-up (three blocks pasted into Settings → Booking Engine →
+Customize) and its local test harness.
+
 ---
 
 ## Page Structure & Z-Index Stack

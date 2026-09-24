@@ -1,0 +1,152 @@
+<style>
+/* ───────────────────────────────────────────────────────────────────────────
+   Horizons Sandhills — "2 nights = farm box" promo pop-up
+   PASTE INTO: Settings → Booking Engine → Customize → Custom Meta Tags
+   Keep the <style> wrapper — that field takes raw head markup, not bare CSS.
+
+   Palette (brand tokens):
+     bone/linen card  #F2EDE3      ink text      #1F2420
+     muted body       #5A5650      CTA           #B05329 → hover #9A4722
+     CTA label        #FFF9F2  (4.6:1 on #B05329 — see README for the numbers)
+
+   z-index 2000 clears the Cloudbeds widget stack (sticky 1100, modal 1400,
+   popover 1500, tooltip 1800).
+─────────────────────────────────────────────────────────────────────────── */
+
+.hs-farmbox[hidden] { display: none !important; }
+
+.hs-farmbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hs-farmbox__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 8, 5, 0.62);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  animation: hs-farmbox-fade 0.32s ease both;
+}
+
+.hs-farmbox__card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 42px 38px 36px;
+  border-radius: 18px;
+  background: #F2EDE3;
+  color: #1F2420;
+  text-align: center;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.45);
+  animation: hs-farmbox-rise 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hs-farmbox__card:focus { outline: none; }
+
+.hs-farmbox__close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #5A5650;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.hs-farmbox__close:hover { background: rgba(31, 36, 32, 0.07); color: #1F2420; }
+
+.hs-farmbox__eyebrow {
+  margin: 0;
+  font-size: 10.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #B05329;
+}
+
+.hs-farmbox__title {
+  margin: 14px 0 0;
+  font-family: Fraunces, Canela, Georgia, "Times New Roman", serif;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+  color: #1F2420;
+}
+
+.hs-farmbox__body {
+  margin: 16px 0 28px;
+  font-size: 15px;
+  line-height: 1.58;
+  color: #5A5650;
+}
+
+.hs-farmbox__cta {
+  display: inline-block;
+  padding: 16px 36px;
+  border: 0;
+  border-radius: 999px;
+  background: #B05329;
+  color: #FFF9F2;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+.hs-farmbox__cta:hover { background: #9A4722; }
+.hs-farmbox__cta:active { transform: scale(0.98); }
+
+.hs-farmbox__cta:focus-visible,
+.hs-farmbox__close:focus-visible {
+  outline: 2px solid #B05329;
+  outline-offset: 3px;
+}
+
+@keyframes hs-farmbox-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes hs-farmbox-rise {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Mobile — Cloudbeds warns custom code "may not work on mobile version",
+   so this breakpoint is the part to re-test after every engine update. */
+@media (max-width: 480px) {
+  .hs-farmbox { padding: 14px; align-items: flex-end; }
+  .hs-farmbox__card {
+    padding: 36px 22px 26px;
+    border-radius: 20px;
+    max-height: calc(100vh - 28px);
+  }
+  .hs-farmbox__title { font-size: 25px; }
+  .hs-farmbox__body { font-size: 14.5px; margin-bottom: 24px; }
+  .hs-farmbox__cta { width: 100%; padding: 17px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hs-farmbox__overlay,
+  .hs-farmbox__card { animation: none; }
+  .hs-farmbox__cta { transition: none; }
+}
+</style>

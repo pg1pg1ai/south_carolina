@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import Button from '../primitives/Button';
-import ContactDropdown from './ContactDropdown';
+import ContactButton from './ContactButton';
 import { openBooking } from '../data/booking';
-import { CONTACT_PHONE_HREF, CONTACT_SMS_HREF } from '../../lib/contact';
+import { CONTACT_PHONE_HREF, CONTACT_SMS_HREF, CONTACT_WHATSAPP_HREF } from '../../lib/contact';
 
 const openGallery = () => window.dispatchEvent(new CustomEvent('open-gallery'));
 
@@ -65,7 +65,7 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
   // occupy overlapping screen space at different scroll ranges, so each must
   // go pointer-events:none while faded out or it silently steals clicks
   // meant for the other (e.g. the invisible Book button intercepting clicks
-  // aimed at the visible Contact Us pill).
+  // aimed at the visible contact pill).
   const galleryPointerEvents = useTransform(galleryOpacity, (v) => (v > 0.05 ? 'auto' : 'none'));
   const bookPointerEvents    = useTransform(bookOpacity, (v) => (v > 0.05 ? 'auto' : 'none'));
   const headerPb         = useTransform(scrollY, [0, trigger], [0, 40]);
@@ -210,7 +210,7 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
 
         {/* Contact + Book buttons */}
         <motion.div className="hidden md:flex justify-end items-center gap-3 pointer-events-auto" style={isPage ? undefined : { opacity: bookOpacity, pointerEvents: bookPointerEvents }}>
-          <ContactDropdown overDark={overDark} />
+          <ContactButton overDark={overDark} />
           <Button onClick={openBooking} variant={overDark ? 'ghost-light' : 'primary'} className="!py-2 !px-5 !min-h-0 flex-shrink-0 whitespace-nowrap">
             Book
           </Button>
@@ -225,7 +225,7 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
         </button>
       </div>
 
-      {/* Contact Us — replaces the old "View gallery" glass pill */}
+      {/* Contact pill — WhatsApp; replaces the old "View gallery" glass pill */}
       {!isPage && (
       <motion.div
         className="hidden md:block pointer-events-auto"
@@ -238,7 +238,7 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
           transform: 'translateY(-50%)',
         }}
       >
-        <ContactDropdown overDark={overDark} />
+        <ContactButton overDark={overDark} />
       </motion.div>
       )}
 
@@ -301,6 +301,7 @@ const fullBgOpacity    = useTransform(scrollY, [0, trigger * 0.4], [0, 1]);
                 }}
               >
                 <Button onClick={() => { setMenuOpen(false); openBooking(); }} variant="primary">Book a Stay</Button>
+                <Button href={CONTACT_WHATSAPP_HREF} variant="ghost-light" newTab onClick={() => setMenuOpen(false)}>WhatsApp</Button>
                 <Button href={CONTACT_PHONE_HREF} variant="ghost-light" onClick={() => setMenuOpen(false)}>Call Us</Button>
                 <Button href={CONTACT_SMS_HREF} variant="ghost-light" onClick={() => setMenuOpen(false)}>Text Us</Button>
               </motion.div>
