@@ -271,6 +271,36 @@ posters are self-labelling.
 
 ---
 
+## Off-site: Cloudbeds booking-engine pop-up
+
+**This image is not rendered by any React component.** It is referenced by
+`docs/cloudbeds-popup/header.html`, which is pasted into the Cloudbeds dashboard
+and runs on `us2.cloudbeds.com`. That means two rules that apply nowhere else on
+this site:
+
+1. **The URL must be absolute**, not `/images/...`. A relative path would resolve
+   against Cloudbeds and 404.
+2. **The absolute host is `https://sandhills.gohorizons.com`** — that is what
+   actually serves the site. `horizonssandhills.com` does not resolve, despite
+   being hardcoded in `src/components/StructuredData.tsx`.
+
+| Slot | Disk path | Referenced at | Displayed |
+|---|---|---|---|
+| Farm basket photo, full-bleed across the top of the pop-up card | `public/images/sandhills/farm-basket.webp` (`.jpg` sibling alongside, unused fallback) | `docs/cloudbeds-popup/header.html`, the `data-hs-img` `src` | 440px wide desktop, full card width on mobile, 2:1 |
+
+Cropped from a 725x1280 portrait original (`IMG_8478`) at `460x230+110+500` —
+a 2:1 band centred on the basket, top edge just above the wine bottle. Exported
+at native resolution, so it is **1x for a 440px box**: if a higher-resolution
+original turns up, re-crop the same region and export at 920x460 for retina.
+
+Replacing it: keep the 2:1 ratio and the filename, or the pop-up markup and the
+`object-position: center 54%` in `docs/cloudbeds-popup/styles.css` both need
+updating. Deploy the site before pasting the pop-up — the image must be live at
+that URL first, or guests see the pop-up without it (`popup.js` hides the frame
+when the photo fails, so it degrades cleanly rather than showing a broken icon).
+
+---
+
 ## Dead / not currently rendered
 
 These components exist in the codebase and read real image data, but are commented

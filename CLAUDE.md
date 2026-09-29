@@ -56,7 +56,7 @@ fires `openBooking()` (`data/booking.ts`) → `BookingModal` → a hand-off to
 `CLOUDBEDS_RESERVATION_URL` with dates pre-filled. Anything that has to run
 *inside* the booking engine therefore lives in the Cloudbeds dashboard, not
 here — see [`docs/cloudbeds-popup/`](./docs/cloudbeds-popup/README.md) for the
-farm-box promo pop-up (three blocks pasted into Settings → Booking Engine →
+farm-basket promo pop-up (three blocks pasted into Settings → Booking Engine →
 Customize) and its local test harness.
 
 ---

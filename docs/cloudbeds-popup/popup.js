@@ -1,41 +1,47 @@
-<script>
-/* ───────────────────────────────────────────────────────────────────────────
-   Horizons Sandhills — "2 nights = farm box" promo pop-up
-   PASTE INTO: Settings → Booking Engine → Customize → JavaScript
-   Keep the <script> wrapper — that field takes raw markup, not bare JS.
-─────────────────────────────────────────────────────────────────────────── */
+/* Horizons Sandhills -- "Your Farm Basket is On Us" promo pop-up.
+   PASTE INTO: Settings -> Booking Engine -> Customize -> JavaScript
+   Paste exactly as-is. Do NOT add script tags: that field is validated as
+   JavaScript, so any markup in it is a syntax error on line 1.
+
+   Constraints, all deliberate -- see README:
+     ASCII only, ES5 only, no markup characters anywhere in this file. */
 (function () {
   'use strict';
 
-  /* ── Copy — the only block you need to edit to change wording ─────────── */
+  /* Copy: the only block to edit to change wording.
+     The WhatsApp text uses \u2019 (curly apostrophe) and \u2014 (em dash)
+     this file stays plain ASCII while still rendering correct typography. */
   var COPY = {
-    eyebrow: 'Direct booking offer',
-    title: 'Book 2 Nights Now and Get a Farm Box',
-    body: 'Stay two nights or more and we’ll leave a farm box waiting in the villa — orchard fruit, honey from our hives, eggs from the farm. Direct bookings only.',
-    cta: 'Choose my dates',
+    eyebrow: 'Special stay offer',
+    title: 'Your Farm Basket is On Us',
+    body: 'Book a 2-night stay at Horizons Sandhills and enjoy a complimentary basket of fresh farm products during your stay.',
+    cta: 'Book your stay',
+    whatsapp: 'Message us on WhatsApp',
     closeLabel: 'Close offer'
   };
 
-  /* ── Settings ─────────────────────────────────────────────────────────── */
-  var DELAY_MS   = 1800;                    // let the calendar paint first
-  var STORAGE_KEY = 'hs_farmbox_popup_seen'; // once per session
-  var FIND_RETRY_MS = 300;                  // Custom Header may inject late
-  var FIND_GIVE_UP_MS = 6000;
+  var DELAY_MS = 1800;
+  var STORAGE_KEY = 'hs_farmbox_popup_seen_v2';
+  var RETRY_MS = 300;
+  var GIVE_UP_MS = 6000;
 
-  /* Booking Engine Plus is a SPA — a re-render must not wire this up twice. */
+  var WHATSAPP_URL = 'https://wa.me/17546679090?text=' + encodeURIComponent(
+    'Hi! I saw the 2-night farm basket offer \u2014 I\u2019d like to book a stay.'
+  );
+
   if (window.__hsFarmBox) { return; }
   window.__hsFarmBox = true;
 
-  var root, card, cta, lastFocused, timer;
+  var root, card, cta, whatsapp, lastFocused, timer;
 
-  /* sessionStorage throws in some privacy modes — never let that break the
-     booking flow, just fall back to "not seen". */
+  /* sessionStorage throws in some privacy modes. Never let that break the
+     booking flow: fall back to "not seen". */
   function hasSeen() {
     try { return window.sessionStorage.getItem(STORAGE_KEY) === '1'; }
     catch (e) { return false; }
   }
   function markSeen() {
-    try { window.sessionStorage.setItem(STORAGE_KEY, '1'); } catch (e) { /* ignore */ }
+    try { window.sessionStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
   }
 
   function setText(selector, value) {
@@ -48,23 +54,34 @@
     setText('[data-hs-title]', COPY.title);
     setText('[data-hs-body]', COPY.body);
     setText('[data-hs-cta]', COPY.cta);
-    var close = root.querySelector('[data-hs-close].hs-farmbox__close');
-    if (close && COPY.closeLabel) { close.setAttribute('aria-label', COPY.closeLabel); }
+    setText('[data-hs-whatsapp-label]', COPY.whatsapp);
+    if (whatsapp) { whatsapp.setAttribute('href', WHATSAPP_URL); }
+    var btn = root.querySelector('[data-hs-close].hs-farmbox__close');
+    if (btn && COPY.closeLabel) { btn.setAttribute('aria-label', COPY.closeLabel); }
+  }
+
+  /* A blocked or missing photo must never leave a broken frame above the
+     offer, so drop the figure entirely if it fails. */
+  function guardPhoto() {
+    var fig = root.querySelector('[data-hs-figure]');
+    var img = root.querySelector('[data-hs-img]');
+    if (!fig || !img) { return; }
+    function drop() { fig.setAttribute('hidden', ''); }
+    img.addEventListener('error', drop);
+    if (img.complete && img.naturalWidth === 0) { drop(); }
   }
 
   function focusables() {
-    return [root.querySelector('.hs-farmbox__close'), cta].filter(Boolean);
+    return [root.querySelector('.hs-farmbox__close'), cta, whatsapp].filter(Boolean);
   }
 
   function onKeydown(e) {
     if (e.key === 'Escape' || e.key === 'Esc') {
       e.preventDefault();
-      close();
+      closePopup();
       return;
     }
     if (e.key !== 'Tab') { return; }
-
-    /* Trap focus between the ✕ and the CTA while the dialog is open. */
     var items = focusables();
     if (!items.length) { return; }
     var first = items[0];
@@ -78,82 +95,77 @@
     }
   }
 
-  function open() {
+  function openPopup() {
     if (hasSeen() || !root || !root.hasAttribute('hidden')) { return; }
-
     lastFocused = document.activeElement;
     root.removeAttribute('hidden');
-    markSeen(); /* shown once per session, whichever way it is dismissed */
-
+    markSeen();
     document.addEventListener('keydown', onKeydown, true);
     if (card && typeof card.focus === 'function') { card.focus(); }
   }
 
-  function close() {
+  function closePopup() {
     if (!root || root.hasAttribute('hidden')) { return; }
-
     root.setAttribute('hidden', '');
     document.removeEventListener('keydown', onKeydown, true);
-
     if (lastFocused && typeof lastFocused.focus === 'function') {
-      try { lastFocused.focus(); } catch (e) { /* element may be gone */ }
+      try { lastFocused.focus(); } catch (e) {}
     }
     lastFocused = null;
   }
 
   function wire() {
-    /* ✕ and the overlay both carry data-hs-close. */
     var closers = root.querySelectorAll('[data-hs-close]');
-    for (var i = 0; i < closers.length; i++) {
+    for (var i = closers.length; i--;) {
       closers[i].addEventListener('click', function (e) {
         e.preventDefault();
-        close();
+        closePopup();
       });
     }
 
+    /* The guest is already inside the booking engine, so the primary action
+       just hands them back to the calendar to pick 2 or more nights. No promo
+       code: the basket is fulfilled manually. If a Cloudbeds coupon is ever
+       configured for this offer, apply it here. */
     if (cta) {
       cta.addEventListener('click', function (e) {
-        /* The offer needs no promo code — the guest just goes back to the
-           calendar and picks 2+ nights. markSeen() already ran on open, so
-           it cannot reappear later in the session. */
         e.preventDefault();
-        close();
+        closePopup();
       });
+    }
+
+    /* The WhatsApp link opens its own tab. Never preventDefault here, that
+       would swallow the navigation. */
+    if (whatsapp) {
+      whatsapp.addEventListener('click', function () { closePopup(); });
     }
   }
 
   function start() {
     root = document.getElementById('hs-farmbox');
     if (!root) { return false; }
-
     card = root.querySelector('.hs-farmbox__card');
     cta = root.querySelector('[data-hs-cta]');
-
+    whatsapp = root.querySelector('[data-hs-whatsapp]');
     applyCopy();
+    guardPhoto();
     wire();
-
-    if (!hasSeen()) {
-      timer = window.setTimeout(open, DELAY_MS);
-    }
+    if (!hasSeen()) { timer = window.setTimeout(openPopup, DELAY_MS); }
     return true;
   }
 
   function boot() {
     if (start()) { return; }
-
-    /* The Custom Header block can land after this script runs — poll briefly,
-       then give up quietly rather than looping forever. */
+    /* The Custom Header block can land after this runs. Poll briefly, then
+       give up quietly rather than looping forever. */
     var waited = 0;
     var poll = window.setInterval(function () {
-      waited += FIND_RETRY_MS;
-      if (start() || waited >= FIND_GIVE_UP_MS) { window.clearInterval(poll); }
-    }, FIND_RETRY_MS);
+      waited += RETRY_MS;
+      if (start() || waited >= GIVE_UP_MS) { window.clearInterval(poll); }
+    }, RETRY_MS);
   }
 
-  /* Never hold the pop-up open across a page/step change. */
-  window.addEventListener('pagehide', function () {
-    window.clearTimeout(timer);
-  });
+  window.addEventListener('pagehide', function () { window.clearTimeout(timer); });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
@@ -161,4 +173,3 @@
     boot();
   }
 })();
-</script>

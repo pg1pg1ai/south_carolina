@@ -1,0 +1,135 @@
+<script>
+(function () {
+'use strict';
+var COPY = {
+eyebrow: 'Special stay offer',
+title: 'Your Farm Basket is On Us',
+body: 'Book a 2-night stay at Horizons Sandhills and enjoy a complimentary basket of fresh farm products during your stay.',
+cta: 'Book your stay',
+whatsapp: 'Message us on WhatsApp',
+closeLabel: 'Close offer'
+};
+var DELAY_MS = 1800;
+var STORAGE_KEY = 'hs_farmbox_popup_seen_v2';
+var RETRY_MS = 300;
+var GIVE_UP_MS = 6000;
+var WHATSAPP_URL = 'https://wa.me/17546679090?text=' + encodeURIComponent(
+'Hi! I saw the 2-night farm basket offer \u2014 I\u2019d like to book a stay.'
+);
+if (window.__hsFarmBox) { return; }
+window.__hsFarmBox = true;
+var root, card, cta, whatsapp, lastFocused, timer;
+function hasSeen() {
+try { return window.sessionStorage.getItem(STORAGE_KEY) === '1'; }
+catch (e) { return false; }
+}
+function markSeen() {
+try { window.sessionStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+}
+function setText(selector, value) {
+var el = root.querySelector(selector);
+if (el && value) { el.textContent = value; }
+}
+function applyCopy() {
+setText('[data-hs-eyebrow]', COPY.eyebrow);
+setText('[data-hs-title]', COPY.title);
+setText('[data-hs-body]', COPY.body);
+setText('[data-hs-cta]', COPY.cta);
+setText('[data-hs-whatsapp-label]', COPY.whatsapp);
+if (whatsapp) { whatsapp.setAttribute('href', WHATSAPP_URL); }
+var btn = root.querySelector('[data-hs-close].hs-farmbox__close');
+if (btn && COPY.closeLabel) { btn.setAttribute('aria-label', COPY.closeLabel); }
+}
+function guardPhoto() {
+var fig = root.querySelector('[data-hs-figure]');
+var img = root.querySelector('[data-hs-img]');
+if (!fig || !img) { return; }
+function drop() { fig.setAttribute('hidden', ''); }
+img.addEventListener('error', drop);
+if (img.complete && img.naturalWidth === 0) { drop(); }
+}
+function focusables() {
+return [root.querySelector('.hs-farmbox__close'), cta, whatsapp].filter(Boolean);
+}
+function onKeydown(e) {
+if (e.key === 'Escape' || e.key === 'Esc') {
+e.preventDefault();
+closePopup();
+return;
+}
+if (e.key !== 'Tab') { return; }
+var items = focusables();
+if (!items.length) { return; }
+var first = items[0];
+var last = items[items.length - 1];
+if (e.shiftKey && document.activeElement === first) {
+e.preventDefault();
+last.focus();
+} else if (!e.shiftKey && document.activeElement === last) {
+e.preventDefault();
+first.focus();
+}
+}
+function openPopup() {
+if (hasSeen() || !root || !root.hasAttribute('hidden')) { return; }
+lastFocused = document.activeElement;
+root.removeAttribute('hidden');
+markSeen();
+document.addEventListener('keydown', onKeydown, true);
+if (card && typeof card.focus === 'function') { card.focus(); }
+}
+function closePopup() {
+if (!root || root.hasAttribute('hidden')) { return; }
+root.setAttribute('hidden', '');
+document.removeEventListener('keydown', onKeydown, true);
+if (lastFocused && typeof lastFocused.focus === 'function') {
+try { lastFocused.focus(); } catch (e) {}
+}
+lastFocused = null;
+}
+function wire() {
+var closers = root.querySelectorAll('[data-hs-close]');
+for (var i = closers.length; i--;) {
+closers[i].addEventListener('click', function (e) {
+e.preventDefault();
+closePopup();
+});
+}
+if (cta) {
+cta.addEventListener('click', function (e) {
+e.preventDefault();
+closePopup();
+});
+}
+if (whatsapp) {
+whatsapp.addEventListener('click', function () { closePopup(); });
+}
+}
+function start() {
+root = document.getElementById('hs-farmbox');
+if (!root) { return false; }
+card = root.querySelector('.hs-farmbox__card');
+cta = root.querySelector('[data-hs-cta]');
+whatsapp = root.querySelector('[data-hs-whatsapp]');
+applyCopy();
+guardPhoto();
+wire();
+if (!hasSeen()) { timer = window.setTimeout(openPopup, DELAY_MS); }
+return true;
+}
+function boot() {
+if (start()) { return; }
+var waited = 0;
+var poll = window.setInterval(function () {
+waited += RETRY_MS;
+if (start() || waited >= GIVE_UP_MS) { window.clearInterval(poll); }
+}, RETRY_MS);
+}
+window.addEventListener('pagehide', function () { window.clearTimeout(timer); });
+if (document.readyState === 'loading') {
+document.addEventListener('DOMContentLoaded', boot);
+} else {
+boot();
+}
+})();
+</script>
