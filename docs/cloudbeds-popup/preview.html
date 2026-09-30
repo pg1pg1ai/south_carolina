@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Farm basket pop-up — local preview</title>
+  <!--
+    Test harness. Not part of the Cloudbeds paste — it exists so the three
+    blocks can be checked (timer, ✕, overlay, Esc, sessionStorage, mobile)
+    without touching the live booking engine.
+
+    Serve it over http, not file:// — fetch() is blocked on file://:
+        npx serve docs/cloudbeds-popup      → open /preview.html
+
+    It pulls header.html / styles.css / popup.js at runtime, so there is no
+    second copy of the code to drift out of sync.
+  -->
+  <style>
+    body { margin: 0; font: 15px/1.6 Inter, system-ui, sans-serif; color: #1f2420; background: #fff; }
+    .mock { max-width: 760px; margin: 0 auto; padding: 32px 20px 80px; }
+    .mock h1 { font: 400 26px/1.2 Georgia, serif; }
+    .mock .cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin: 20px 0 28px; }
+    .mock .cal div { aspect-ratio: 1; display: grid; place-items: center; border: 1px solid #e3ded4; border-radius: 6px; font-size: 13px; color: #5a5650; }
+    .bar { position: sticky; top: 0; background: #1f2420; color: #fff; padding: 10px 20px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; font-size: 13px; }
+    .bar button { font: inherit; padding: 6px 12px; border: 0; border-radius: 4px; background: #B05329; color: #fff; cursor: pointer; }
+    .bar code { background: rgba(255,255,255,.14); padding: 2px 6px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <strong>Harness</strong>
+    <button id="reset">Clear session flag &amp; reload</button>
+    <span>key: <code>hs_farmbox_popup_seen_v2</code></span>
+    <span id="flag"></span>
+  </div>
+
+  <div class="mock">
+    <h1>Mock booking engine</h1>
+    <p>Stand-in for the Cloudbeds calendar. The pop-up should appear after ~1.8s,
+       sit above this content, and close via ✕, the overlay, or Esc.</p>
+    <div class="cal" id="cal"></div>
+    <p>Scroll and tab around to confirm the pop-up traps focus while open and
+       hands it back afterwards.</p>
+  </div>
+
+  <script>
+    var cal = document.getElementById('cal');
+    for (var d = 1; d <= 28; d++) { cal.insertAdjacentHTML('beforeend', '<div>' + d + '</div>'); }
+
+    document.getElementById('flag').textContent =
+      'seen = ' + (sessionStorage.getItem('hs_farmbox_popup_seen_v2') || 'null');
+    document.getElementById('reset').onclick = function () {
+      sessionStorage.removeItem('hs_farmbox_popup_seen_v2');
+      location.reload();
+    };
+
+    /* Mirror how Cloudbeds injects the three fields: markup into the body,
+       <style> into the head, <script> executed. */
+    Promise.all([
+      fetch('./header.html').then(function (r) { return r.text(); }),
+      fetch('./styles.css').then(function (r) { return r.text(); }),
+      fetch('./popup.js').then(function (r) { return r.text(); })
+    ]).then(function (parts) {
+      document.body.insertAdjacentHTML('beforeend', parts[0]);
+      document.head.insertAdjacentHTML('beforeend', parts[1]);
+
+      var js = parts[2].replace(/^\s*<script>/, '').replace(/<\/script>\s*$/, '');
+      var el = document.createElement('script');
+      el.textContent = js;
+      document.body.appendChild(el);
+    });
+  </script>
+</body>
+</html>

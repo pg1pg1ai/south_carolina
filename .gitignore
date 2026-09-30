@@ -25,6 +25,10 @@ graphify-out
 *.sln
 *.sw?
 *.html
+# ...but the Cloudbeds pop-up blocks are source, not build output: header.html
+# IS the Custom Header block pasted into the dashboard, and without it the
+# pop-up cannot be rebuilt from this repo.
+!docs/cloudbeds-popup/*.html
 Yagrumo*
 .env
 .env.*
