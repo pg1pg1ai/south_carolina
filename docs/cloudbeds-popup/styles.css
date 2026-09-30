@@ -75,9 +75,9 @@
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 2 / 1;
+  aspect-ratio: 3 / 2;
   object-fit: cover;
-  object-position: center 54%;  /* keeps the basket centred if the box crops */
+  object-position: center 58%;  /* favours the basket if the box ever crops */
 }
 
 /* popup.js sets this if the photo fails to load, so a broken image can never
@@ -222,6 +222,13 @@
   .hs-farmbox__title { font-size: 25px; }
   .hs-farmbox__body { font-size: 14.5px; margin-bottom: 22px; }
   .hs-farmbox__cta { padding: 17px 18px; letter-spacing: 0.18em; }
+}
+
+/* Short viewports (old small phones, or a landscape phone): flatten the photo
+   so the card stops scrolling and both CTAs stay above the fold. object-fit
+   crops the 3:2 source back to 2:1, and object-position keeps the basket. */
+@media (max-height: 600px) {
+  .hs-farmbox__img { aspect-ratio: 2 / 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {

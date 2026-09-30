@@ -286,12 +286,18 @@ this site:
 
 | Slot | Disk path | Referenced at | Displayed |
 |---|---|---|---|
-| Farm basket photo, full-bleed across the top of the pop-up card | `public/images/sandhills/farm-basket.webp` (`.jpg` sibling alongside, unused fallback) | **`docs/cloudbeds-popup/popup.js`, the `PHOTO_URL` constant** (authoritative — popup.js builds the figure if the markup lacks one). Mirrored in `docs/cloudbeds-popup/header.html` as the `data-hs-img` `src`; change both. | 440px wide desktop, full card width on mobile, 2:1 |
+| Farm basket photo, full-bleed across the top of the pop-up card | `public/images/sandhills/farm-basket.webp` (`.jpg` sibling alongside, unused fallback) | **`docs/cloudbeds-popup/popup.js`, the `PHOTO_URL` constant** (authoritative — popup.js builds the figure if the markup lacks one). Mirrored in `docs/cloudbeds-popup/header.html` as the `data-hs-img` `src`; change both. | 440px wide desktop, full card width on mobile, 3:2 |
 
-Cropped from a 725x1280 portrait original (`IMG_8478`) at `460x230+110+500` —
-a 2:1 band centred on the basket, top edge just above the wine bottle. Exported
-at native resolution, so it is **1x for a 440px box**: if a higher-resolution
-original turns up, re-crop the same region and export at 920x460 for retina.
+Cropped from a 725x1280 portrait original (`IMG_8478`) at `560x373+80+420` —
+a 3:2 frame centred on the basket, with the villa deck and stairs above for
+context and grass below. Exported at native resolution (560px for a 440px box,
+so ~1.3x): if a higher-resolution original turns up, re-crop the same region and
+export at 1120x746 for a true 2x.
+
+Was previously a 2:1 band at `460x230+110+500`; heightened at the client's
+request. The ratio is mirrored in three places — `aspect-ratio` in
+`styles.css`, the `width`/`height` attributes in `header.html`, and
+`PHOTO_W`/`PHOTO_H` in `popup.js` — all three must move together.
 
 Replacing it: keep the 2:1 ratio and the filename, or the pop-up markup and the
 `object-position: center 54%` in `docs/cloudbeds-popup/styles.css` both need
