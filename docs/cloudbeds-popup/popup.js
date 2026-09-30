@@ -1,7 +1,9 @@
 /* Horizons Sandhills -- "Your Farm Basket is On Us" promo pop-up.
-   PASTE INTO: Settings -> Booking Engine -> Customize -> JavaScript
-   Paste exactly as-is. Do NOT add script tags: that field is validated as
-   JavaScript, so any markup in it is a syntax error on line 1.
+
+   THIS FILE IS THE SOURCE, NOT THE PASTE. Edit here, then run:
+       node docs/cloudbeds-popup/build-min.cjs
+   and paste the generated popup.wrapped.js into the dashboard's JavaScript
+   field. That is the packaging the field was verified to accept.
 
    Constraints, all deliberate -- see README:
      ASCII only, ES5 only, no markup characters anywhere in this file. */

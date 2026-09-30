@@ -29,7 +29,10 @@ out = out
   .filter(function (l) { return l.length; })
   .join('\n');
 
-fs.writeFileSync('popup.min.js', out);
-fs.writeFileSync('popup.wrapped.js', '<script>\n' + out + '\n</script>\n');
-console.log('popup.min.js      ' + out.length + ' bytes');
-console.log('popup.wrapped.js  ' + (out.length + 19) + ' bytes');
+var BANNER = '/* Generated from popup.js by build-min.cjs. Do not edit by hand: '
+  + 'edit popup.js and re-run the build. */';
+
+fs.writeFileSync('popup.min.js', BANNER + '\n' + out + '\n');
+fs.writeFileSync('popup.wrapped.js', '<script>\n' + BANNER + '\n' + out + '\n</script>\n');
+console.log('popup.min.js      ' + fs.statSync('popup.min.js').size + ' bytes');
+console.log('popup.wrapped.js  ' + fs.statSync('popup.wrapped.js').size + ' bytes  <-- paste this one');

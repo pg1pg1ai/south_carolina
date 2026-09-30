@@ -42,50 +42,53 @@ Dashboard path: **Account menu → Settings → Booking Engine → tab `Customiz
 | File | Field | Paste |
 |---|---|---|
 | `header.html` | **Custom Header** | As-is — the field takes HTML. Set it per-language if the engine is multilingual. |
-| `styles.css` | **Custom Meta Tags** | As-is, **keeping** the `<style>` wrapper — the field takes head markup, not bare CSS. |
-| `popup.js` | **JavaScript** | As-is. It has **no** `<script>` wrapper. See below if the field rejects it. |
+| `styles.css` | **Custom Meta Tags** | As-is, **keeping** the `<style>` wrapper — the field takes head markup. |
+| **`popup.wrapped.js`** | **JavaScript** | As-is, **including** its `<script>` tags. |
 
-`popup.min.js` and `popup.wrapped.js` are generated alternatives for the
-JavaScript field only — same code, different packaging. Regenerate both after
-editing `popup.js`:
+**The JavaScript field wants `<script>` tags.** This was established the hard
+way — see below. `popup.wrapped.js` is generated, so never edit it directly:
+edit `popup.js`, rebuild, then paste the result.
 
 ```
 node docs/cloudbeds-popup/build-min.cjs
 ```
 
-### If the JavaScript field says "There are syntax errors in your Javascript code"
+`COPY` and `PHOTO_URL` still sit at the very top of the generated file, so the
+wording and the photo URL stay easy to eyeball after a paste.
 
-The code is verified valid before every handover, as an ES5 **classic script**
-(which is what the booking engine runs, and a stricter check than `node --check`,
-since this repo is `"type": "module"`):
+| File | Role |
+|---|---|
+| `popup.js` | **Source of truth.** Readable and commented. Never pasted. |
+| `popup.wrapped.js` | Generated. **This is the paste.** Minified, in `<script>` tags. |
+| `popup.min.js` | Generated. Same code without tags — kept only in case a future engine version wants bare JS. |
+
+### What actually broke, and what did not
+
+The first paste was rejected with *"There are syntax errors in your Javascript
+code."* The obvious suspect was the `<script>` wrapper, so it was removed —
+**that was the wrong call.** The field wants the tags; the wrapped build is what
+the dashboard accepted.
+
+The real cause was among the other things fixed in the same pass. The original
+file also had:
+
+- **non-ASCII characters** (em dashes, box-drawing rules) throughout its comments
+- the literal text `<script>` **inside a JS comment**, which a validator scanning
+  for tags can easily mis-parse
+- `function open()` / `function close()`, shadowing `window.open`/`close`, which
+  some linters report as an error rather than a warning
+- roughly 7 KB of source, against ~5 KB now
+
+All four are gone, and the constraints that keep them gone hold in `popup.js`:
+ASCII only, ES5 only, and no `<` character anywhere — not in code, not in
+comments. Verify before any handover:
 
 ```
 node -e "require('acorn').parse(require('fs').readFileSync('docs/cloudbeds-popup/popup.js','utf8'),{ecmaVersion:5,sourceType:'script'})"
 ```
 
-So if the dashboard still rejects it, the problem is how the field is being fed,
-not the code. Work down this ladder — each step rules out one cause:
-
-1. **Paste `console.log('hs test');` on its own and save.**
-   - *Rejected too* → the field is not accepting bare JS. Try
-     `popup.wrapped.js` instead, which is the same code inside `<script>` tags.
-   - *Accepted* → bare JS is right, continue down the list.
-2. **Paste `popup.min.js`.** It is the same logic at 4.0 KB instead of 5.8 KB.
-   If the full file fails and the minified one saves, the field has a **length
-   cap** and was silently truncating mid-statement.
-3. **Check for a stray wrapper.** A leading `<` is a syntax error on line 1.
-   This is what broke the first attempt.
-4. **Re-copy from the raw file, not from a rendered view.** Copying from a
-   Markdown preview or a chat window can substitute smart quotes for `'`, which
-   is a syntax error. All three blocks are deliberately ASCII-only so that any
-   non-ASCII character appearing in the field is a reliable sign of this.
-
-The three blocks are ASCII-only and `popup.js` is ES5-only (no `const`/`let`,
-arrow functions or template literals). `popup.js` also contains **no `<`
-character anywhere** — not in code, not in comments — so nothing in it can be
-mistaken for markup by a sanitiser. Keep all of that true when editing: the
-curly apostrophe and em dash in the WhatsApp message are written as `\u2019`
-and `\u2014` escapes for exactly this reason.
+**The lesson: do not strip the `<script>` tags.** If a paste is rejected, suspect
+the file's contents, not its wrapper.
 
 ---
 
@@ -181,8 +184,15 @@ under "Off-site: Cloudbeds booking-engine pop-up".
 ## Editing the copy
 
 Change the `COPY` block at the top of `popup.js` — it overwrites the text on
-load, so that is the single place to edit. The same wording sits in
-`header.html` as a no-JS fallback; update it too if you want the two to match.
+load, so that is the single place to edit. **Then rebuild and re-paste
+`popup.wrapped.js`**, or the change never reaches the booking engine:
+
+```
+node docs/cloudbeds-popup/build-min.cjs
+```
+
+The same wording sits in `header.html` as a no-JS fallback; update it too if you
+want the two to match.
 
 Current wording is the spec doc verbatim, bar sentence-casing the two buttons
 (the doc sets them in caps; CSS applies `text-transform: uppercase`, so caps in

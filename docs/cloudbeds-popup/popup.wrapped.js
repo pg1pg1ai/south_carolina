@@ -1,4 +1,5 @@
 <script>
+/* Generated from popup.js by build-min.cjs. Do not edit by hand: edit popup.js and re-run the build. */
 (function () {
 'use strict';
 var COPY = {
