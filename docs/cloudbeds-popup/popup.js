@@ -20,6 +20,16 @@
     closeLabel: 'Close offer'
   };
 
+  /* The photo. It lives here, not only in the Custom Header block, because
+     popup.js is the one field guaranteed to be applied: if the markup arrives
+     without a figure (header block not re-pasted, or img stripped by the
+     dashboard), this builds one. Absolute URL is required -- this runs on
+     us2.cloudbeds.com, so a relative path would resolve against Cloudbeds. */
+  var PHOTO_URL = 'https://sandhills.gohorizons.com/images/sandhills/farm-basket.webp';
+  var PHOTO_ALT = 'A wicker basket on the lawn holding red wine, peaches, grapes, a jar of honey and farmhouse cheese.';
+  var PHOTO_W = 460;
+  var PHOTO_H = 230;
+
   var DELAY_MS = 1800;
   var STORAGE_KEY = 'hs_farmbox_popup_seen_v2';
   var RETRY_MS = 300;
@@ -60,14 +70,46 @@
     if (btn && COPY.closeLabel) { btn.setAttribute('aria-label', COPY.closeLabel); }
   }
 
-  /* A blocked or missing photo must never leave a broken frame above the
-     offer, so drop the figure entirely if it fails. */
-  function guardPhoto() {
+  /* Put the photo at the top of the card, building the figure if the markup
+     did not ship one. A blocked or missing image must never leave a broken
+     frame above the offer, so the figure is dropped if it fails to load. */
+  function setUpPhoto() {
+    if (!card || !PHOTO_URL) { return; }
+
     var fig = root.querySelector('[data-hs-figure]');
-    var img = root.querySelector('[data-hs-img]');
-    if (!fig || !img) { return; }
+    var img = fig ? fig.querySelector('[data-hs-img]') : null;
+
+    if (!fig) {
+      fig = document.createElement('div');
+      fig.className = 'hs-farmbox__figure';
+      fig.setAttribute('data-hs-figure', '');
+      card.insertBefore(fig, card.firstChild);
+    }
+
+    if (!img) {
+      img = document.createElement('img');
+      img.className = 'hs-farmbox__img';
+      img.setAttribute('data-hs-img', '');
+      fig.appendChild(img);
+    }
+
+    /* Matches the stylesheet exactly, so the two never fight. It is repeated
+       inline only so the photo is still the right size if the Custom Meta Tags
+       block is stale. */
+    img.style.display = 'block';
+    img.style.width = '100%';
+    img.style.height = 'auto';
+
+    img.setAttribute('alt', PHOTO_ALT);
+    img.setAttribute('width', PHOTO_W);
+    img.setAttribute('height', PHOTO_H);
+
     function drop() { fig.setAttribute('hidden', ''); }
     img.addEventListener('error', drop);
+
+    /* Attach the handler before the request starts, or a fast failure is
+       missed. Re-setting the same src is a no-op in every browser. */
+    if (img.getAttribute('src') !== PHOTO_URL) { img.setAttribute('src', PHOTO_URL); }
     if (img.complete && img.naturalWidth === 0) { drop(); }
   }
 
@@ -148,7 +190,7 @@
     cta = root.querySelector('[data-hs-cta]');
     whatsapp = root.querySelector('[data-hs-whatsapp]');
     applyCopy();
-    guardPhoto();
+    setUpPhoto();
     wire();
     if (!hasSeen()) { timer = window.setTimeout(openPopup, DELAY_MS); }
     return true;

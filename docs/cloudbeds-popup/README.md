@@ -94,32 +94,53 @@ and `\u2014` escapes for exactly this reason.
 The pop-up leads with `farm-basket.webp` — the gift basket on the lawn, cropped
 2:1 and full-bleed across the top of the card.
 
-Because this markup runs on `us2.cloudbeds.com`, the `src` **must be absolute**.
-It points at `https://sandhills.gohorizons.com/images/sandhills/farm-basket.webp`
-— that host is what actually serves the site; `horizonssandhills.com` does not
-resolve, despite being hardcoded as `SITE_URL` in
-`src/components/StructuredData.tsx` (worth fixing separately — every schema.org
-and canonical URL the site emits points at a dead domain).
+**`popup.js` owns the photo, the same way it owns the copy.** `PHOTO_URL` sits
+at the top of that file next to `COPY`. If the Custom Header block is stale, or
+the dashboard strips the `img` from it, popup.js builds the figure itself, so
+the photo only ever depends on the JavaScript field. `header.html` still ships
+the same figure as a no-JS fallback; popup.js adopts it rather than duplicating
+it when both are present.
 
-**Deploy the site before pasting the pop-up**, so the image is live at that URL
-first. If it 404s or is blocked, `popup.js` hides the frame and the offer still
-shows properly rather than displaying a broken image.
+The URL **must be absolute**, because this runs on `us2.cloudbeds.com` and a
+relative path would resolve against Cloudbeds. It points at
+`https://sandhills.gohorizons.com/images/sandhills/farm-basket.webp` — that host
+is what actually serves the site. `horizonssandhills.com` does **not** resolve,
+despite being hardcoded as `SITE_URL` in `src/components/StructuredData.tsx`
+(worth fixing separately: every schema.org and canonical URL the site emits
+points at a dead domain).
 
-Details of the crop, and what to do when replacing it, are in
-[`IMAGE_MAP.md`](../../IMAGE_MAP.md) under "Off-site: Cloudbeds booking-engine
-pop-up".
+**Deploy the site before pasting**, so the image is live at that URL first. If
+it 404s or is blocked, popup.js hides the frame and the offer still reads
+properly rather than showing a broken image.
 
----
+### If the photo does not appear
 
-Two things the spec warns about, both still true:
+Run this in the browser console on the booking page, with the pop-up open:
 
-- Saving these fields may demand **MFA re-confirmation**. Have the second factor
-  to hand or the save silently drops.
-- On **Booking Engine Plus (SPA)** one paste covers the whole flow. On the
-  **legacy** engine the blocks may need repeating per page — check every step
-  after going live.
+```js
+(function () {
+  var r = document.getElementById('hs-farmbox');
+  if (!r) { return console.log('no pop-up root: Custom Header block is missing'); }
+  var i = r.querySelector('[data-hs-img]');
+  console.log({
+    figure: !!r.querySelector('[data-hs-figure]'),
+    img: !!i,
+    src: i && i.getAttribute('src'),
+    loaded: !!(i && i.complete && i.naturalWidth > 0),
+    natural: i && (i.naturalWidth + 'x' + i.naturalHeight)
+  });
+})();
+```
 
-`preview.html` is a local test harness, not part of the paste.
+| Result | Cause |
+|---|---|
+| `no pop-up root` | The Custom Header block was never pasted. |
+| `img: false` | popup.js is stale — repaste the JavaScript field. |
+| `loaded: false`, `natural: 0x0` | The URL is not reachable from the engine. Confirm the site is deployed. |
+| `loaded: true` but nothing visible | The Custom Meta Tags block is stale — repaste `styles.css`. |
+
+Crop details and replacement rules are in [`IMAGE_MAP.md`](../../IMAGE_MAP.md)
+under "Off-site: Cloudbeds booking-engine pop-up".
 
 ---
 
