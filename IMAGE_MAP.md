@@ -268,6 +268,16 @@ posters are self-labelling.
 | Why People Don't Remember Hotels. They Remember Experiences | `/images/blog/why-people-dont-remember-hotels-cover.webp` (png sibling alongside) — like the article above, the headline is baked into the image itself | `/images/blog/why-people-dont-remember-hotels-inline.webp` (jpeg sibling alongside) |
 | Building More Than Resorts: Creating Places People Return To | `/images/blog/building-more-than-resorts-cover.webp` (png sibling alongside), headline baked in | `/images/blog/building-more-than-resorts-inline.webp` (jpeg sibling alongside) — same lakeshore/sauna scene as `lake-sauna-inline`, different crop |
 | Why Nature Is Becoming the New Wellness Center | `/images/blog/why-nature-is-becoming-the-new-wellness-center-cover.webp` (png sibling alongside), headline baked in | — none |
+| The Future of Corporate Retreats Isn't Another Conference Room | `/images/blog/corporate-retreats-cover.webp` (png sibling alongside), headline baked in | — none |
+| Why People Need Places to Disconnect More Than Ever | `/images/blog/places-to-disconnect-cover.webp` (png sibling alongside), headline baked in | — none |
+| Sustainability Isn't a Marketing Strategy Anymore | `/images/blog/sustainability-cover.webp` (png sibling alongside), headline baked in | — none |
+| What Makes a Destination Feel Authentic? | `/images/blog/destination-authenticity-cover.webp` (png sibling alongside), headline baked in | — none |
+
+**Blog covers carry their headline baked into the image**, so the cover and the
+`title` in `blog.ts` must say the same thing — changing one without the other
+leaves the page contradicting itself. Covers are 16:9 at native export size
+(1600x900 or 1672x941); they are used both as the index-grid thumbnail and as
+the article's full-bleed masthead, so do not crop them tighter for the grid.
 
 ---
 

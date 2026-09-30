@@ -216,4 +216,161 @@ export const blogArticles: BlogArticle[] = [
       },
     ],
   },
+  {
+    slug: 'the-future-of-corporate-retreats-isnt-another-conference-room',
+    title: 'The Future of Corporate Retreats Isn’t Another Conference Room',
+    excerpt:
+      'A retreat works when it creates real distance from the routine — not when it moves the same workday into a nicer room.',
+    cover: '/images/blog/corporate-retreats-cover.webp',
+    date: '2026-09-18',
+    body: [
+      {
+        type: 'paragraph',
+        text: 'At Horizons, we believe that a corporate retreat is not just a change of location, but a shift away from the usual workplace. It is a chance to find space for new conversations and strengthen relationships, as well as an opportunity for collaborative planning and simply spending time together outside the usual routine. We are convinced that these experiences should not simply replicate a typical workday in a different location. Rather, the goal should be to take people out of their usual environment so that the experience does not feel like just another day at the office.',
+      },
+      { type: 'heading', text: 'Breaking the Daily Pattern' },
+      {
+        type: 'paragraph',
+        text: 'Daily work creates patterns. People exist within their daily routines, talking about the same topics, working in the same room, and meeting the same people. Horizons offers the opportunity to hold an off-site seminar that is not only productive but also beneficial for both the body and the mind. A conversation that begins during a work session can continue on a walk. People who normally interact only in the context of specific responsibilities can sit down for breakfast or spend an evening together around a fire. There is more room for conversations that would probably never make it onto a meeting agenda. We believe this is the most valuable aspect of an off-site event. After all, sometimes what happens between scheduled sessions can be just as important as the sessions themselves.',
+      },
+      { type: 'heading', text: 'Bonding Beyond the Agenda' },
+      {
+        type: 'paragraph',
+        text: 'People bond not only through conversations about work. Cooking together on the terrace of our “Forest Villa”, or sharing a meal overlooking the lake without any follow-up meetings, can change the nature of how people interact. These experiences do not need to be turned into formal team-building exercises to be valuable. In fact, we often prefer the opposite approach. Give people something to do and a place to spend time together, but don’t organize every interaction for them. Some of the best conversations happen precisely because nobody put them on the schedule.',
+      },
+      {
+        type: 'paragraph',
+        text: 'This is how we approach group stays at Horizons Sandhills. Teams are given the opportunity to relax and spend the night in our “Forest Villa,” as well as hold work sessions surrounded by nature. We do not see the goal as filling every available hour. We prefer to give guests the opportunity to choose for themselves how to spend their time, whether on relaxation or productive activities.',
+      },
+      {
+        type: 'paragraph',
+        text: 'We do not believe the future of corporate retreats will be defined by a more impressive conference room. In our view, the key is to create enough distance from the usual work routine so that people can have an exceptional experience. Teams still need places to think and work, but they also need meals, walks, conversations, and time together that have nothing to do with the next presentation. When a retreat combines both of these elements, it ceases to be just a typical work event moved to a more pleasant location. It becomes a memorable experience for the entire team, helping them bond and work productively.',
+      },
+    ],
+  },
+  {
+    slug: 'why-people-need-places-to-disconnect-more-than-ever',
+    title: 'Why People Need Places to Disconnect More Than Ever',
+    excerpt:
+      'Disconnecting doesn’t have to mean switching off your phone. It can simply mean being somewhere the phone becomes less interesting.',
+    cover: '/images/blog/places-to-disconnect-cover.webp',
+    date: '2026-09-20',
+    body: [
+      {
+        type: 'paragraph',
+        text: 'At Horizons, we do not believe that simply coming to relax in nature automatically guarantees disconnection from the outside world. Sometimes people bring their usual routines with them on a trip. Work messages, notifications, news, entertainment, and social media are always within reach. You can spend the entire day sitting by the lake while still being completely absorbed in the messages coming through your phone, just as you would be at home. That is why we believe hospitality is about more than simply creating distance between a guest and the city. The place itself should encourage people to take a break from their everyday routines.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The atmosphere of a destination should encourage people to change their usual habits. At Horizons, guests can choose the way of relaxing that suits them best. A walking trail surrounded by forest and the riverbank gives people an opportunity to focus on their own thoughts and reflections, putting aside the routine that already takes up so much of everyday life. Kayaking or going for a bike ride gives those who prefer a more active experience another way to spend their time. For us, “disconnecting” does not mean giving up technology. We are not trying to encourage guests to switch off their phones. Instead, we want to create a place where, for a while, the phone simply becomes less interesting.',
+      },
+      { type: 'heading', text: 'Not Every Hour Needs a Result' },
+      {
+        type: 'paragraph',
+        text: 'We also believe that sometimes the key to a successful getaway is not having a specific goal at all. In modern life, we already try to fill almost every hour with something to do. At work, there are always deadlines and schedules, and even a vacation can turn into a carefully planned itinerary built around reservations, activities, and places that have to be visited. At Horizons Sandhills, guests are not limited by time when talking around the fire or taking a boat out on the lake. They can enjoy the amenities across the property in any order and without having to follow a schedule. These are very simple things, but that simplicity is exactly the point. Not every hour has to produce a result.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The absence of a strict schedule also affects how people spend time together. Families, couples, friends, and groups often do not need more entertainment in order to feel closer. Sometimes they simply need fewer reasons to interrupt a conversation. An evening meal can last longer simply because no one needs to rush anywhere afterward. We like this kind of flexibility because spending time together does not necessarily mean doing the same thing all day.',
+      },
+      { type: 'heading', text: 'Built Into the Landscape' },
+      {
+        type: 'paragraph',
+        text: 'This idea became one of the foundations of Horizons Sandhills. The Forest Villas are part of the surrounding landscape rather than something that separates guests from nature. Each private terrace extends part of the living space outdoors. All the amenities available at Horizons Sandhills can be enjoyed without guests having to organize their day around a particular program.',
+      },
+      {
+        type: 'paragraph',
+        text: 'We want people to use these opportunities whenever they feel like it, or whenever they are ready to try something new. The point is not to create the longest possible list of activities. The point is to let the day unfold naturally, without constantly asking, “What are we doing next?”',
+      },
+      {
+        type: 'paragraph',
+        text: 'We believe this is becoming one of the most important roles that outdoor hospitality can play. Rest does not have to require people to give up technology, follow a particular wellness routine, or make every minute productive in its own way. It can simply provide an environment in which everyday concerns temporarily lose some of their importance. For us, that is what truly disconnecting from everyday life looks like. It does not mean doing absolutely nothing or forcing yourself to “be present.” It means reaching a state where you no longer feel that every moment has to lead to the next.',
+      },
+    ],
+  },
+  {
+    slug: 'sustainability-isnt-a-marketing-strategy-anymore',
+    title: 'Sustainability Isn’t a Marketing Strategy Anymore',
+    excerpt:
+      'Development should make a property more useful without making the landscape less recognizable — which means knowing when to build, and when to leave an area alone.',
+    cover: '/images/blog/sustainability-cover.webp',
+    date: '2026-09-22',
+    body: [
+      {
+        type: 'paragraph',
+        text: 'For a countryside retreat, the character of the surrounding environment is very important. If too much of the landscape is cleared, heavily altered, or developed with new structures, the place may lose the appeal that made people want to visit in the first place.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Any changes made to the landscape should benefit the property without taking away from what makes it recognizable. This requires a clear understanding of what should be added, where it would be appropriate, and what is better left in its natural state.',
+      },
+      { type: 'heading', text: 'Building Without Erasing' },
+      {
+        type: 'paragraph',
+        text: 'Sustainable development does not mean refusing to build or improve a hospitality project. It means understanding that every addition changes the environment around it.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Accommodations, pathways, recreational areas, and activities should help guests truly experience the atmosphere of the property rather than compete with it. At Horizons Sandhills, our Forest Villas combine modern comfort with a connection to nature, allowing guests to stay close to the forest and lake while still enjoying a high level of comfort. Large windows, private terraces, and outdoor spaces extend the experience beyond the interior rather than separating people from nature.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Our goal is to give people the freedom to move around Horizons Sandhills and build their own relationship with the surrounding environment. We would not want nature to become simply a view from the window.',
+      },
+      { type: 'heading', text: 'Beehives and an Orchard' },
+      {
+        type: 'paragraph',
+        text: 'We have beehives on the property, which are a good example of how sustainability is an important part of our approach. They contribute to the health of the land while also allowing us to produce natural honey directly on the property. We are also developing a fruit orchard, which is another step in the long-term development of Horizons Sandhills.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Of course, these things alone will not solve every environmental problem, and we are not claiming otherwise. We see value in making sustainability part of actual development rather than using it only to attract attention.',
+      },
+      { type: 'heading', text: 'No Demands on Guests' },
+      {
+        type: 'paragraph',
+        text: 'Our environmental responsibility should not create restrictions for guests or require anything from them. We believe the most effective approach is to make ways of experiencing the property that cause less harm to the environment simple and appealing.',
+      },
+      {
+        type: 'paragraph',
+        text: 'The goal is not to tell people how they should interact with nature. The goal is to provide guests with comfort and freedom while maintaining the sustainability and cleanliness of the surrounding environment.',
+      },
+      {
+        type: 'paragraph',
+        text: 'As we continue developing in outdoor hospitality, we understand that new questions continue to arise: how the land is used, how activities change, what should be introduced, and what should remain as it is. That is why we believe sustainable development cannot be viewed simply as a marketing strategy. Environmental responsibility should be a standard when making decisions. The most convincing evidence is not a statement about sustainability, but the fact that the environment remains protected as the business continues to develop.',
+      },
+    ],
+  },
+  {
+    slug: 'what-makes-a-destination-feel-authentic',
+    title: 'What Makes a Destination Feel Authentic?',
+    excerpt:
+      'Guests can’t always explain why one place feels authentic and another doesn’t — but they can always feel the difference.',
+    cover: '/images/blog/destination-authenticity-cover.webp',
+    date: '2026-09-25',
+    body: [
+      {
+        type: 'paragraph',
+        text: 'Guests may not always be able to explain why one place feels authentic while another does not, but they can always feel the difference. We believe that a place becomes authentic when its individuality grows naturally out of the place itself. This cannot be achieved later by adding decorations, carefully choosing a visual style, or borrowing one from another successful property. A beautiful interior or simply a visually appealing setting will most likely attract attention, but appearance alone does not create a lasting identity.',
+      },
+      { type: 'heading', text: 'The Setting Already Exists' },
+      {
+        type: 'paragraph',
+        text: 'Every place already has its own character before the first building is even designed. Climate, vegetation, bodies of water, open spaces, and the surrounding region create conditions that cannot be reproduced somewhere else. At Horizons Sandhills, an important part of this is the South Carolina landscape: 126 acres of private land, an 18-acre lake, forests, trails, and open spaces that change throughout the day and across different seasons. The property does not need to invent a setting for its guests - it already exists. Our task is to make that setting accessible without replacing it with an artificially created version of nature.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Architecture is undoubtedly important in creating authenticity, but not because it should imitate a particular style. Its value comes from the harmony between the surrounding landscape and the design itself. The “Forest Villas” at Horizons Sandhills offer modern private accommodations with views of the surrounding landscape. Large windows direct attention outside. Private terraces make the forest part of everyday life rather than simply a distant view. Fire pits, outdoor dining areas, and walking paths surrounded by forest encourage guests to step outside and spend time outdoors throughout the property. We believe that design should not compete with its surroundings. It should complement them, and it is through this combination that guests can develop a genuine sense of comfort.',
+      },
+      { type: 'heading', text: 'A Place That Keeps Developing' },
+      {
+        type: 'paragraph',
+        text: 'Authenticity also comes from the fact that a destination continues to live and develop even after guests leave. Not every element has to exist only for entertainment or decoration. The beehives at Horizons Sandhills are part of the property’s environmental approach and our plans to produce natural honey. The developing orchard is another project that will continue to change and mature over time. These elements are not themed installations created to make the property appear more natural. They are part of our approach to creating an authentic destination, and that is an approach we do not intend to change.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Authenticity cannot be achieved simply by adding different elements in an attempt to give a place a particular appearance. It develops when each decision is made with respect for the identity and character the place already has. The landscape provides the foundation, architecture adds comfort, and long-term projects continue to improve the guest experience. At Horizons Sandhills, we believe that the identity of a destination becomes an advantage and creates authenticity when it remains in harmony with its surroundings. When all of these elements come together, the result is not simply a place that looks distinctive, but one that feels as though it could only exist exactly where it is.',
+      },
+    ],
+  },
 ];
