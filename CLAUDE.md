@@ -59,6 +59,18 @@ here — see [`docs/cloudbeds-popup/`](./docs/cloudbeds-popup/README.md) for the
 farm-basket promo pop-up (three blocks pasted into Settings → Booking Engine →
 Customize) and its local test harness.
 
+**The same offer runs on the site**, as `FarmBasketPopup.tsx` — same copy, same
+photo, but its primary CTA opens `BookingModal` rather than returning the guest
+to a calendar. The two are separate implementations by necessity (one is React,
+one is vanilla JS pasted into a third-party dashboard), so **a copy change has
+to be made twice**: `COPY` in `FarmBasketPopup.tsx` and `COPY` in
+`docs/cloudbeds-popup/popup.js`.
+
+`FarmBasketPopup` drives its own show/hide from state rather than from
+`AnimatePresence` (which `BookingModal` and `PrivateEventModal` do use) — it is
+a full-viewport overlay, so it must not depend on an exit animation completing
+in order to stop intercepting clicks. The reasoning is in the component.
+
 ---
 
 ## Page Structure & Z-Index Stack
@@ -67,6 +79,7 @@ Customize) and its local test harness.
 
 | z-index | Element |
 |---------|---------|
+| 400 | PrivateEventModal · 320 BookingModal · **300 FarmBasketPopup** (all portalled to `body`) |
 | 200 | StickyHeader |
 | 100 | Mobile sticky booking bar (fixed bottom-0, hardcoded in SandhillsLanding) |
 | 60 | Footer (RoundedEntry z-60) |
@@ -89,6 +102,7 @@ Customize) and its local test harness.
 8. `<RoundedEntry z=55>` → `<FaqAccordion items={d.faq} />` — last section before the footer
 9. `<Footer />` (z-60)
 10. Mobile sticky bar (fixed z-100)
+11. `<FarmBasketPopup />` — promo pop-up, portalled to `body`
 
 **Commented out:**
 - `DayScenes`

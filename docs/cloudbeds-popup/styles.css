@@ -65,7 +65,7 @@
 /* Photo: full-bleed across the top of the card. Negative margins cancel the
    card padding, so the card keeps one padding value to change. */
 .hs-farmbox__figure {
-  margin: -42px -38px 24px;
+  margin: -42px -38px 34px;
   border-radius: 18px 18px 0 0;
   overflow: hidden;
   background: #E6DECC;   /* holds the space if the photo is slow or blocked */
@@ -216,7 +216,7 @@
     max-height: calc(100vh - 28px);
   }
   .hs-farmbox__figure {
-    margin: -36px -22px 20px;
+    margin: -36px -22px 28px;
     border-radius: 20px 20px 0 0;
   }
   .hs-farmbox__title { font-size: 25px; }

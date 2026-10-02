@@ -17,6 +17,18 @@ offer, same three fields in the dashboard — repaste all three.
 
 ---
 
+## There is a twin on the site
+
+`src/components/blocks/FarmBasketPopup.tsx` runs the same offer on the React
+site, with the same copy and photo. Its primary CTA opens `BookingModal`
+instead of returning the guest to a calendar.
+
+They cannot share code — this one is vanilla JS pasted into a third-party
+dashboard — so **a copy change has to be made in both places**: the `COPY`
+block in `popup.js` here, and the `COPY` block in `FarmBasketPopup.tsx`.
+
+---
+
 ## Why this lives in the dashboard, not in the repo
 
 The original spec's section 4 flags a blocker to check first: if the property

@@ -23,6 +23,7 @@ import GettingHere from '../components/blocks/GettingHere';
 import Footer from '../components/blocks/Footer';
 import BookingModal from '../components/blocks/BookingModal';
 import PrivateEventModal from '../components/blocks/PrivateEventModal';
+import FarmBasketPopup from '../components/blocks/FarmBasketPopup';
 import { openBooking } from '../components/data/booking';
 import StackCard from '../components/primitives/StackCard';
 import RoundedEntry from '../components/primitives/RoundedEntry';
@@ -306,6 +307,7 @@ export default function SandhillsLanding() {
 
       <BookingModal />
       <PrivateEventModal />
+      <FarmBasketPopup />
     </>
   );
 }

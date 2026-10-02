@@ -296,7 +296,7 @@ this site:
 
 | Slot | Disk path | Referenced at | Displayed |
 |---|---|---|---|
-| Farm basket photo, full-bleed across the top of the pop-up card | `public/images/sandhills/farm-basket.webp` (`.jpg` sibling alongside, unused fallback) | **`docs/cloudbeds-popup/popup.js`, the `PHOTO_URL` constant** (authoritative — popup.js builds the figure if the markup lacks one). Mirrored in `docs/cloudbeds-popup/header.html` as the `data-hs-img` `src`; change both. | 440px wide desktop, full card width on mobile, 3:2 |
+| Farm basket photo, full-bleed across the top of the pop-up card. **Also used on the site** by `src/components/blocks/FarmBasketPopup.tsx`, which references it by the ordinary relative path `/images/sandhills/farm-basket.webp` | `public/images/sandhills/farm-basket.webp` (`.jpg` sibling alongside, unused fallback) | **`docs/cloudbeds-popup/popup.js`, the `PHOTO_URL` constant** (authoritative — popup.js builds the figure if the markup lacks one). Mirrored in `docs/cloudbeds-popup/header.html` as the `data-hs-img` `src`; change both. | 440px wide desktop, full card width on mobile, 3:2 |
 
 Cropped from a 725x1280 portrait original (`IMG_8478`) at `560x373+80+420` —
 a 3:2 frame centred on the basket, with the villa deck and stairs above for
