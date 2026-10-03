@@ -54,7 +54,7 @@ Dashboard path: **Account menu → Settings → Booking Engine → tab `Customiz
 | File | Field | Paste |
 |---|---|---|
 | `header.html` | **Custom Header** | As-is — the field takes HTML. Set it per-language if the engine is multilingual. |
-| `styles.css` | **Custom Meta Tags** | As-is, **keeping** the `<style>` wrapper — the field takes head markup. |
+| `styles.css` | **Custom Meta Tags** | As-is, **keeping** the `<style>` wrapper — the field takes head markup. See the validator note below. |
 | **`popup.wrapped.js`** | **JavaScript** | As-is, **including** its `<script>` tags. |
 
 **The JavaScript field wants `<script>` tags.** This was established the hard
@@ -73,6 +73,33 @@ wording and the photo URL stay easy to eyeball after a paste.
 | `popup.js` | **Source of truth.** Readable and commented. Never pasted. |
 | `popup.wrapped.js` | Generated. **This is the paste.** Minified, in `<script>` tags. |
 | `popup.min.js` | Generated. Same code without tags — kept only in case a future engine version wants bare JS. |
+
+### Both fields scan the text you paste, not just its syntax
+
+The **Custom Meta Tags** field refuses the CSS with:
+
+> Meta tag input should not contain javascript codes!
+
+It is scanning the whole input for anything that looks like a tag. It found
+`<script>` written **inside a CSS comment** — a comment that existed only to
+explain the JavaScript field. The CSS was valid; the prose about code was the
+problem.
+
+So the rule for `styles.css` is the same one `popup.js` already follows: **no
+angle brackets anywhere except the opening and closing `<style>` tags, and no
+mention of the other blocks by name.** Check before pasting:
+
+```
+grep -n '<' docs/cloudbeds-popup/styles.css          # expect exactly 2 hits
+grep -niE 'script|javascript' docs/cloudbeds-popup/styles.css   # expect none
+```
+
+`styles.bare.css` is a generated fallback with the `<style>` tags removed, for
+the case where the field turns out to reject the wrapper itself rather than the
+contents. Try `styles.css` first — the field takes head markup, so the wrapper
+should be correct.
+
+---
 
 ### What actually broke, and what did not
 
