@@ -28,7 +28,7 @@ suggestions.
 | Decision | Choice | Consequence |
 |---|---|---|
 | Repo | Same repo, same Vite app | 13 new routes in `src/App.tsx`; no new project, no separate deploy |
-| Host | `sandhills.gohorizons.com/<slug>` | Real paths on the existing domain — no duplicate-content risk |
+| Host | `sandhills.gohorizons.com/<slug>` | Confirmed live origin; `SITE_ORIGIN` constant replaces the stale hardcoded `horizonssandhills.com` site-wide |
 | Traffic | Paid ads now, organic later | Built indexable from the start: per-page title/description, sitemap entries |
 | Page chrome | **None** | No `StickyHeader`, no `Footer`. Four screens and the form, nothing else |
 | Amenities | Photo cards, 3x2 grid | Matches `VillaCascade`'s `EXPERIENCE_CARDS` language |
@@ -273,10 +273,9 @@ sub-component, same Escape-to-close and backdrop-click-to-close, same
 
 Differences from `PrivateEventModal`:
 
-- **Fields:** Name, Phone, Email. All three required, matching how
-  `PrivateEventModal` validates. *(Assumption — the brief lists three fields with
-  no optionality. Requiring both phone and email does cost some leads; relaxable
-  to email-or-phone on request.)*
+- **Fields:** Name, Phone, Email — all three required, exactly as the brief
+  lists them (client confirmed 2026-10-10, declining the email-or-phone
+  relaxation). Matches how `PrivateEventModal` validates.
 - **Copy:** verbatim from the brief, including the WhatsApp line ("Contact us now
   … or fill out the form below") wired to the existing `CONTACT_WHATSAPP_HREF`
   and `WhatsAppIcon`, and the post-submit "Thank you!" state.
@@ -335,11 +334,11 @@ variants. The `Title Case.webp` duplicates in that folder are not referenced —
 spaces in asset paths are a liability.
 
 The remaining seven use placeholders from the general library (marked `*` in the
-inventory). **This is the one open dependency on the client.** Seven segment
-heroes reusing generic property shots is the weakest part of the result: a
-pet-friendly ad landing on a photo with no dog in it converts worse than one that
-shows the promise. Each swap is a one-line data edit, so it does not block
-implementation.
+inventory). **The client has accepted shipping with these and supplying real
+photography later** (2026-10-10), so this is not a blocker — but it is the
+weakest part of the result: a pet-friendly ad landing on a photo with no dog in
+it converts worse than one that shows the promise. Each swap is a one-line data
+edit in `segments.ts` plus a hero derivative.
 
 ### Amenity cards — resize required
 
@@ -396,15 +395,22 @@ rather than pre-emptively touching it.
 - `robots.txt` already allows everything; no change.
 - No new structured data.
 
-### Open: which origin is canonical
+### Canonical origin — resolved
 
-`sitemap.xml` and `StructuredData.tsx` hardcode `https://horizonssandhills.com`,
-while the client describes the live host as `sandhills.gohorizons.com`.
+**`https://sandhills.gohorizons.com` is the live origin** (client, 2026-10-10).
+`sitemap.xml` and `StructuredData.tsx` currently hardcode
+`https://horizonssandhills.com`, which is therefore wrong.
 
-Introduce a single `SITE_ORIGIN` constant and route the new canonicals through
-it, so correcting the host later is one edit instead of a hunt. **Leave its value
-at the current `horizonssandhills.com` and flag it** — do not guess which domain
-is canonical. Needs a direct answer from the client.
+Introduce a single `SITE_ORIGIN` constant set to the correct origin, and route
+both the new canonicals and the existing hardcoded URLs through it.
+
+**This has to extend past the 13 new pages.** A sitemap served from
+`sandhills.gohorizons.com` that lists `horizonssandhills.com` URLs is a
+cross-domain sitemap and gets ignored, so adding 13 correct entries to the
+existing file would leave it internally inconsistent and non-functional for both
+sets. Updating every URL in `sitemap.xml` and `StructuredData.tsx` to
+`SITE_ORIGIN` is what makes the new entries work; it is in scope for that reason
+and no other. `CLAUDE.md` documents the old origin and needs the same correction.
 
 ---
 
@@ -429,10 +435,8 @@ reconsidering as a separate decision if the site grows tests generally.
 
 ## 12. Follow-ups
 
-- Client to supply segment photography for the seven placeholder heroes.
-- Client to confirm the canonical origin (`horizonssandhills.com` vs.
-  `sandhills.gohorizons.com`).
-- Decide whether to relax the form to email-or-phone rather than both.
+- Client to supply segment photography for the seven placeholder heroes
+  (accepted as a later swap, not a blocker).
 - Revisit internal linking when the organic phase begins — these are orphan pages
   by design.
 - `CLAUDE.md` claims the Footer booking CTA block was "removed site-wide" on
