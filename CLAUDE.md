@@ -317,4 +317,4 @@ Vite code splitting:
 - `framer-motion` → `motion` chunk
 - `react` + `react-router` → `react-vendor` chunk
 
-SEO: `StructuredData.tsx` injects Resort schema + FAQPage schema. All URLs hardcoded to `https://horizonssandhills.com`.
+SEO: `StructuredData.tsx` injects Resort schema + FAQPage schema. All URLs are built from `SITE_ORIGIN` (`src/lib/site.ts`), currently `https://sandhills.gohorizons.com` — `public/sitemap.xml`, `public/robots.txt`, and `public/llms.txt` can't import a constant, so they carry that same origin as a literal and must be kept in sync by hand.

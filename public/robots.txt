@@ -35,4 +35,4 @@ Allow: /
 User-agent: Meta-ExternalFetcher
 Allow: /
 
-Sitemap: https://horizonssandhills.com/sitemap.xml
+Sitemap: https://sandhills.gohorizons.com/sitemap.xml

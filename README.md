@@ -83,7 +83,7 @@ public/
   - `/images/sandhills/apiary.webp`
   - `/images/sandhills/farm_tour.webp`
 - [ ] Update phone number if needed: `tel:+18035550180`
-- [ ] Verify all URLs in `StructuredData.tsx` point to `horizonssandhills.com`
+- [ ] Verify all URLs in `StructuredData.tsx` point to `sandhills.gohorizons.com` (the live origin — see `SITE_ORIGIN` in `src/lib/site.ts`)
 - [ ] Re-enable commented-out sections when ready (Worth It chapter, NearbyGrid)
 
 ---

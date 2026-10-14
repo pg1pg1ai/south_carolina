@@ -1,6 +1,7 @@
 import type { BlogArticle } from './data/blog';
+import { SITE_ORIGIN } from '../lib/site';
 
-const SITE_URL = 'https://horizonssandhills.com';
+const SITE_URL = SITE_ORIGIN;
 
 const resort = {
   '@context': 'https://schema.org',
