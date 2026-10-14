@@ -15,6 +15,7 @@ const FORM_LABELS: Record<string, string> = {
   'corporate-quote': 'Corporate Quotation Request',
   'question': 'Website Question',
   'labor-day-offer': 'Labor Day Offer',
+  'landing-request': 'Landing Page Request',
 };
 
 function escapeHtml(value: string): string {

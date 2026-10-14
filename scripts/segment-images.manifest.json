@@ -1,0 +1,31 @@
+{
+  "cards": {
+    "villa": "sandhills/Villa.webp",
+    "lake": "sandhills/canoes.webp",
+    "sauna": "sandhills/sauna.webp",
+    "firepit": "sandhills/fire_pit.webp",
+    "ebikes": "bikes.webp",
+    "acres": "sandhills/land.webp",
+    "sports": "experience/05-the-open-field.webp",
+    "teamActivities": "experience/bring you a-game.webp",
+    "trails": "sandhills/Forest_bathing_walk.webp",
+    "forestTrails": "sandhills/twelve_miles.webp",
+    "photoReady": "villa/hero/1.webp",
+    "privateGrounds": "experience/05-the-open-field.webp"
+  },
+  "heroes": {
+    "romantic": "villa/hero/2.webp",
+    "family": "b2b/Family Reunions.webp",
+    "girls-weekend": "experience/pool-days.webp",
+    "bachelorette": "b2b/Bachelor.webp",
+    "birthday": "b2b/Birthday Weekends.webp",
+    "celebrations": "b2b/Private Celebrations.webp",
+    "wellness-retreat": "b2b/Wellness Retreats.webp",
+    "corporate-retreat": "b2b/Corporate Retreats.webp",
+    "group": "villa/hero/3.webp",
+    "solo": "sandhills/Forest_bathing_walk.webp",
+    "remote-work": "villa/03_Terrace/2.webp",
+    "road-trip": "sandhills/twelve_miles.webp",
+    "pet-friendly": "sandhills/worthit.webp"
+  }
+}

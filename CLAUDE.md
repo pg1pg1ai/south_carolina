@@ -24,7 +24,7 @@ npm run preview    # preview production build
 - **Tailwind CSS 3.4** — design tokens in `tailwind.config.ts`; raw `rgba`/hex used in inline styles for motion values only
 - **Lucide React** — utility icons (chevrons, close, etc.)
 - **@phosphor-icons/react** — decorative duotone icons in HeroImmersive GLANCE block only; use `Icon` suffix (e.g. `TreeEvergreenIcon`)
-- **React Router 7** — five routes: `/` → `SandhillsLanding`, `/stays/:slug` → `StayDetail`, `/guide` → `GuestGuide`, `/blog` → `BlogIndex`, `/blog/:slug` → `ArticlePage`
+- **React Router 7** — 19 routes: `/` → `SandhillsLanding`, `/stays/:slug` → `StayDetail`, `/guide` → `GuestGuide`, `/blog` → `BlogIndex`, `/blog/:slug` → `ArticlePage`, `/preview/homepage-widgets` → `PreviewHomepageWidgets`, plus 13 segment landing pages (`/romantic`, `/family`, `/girls-weekend`, `/bachelorette`, `/birthday`, `/celebrations`, `/wellness-retreat`, `/corporate-retreat`, `/group`, `/solo`, `/remote-work`, `/road-trip`, `/pet-friendly`) generated explicitly from the `segments` registry in `src/App.tsx` — see "Segment Landing Pages" below
 
 ---
 
@@ -150,9 +150,51 @@ five category filters, ~36 pins, and a jump-to-spot list. Pin positions come fro
 `property-map.webp` invalidates every coordinate**. See `IMAGE_MAP.md`.
 
 Removed at the client's request (2026-08-12) and **not** to be reinstated without
-asking: a Safety section, a Checkout section with its checklist, and the
-`Footer` booking CTA block (removed site-wide, so the landing page lost it too).
-Late checkout now lives only on the hero's Checkout card.
+asking: a Safety section and a Checkout section with its checklist. Late checkout
+now lives only on the hero's Checkout card. (The Footer booking CTA block was
+*not* removed site-wide — `Footer.tsx` lines ~77-92 still render "Pick your
+dates — the pines will handle the rest." + a "Book Your Stay" button, on every
+page that renders `Footer`. The segment landing pages don't render `Footer` at
+all, by design — see "Segment Landing Pages" below.)
+
+---
+
+## Segment Landing Pages
+
+13 audience-targeted landing pages, one per visitor intent, each a standalone
+route rendered by the shared `src/pages/SegmentLanding.tsx` template:
+
+`/romantic`, `/family`, `/girls-weekend`, `/bachelorette`, `/birthday`,
+`/celebrations`, `/wellness-retreat`, `/corporate-retreat`, `/group`, `/solo`,
+`/remote-work`, `/road-trip`, `/pet-friendly`
+
+**Data layer:** `src/components/data/segments.ts` exports `segments`, an array
+of 13 `Segment` objects (hero, amenities, video, finalCta, leadLabel, seo).
+`src/App.tsx` generates one `<Route>` per entry via `segments.map(...)` —
+explicitly, never a `/:slug` catch-all, which would swallow every typo and
+unknown path on the rest of the site.
+
+**By design, these pages render no `StickyHeader` and no `Footer`** — just
+`SegmentHero`, `AmenityCards`, `VideoStrip`, `SegmentCta`, and
+`RequestFormModal`, mounted directly by `SegmentLanding`. There is no
+in-site navigation onto or off of them; `public/sitemap.xml` is Google's only
+discovery path.
+
+**Every CTA on every segment page opens `RequestFormModal`** (`src/components/blocks/RequestFormModal.tsx`)
+— never `openBooking()`. These are lead-capture pages, not booking hand-offs:
+a CTA calls `openRequestForm()` (`src/lib/requestForm.ts`), which dispatches
+the `open-request-form` event `RequestFormModal` listens for — mirroring how
+`openBooking()` (`data/booking.ts`) opens `BookingModal` elsewhere on the
+site. On submit, `RequestFormModal` posts to `/api/send-inquiry` via
+`sendInquiry()` (`src/lib/sendInquiry.ts`), distinct from the Cloudbeds
+hand-off the rest of the site uses.
+
+Segment hero/card imagery is produced by `scripts/build-segment-images.mjs`
+into `public/images/segments/`. `npm run check:segments`
+(`scripts/check-segments.mjs`) validates the data — every photo path resolves
+to a real file, no duplicate slugs, no hero reusing one of its own page's card
+photos, and no YouTube id with a leftover `?si=` suffix. Run it after any edit
+to `segments.ts`.
 
 ---
 

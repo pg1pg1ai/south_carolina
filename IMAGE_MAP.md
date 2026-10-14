@@ -281,6 +281,63 @@ the article's full-bleed masthead, so do not crop them tighter for the grid.
 
 ---
 
+## Segment landing pages derivatives (`/images/segments/`)
+
+**Purpose:** The segment landing pages (Task 2–7) reference precomputed image
+derivatives by filename convention, keyed to the segment type or amenity. These
+files are generated automatically by `scripts/build-segment-images.mjs` and are
+NEVER edited directly.
+
+**Generation:**
+- Run: `npm run build:segment-images`
+- Consumes: `CARD_SOURCES` and `HERO_SOURCES` in `scripts/build-segment-images.mjs`
+  (the authoritative source mapping — app code never names a raw source)
+- Produces: 
+  - `public/images/segments/cards/*.webp` (12 files, keyed by `AmenityKey`: `villa`, `lake`, `sauna`, `firepit`, `ebikes`, `acres`, `sports`, `teamActivities`, `trails`, `forestTrails`, `photoReady`, `privateGrounds`)
+  - `public/images/segments/heroes/*.webp` (13 files, keyed by segment slug: `romantic`, `family`, `girls-weekend`, `bachelorette`, `birthday`, `celebrations`, `wellness-retreat`, `corporate-retreat`, `group`, `solo`, `remote-work`, `road-trip`, `pet-friendly`)
+  - `scripts/segment-images.manifest.json` (maps each key/slug to its source for duplicate checking)
+
+**Constraints:**
+- Every `cards/*` file must be < 100000 bytes
+- Every `heroes/*` file must be < 200000 bytes
+- Quality is optimized per file (starting at 85, stepping down only to meet budget).
+  See the script's build output for final quality per file.
+- The script includes a guard that prevents any two sources from colliding
+  (producing identical files on disk), except the known shared pair:
+  `sports` and `privateGrounds` intentionally both use `experience/05-the-open-field.webp`.
+- If build fails (any file over budget), the script exits with code 1.
+
+**Hero sources:** Six come from high-resolution originals in `b2b/` (Title Case,
+2500–5500 px wide):
+- `family` ← `b2b/Family Reunions.webp` (5504×3072, original art direction)
+- `bachelorette` ← `b2b/Bachelor.webp`
+- `birthday` ← `b2b/Birthday Weekends.webp`
+- `celebrations` ← `b2b/Private Celebrations.webp`
+- `wellness-retreat` ← `b2b/Wellness Retreats.webp`
+- `corporate-retreat` ← `b2b/Corporate Retreats.webp`
+
+Remaining seven are placeholders awaiting client photography:
+- `romantic` ← `villa/hero/2.webp`
+- `girls-weekend` ← `experience/pool-days.webp`
+- `group` ← `villa/hero/3.webp`
+- `solo` ← `sandhills/Forest_bathing_walk.webp`
+- `remote-work` ← `villa/03_Terrace/2.webp`
+- `road-trip` ← `sandhills/twelve_miles.webp`
+- `pet-friendly` ← `sandhills/worthit.webp` (golden-hour savanna, suits "space to enjoy together")
+
+**Updating placeholders:** To swap a placeholder hero, edit the value in
+`HERO_SOURCES` and rerun `npm run build:segment-images`. The build script
+rejects two heroes sharing a source, and two cards sharing a source (except
+the whitelisted `sports`/`privateGrounds` pair). Then run `npm run
+check:segments`, which separately rejects a hero that reuses one of that
+page's own card photos (via the manifest).
+
+**Important:** The source photos are listed in the script only to keep them out of
+app code. Every later task derives its image paths from the key/slug using the
+formula `/images/segments/cards/<key>.webp` or `/images/segments/heroes/<slug>.webp`.
+
+---
+
 ## Off-site: Cloudbeds booking-engine pop-up
 
 **This image is not rendered by any React component.** It is referenced by

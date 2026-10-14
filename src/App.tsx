@@ -5,6 +5,8 @@ import GuestGuide from './pages/GuestGuide';
 import BlogIndex from './pages/BlogIndex';
 import ArticlePage from './pages/ArticlePage';
 import PreviewHomepageWidgets from './pages/PreviewHomepageWidgets';
+import { segments } from './components/data/segments';
+import SegmentLanding from './pages/SegmentLanding';
 
 export default function App() {
   return (
@@ -16,6 +18,9 @@ export default function App() {
         <Route path="/blog" element={<BlogIndex />} />
         <Route path="/blog/:slug" element={<ArticlePage />} />
         <Route path="/preview/homepage-widgets" element={<PreviewHomepageWidgets />} />
+        {segments.map((s) => (
+          <Route key={s.slug} path={`/${s.slug}`} element={<SegmentLanding segment={s} />} />
+        ))}
       </Routes>
     </BrowserRouter>
   );
