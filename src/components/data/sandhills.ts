@@ -105,7 +105,7 @@ export const sandhillsData = {
   included: [
     { n: '01', title: 'Sauna sessions', note: 'Unlimited, heated by six', icon: '/images/Icons/sauna.png' },
     { n: '02', title: 'Canoes & paddleboards', note: 'Two Kevlar, two SUP', icon: '/images/Icons/canoe.png' },
-    { n: '03', title: 'Premium coffee/tea kit', note: 'Beans from Camden, 30mi · 3 complimentary tea pyramids in each unit', icon: '/images/Icons/coffee.png' },
+    { n: '03', title: 'Premium coffee/tea kit', note: 'Beans from Camden, 30mi · 3 complimentary premium tea sachets per villa', icon: '/images/Icons/coffee.png' },
     { n: '04', title: 'Outdoor firepit', note: 'Wood stacked, lighter too', icon: '/images/Icons/fire.png' },
     { n: '05', title: 'Twelve miles of trail', note: 'Illustrated map per cabin', icon: '/images/Icons/forest.png' },
     { n: '06', title: 'Stargazing chairs', note: 'Two, reclining, per deck', icon: '/images/Icons/chairs.png' },

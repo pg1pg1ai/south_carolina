@@ -227,7 +227,7 @@ export const guideData = {
           items: [
             { text: 'Nespresso coffee machine with milk frother' },
             { text: 'Complimentary Nespresso coffee capsules — 1 capsule per adult guest, per night of the reservation, replenished daily' },
-            { text: '3 complimentary tea pyramids in every unit' },
+            { text: '3 complimentary premium tea sachets per villa' },
             { text: 'Complimentary Fiji water' },
             { text: 'Sea salt and pepper grinders' },
             { text: 'Olive oil' },
