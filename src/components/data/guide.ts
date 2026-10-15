@@ -186,7 +186,7 @@ export const guideData = {
   knowBeforeVisit: [
     {
       title: 'Security Deposit',
-      note: 'A $300 refundable security deposit is required and will be returned within 5–10 business days after check-out, provided no damages inflicted by guests are found during the property inspection.',
+      note: 'A $200 refundable security deposit is required and will be returned within 5–10 business days after check-out, provided no damages inflicted by guests are found during the property inspection.',
     },
     {
       title: 'ID Requirement',
@@ -194,7 +194,7 @@ export const guideData = {
     },
     {
       title: 'Pets',
-      note: 'Max. 3 per cabin with a $60 pet fee per cabin. Pets must be leashed in common areas. Please inform us in advance if you are bringing any. To ensure guest comfort and prevent snakes and pests from entering the facility, the territory is treated with a repellent — if consumed by pets, it may induce sickness.',
+      note: 'Max. 3 per cabin with a $50 pet fee per cabin. Pets must be leashed in common areas. Please inform us in advance if you are bringing any. To ensure guest comfort and prevent snakes and pests from entering the facility, the territory is treated with a repellent — if consumed by pets, it may induce sickness.',
     },
   ],
 
