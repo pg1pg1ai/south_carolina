@@ -307,7 +307,7 @@ export default function GuestGuide() {
                 <div className="no-print mt-4 flex flex-col gap-2">
                   <a href={telHref} className="eyebrow rounded-full bg-signal px-5 py-3 text-center text-linen hover:bg-signal2 transition-colors">Call {GUIDE_PHONE_DISPLAY}</a>
                   <a href={smsHref()} className="eyebrow rounded-full border border-ink px-5 py-3 text-center text-ink hover:bg-ink hover:text-bone transition-colors">Text {GUIDE_PHONE_DISPLAY}</a>
-                  <a href={smsHref('Hi Daniil, I would like to report an issue at Horizons Sandhills: ')} className="eyebrow px-5 py-2 text-center text-ink2 hover:text-ink transition-colors">Report an Issue</a>
+                  <a href={smsHref('Hi Julia, I would like to report an issue at Horizons Sandhills: ')} className="eyebrow px-5 py-2 text-center text-ink2 hover:text-ink transition-colors">Report an Issue</a>
                 </div>
               </div>
             </RevealOnScroll>
