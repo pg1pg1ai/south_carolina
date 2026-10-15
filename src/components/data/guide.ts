@@ -123,7 +123,7 @@ export const guideData = {
       'Follow your GPS to the property address. Set navigation before you leave — cell service gets weaker as you approach.',
       'Park in the designated parking space.',
       'Guests are not permitted to drive on premises.',
-      'Continue past the gate to your assigned parking lot. The gate code is 6619.',
+      'Continue past the gate to your assigned parking lot. The gate code is 4565.',
       'Please avoid driving on unmarked paths. They are for walking only.',
     ],
     parking: [
@@ -161,7 +161,7 @@ export const guideData = {
     { id: 'gazebo', label: 'Gazebo & cold plunge', category: 'amenities', x: 40.46, y: 77.75 },
     { id: 'outdoor-shower', label: 'Outdoor shower', category: 'amenities', x: 38.00, y: 72.34 },
     { id: 'dock', label: 'Dock', category: 'amenities', x: 38.47, y: 68.96 },
-    { id: 'pool', label: 'Pool', category: 'amenities', x: 71.39, y: 65.29 },
+    { id: 'pool', label: 'Pool — Under Maintenance', category: 'amenities', x: 71.39, y: 65.29 },
     { id: 'pool-pavillion', label: 'Pool pavillion', category: 'amenities', x: 72.33, y: 70.64 },
     { id: 'beach-sports-courts', label: 'Beach sports courts', category: 'amenities', x: 71.20, y: 76.36 },
     // Offset from its label (y 65.81) so the pin covers a leftover Google
@@ -227,6 +227,7 @@ export const guideData = {
           items: [
             { text: 'Nespresso coffee machine with milk frother' },
             { text: 'Complimentary Nespresso coffee capsules — 1 capsule per adult guest, per night of the reservation, replenished daily' },
+            { text: '3 complimentary tea pyramids in every unit' },
             { text: 'Complimentary Fiji water' },
             { text: 'Sea salt and pepper grinders' },
             { text: 'Olive oil' },
@@ -285,9 +286,13 @@ export const guideData = {
 
     water: {
       kicker: 'The Water',
-      title: 'Lake & Lounge Guidelines',
-      sub: 'Relax, explore, and share the lake with care',
+      title: 'Lake, Pool & Lounge Guidelines',
+      sub: 'Relax, explore, and share the lake with care. The pool is currently under maintenance.',
       groups: [
+        {
+          title: 'Swimming Pool',
+          paras: ['The pool is currently under maintenance.'],
+        },
         {
           title: 'Lake Activities',
           intro: 'Guests are welcome to enjoy a variety of activities at the lake, including:',
@@ -316,9 +321,9 @@ export const guideData = {
           ],
         },
         {
-          title: 'Fishing & Swimming',
+          title: 'Fishing & Lake Swimming',
           paras: [
-            'Fishing and swimming are available to property guests during their stay. Guests are encouraged to bring their own fishing rods and bait if willing to fish.',
+            'Fishing and swimming in the lake are available to property guests during their stay. Guests are encouraged to bring their own fishing rods and bait if willing to fish.',
             'Please be mindful of other guests using the lake and maintain a safe distance from kayaks, paddleboards, water bikes, and fishing areas.',
           ],
         },

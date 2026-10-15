@@ -49,7 +49,7 @@ export const TERRITORY = [
   { icon: WavesIcon,         value: ['A Lake', 'to Yourself'],                label: 'Swim, fish, paddle, float — or do absolutely nothing on an 18-acre lake.' },
   { icon: HouseSimpleIcon,   value: ['Five-Star Comfort,', 'Forest Edition'], label: 'Modern Forest Villas with everything you need to feel at home outside.' },
   { icon: FireIcon,          value: ['The Wood-Fired', 'Reset'],              label: 'Sauna heat, lake views and the kind of calm you came here for.' },
-  { icon: BicycleIcon,       value: ['Play Without', 'a Schedule'],           label: 'Pool days, e-bikes, kayaks, paddleboards, trails, volleyball, soccer and open-air adventures.' },
+  { icon: BicycleIcon,       value: ['Play Without', 'a Schedule'],           label: 'E-bikes, kayaks, paddleboards, trails, volleyball, soccer and open-air adventures.' },
   { icon: MoonStarsIcon,     value: ['Stay Out', 'After Dark'],               label: 'Firepits, decks, stars and long evenings with your people.' },
 ];
 const NUMH = 'clamp(50px, 6.5vh, 78px)';

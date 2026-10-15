@@ -158,22 +158,19 @@ const EXPERIENCE_CARDS = [
   },
   {
     image:    '/images/experience/06-pool-days.webp',
-    title:    'Pool Days',
-    note:     'A large outdoor pool made for long afternoons, sun, water and good company.',
-    badge:    'The water is fine.',
-    badgeShort: 'The water is fine',
-    headline: 'Long afternoons, solved.',
-    body:     'A proper outdoor pool with loungers around it and towels stacked poolside. Swim before breakfast, float through the afternoon, let the kids wear themselves out before dinner. Bring sunscreen — the rest is handled.',
-    bodyShort: 'A proper outdoor pool, loungers and towels waiting. Bring sunscreen — the rest is handled.',
-    schedule: 'Open daily · dawn to dusk',
+    title:    'Pool',
+    note:     'The pool is currently under maintenance.',
+    badge:    'Under maintenance',
+    badgeShort: 'Under maintenance',
+    headline: 'The pool is under maintenance.',
+    body:     'The pool is currently under maintenance.',
+    bodyShort: 'The pool is currently under maintenance.',
+    schedule: 'Under maintenance',
     location: 'Pool terrace, by the main cabin',
-    points:   ['Large outdoor pool', 'Loungers and towels poolside', 'Swim laps or just float', 'Open dawn to dusk'],
-    accent:   'solved.',
+    points:   ['Currently under maintenance'],
+    accent:   'on hold.',
     facts: [
-      { icon: Waves, label: 'Big outdoor pool' },
-      { icon: Armchair, label: 'Loungers for everyone' },
-      { icon: Gift, label: 'Towels provided' },
-      { icon: Clock, label: 'Dawn to dusk' },
+      { icon: Waves, label: 'Under maintenance' },
     ],
   },
   {
@@ -1488,4 +1485,3 @@ function ExperiencePanel({ cards, currentIdx, onSelect }: { cards: typeof EXPERI
     </>
   );
 }
-
