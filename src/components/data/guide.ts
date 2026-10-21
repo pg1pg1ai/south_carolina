@@ -1,8 +1,8 @@
 // Guest Guide (/guide) content. Facts sourced from the client's guide document;
 // structure mirrors sandhills.ts. Phone/Wi-Fi/places are real — edit here, not in components.
 
-export const GUIDE_PHONE = '+12133226868';
-export const GUIDE_PHONE_DISPLAY = '+1 (213) 322-6868';
+export const GUIDE_PHONE = '+17542868623';
+export const GUIDE_PHONE_DISPLAY = '+1 (754) 286-8623';
 
 export const telHref = `tel:${GUIDE_PHONE}`;
 export const smsHref = (body?: string) =>
@@ -93,7 +93,7 @@ export const mapCategories: { id: MapCategory; label: string; color: string }[] 
 export const guideData = {
   meta: {
     title: 'Guest Guide — Horizons Sandhills',
-    manager: 'Julia',
+    manager: 'Andrii',
     address: '423 Woodmen Rd, Patrick, SC 29584',
     gps: '34.5663,-80.1024',
     nearestTown: 'Patrick, SC',
@@ -201,8 +201,8 @@ export const guideData = {
   access: {
     steps: [
       { title: 'Enter the premises and park in the designated parking space', body: 'Follow Woodmen Rd to the property entrance. Signage marks the turn in.' },
-      { title: 'Our manager Julia will help with navigating your forest villa', body: 'Use the luggage carts to help you pull your suitcases to your forest villa.' },
-      { title: 'Use your keypad or key', body: 'The 4-digit code will be shared with you by Julia at check-in.' },
+      { title: 'Our manager Andrii will help with navigating your forest villa', body: 'Use the luggage carts to help you pull your suitcases to your forest villa.' },
+      { title: 'Use your keypad or key', body: 'The 4-digit code will be shared with you by Andrii at check-in.' },
       { title: 'Enter, breathe, settle in', body: 'Take a moment on the porch. Let the trip melt off your shoulders.' },
       { title: 'Lock behind you', body: 'When leaving, close all doors and lock up.' },
     ],
@@ -470,8 +470,8 @@ export const guideData = {
     { title: 'Grill', note: 'Please clean the grill after use to avoid a $50 cleaning fee deducted from your deposit.' },
     { title: 'Parties & Events', note: 'Not permitted without prior written approval.' },
     { title: 'Parking', note: 'Use your assigned parking area only.' },
-    { title: 'First-Aid Kit', note: 'A basic First-Aid Kit is available on property. Please ask Julia for help locating it. For life-threatening emergencies, please call 911.' },
-    { title: 'Baby Crib & Bedding', note: 'If you are traveling with a child under 3 years old and are in need of a crib and bedding, please ask Julia for complimentary installation in your room.' },
+    { title: 'First-Aid Kit', note: 'A basic First-Aid Kit is available on property. Please ask Andrii for help locating it. For life-threatening emergencies, please call 911.' },
+    { title: 'Baby Crib & Bedding', note: 'If you are traveling with a child under 3 years old and are in need of a crib and bedding, please ask Andrii for complimentary installation in your room.' },
     { title: 'Nature', note: 'Please do not disturb wildlife or vegetation.' },
   ],
 
@@ -479,7 +479,7 @@ export const guideData = {
   checkout: {
     time: '12:00 PM',
     lateNote: 'Late checkout is available on request, depending on availability. An extra fee of 10% of the nightly rate applies.',
-    lateSms: 'Hi Julia, we would like to request a late checkout for our stay at Horizons Sandhills. Is that possible?',
+    lateSms: 'Hi Andrii, we would like to request a late checkout for our stay at Horizons Sandhills. Is that possible?',
   },
 
   localGuide: [
@@ -616,7 +616,7 @@ export const guideData = {
 
   faq: [
     { q: 'What is the Wi-Fi password?', a: 'The network is “Horizons Sandhills Guest” and the password is “@HorizonsSandhills”. Both are in Start Here with one-tap copy buttons.' },
-    { q: 'How do I contact the property manager?', a: `Julia is on the property and available 24/7 — call or text ${GUIDE_PHONE_DISPLAY}.` },
+    { q: 'How do I contact the property manager?', a: `Andrii is on the property and available 24/7 — call or text ${GUIDE_PHONE_DISPLAY}.` },
     { q: 'How do I use the sauna?', a: 'See the Cedar Barrel Sauna card under Amenities — give it about fifteen minutes to warm up.' },
     { q: 'Where should I park?', a: 'Use your assigned lot: A or B for the Forest Villa, C for the Guest House, D for overflow. EV chargers are at Parking A.' },
     { q: 'Where is the nearest grocery store?', a: 'The Markette in Patrick (8–10 min) covers essentials; Piggly Wiggly in Chesterfield (17–20 min) is the closest full grocery store.' },
