@@ -55,7 +55,7 @@ export const sandhillsData = {
       beds: 1,
       baths: 1,
       description: "Each villa in its own clearing — close enough to the lake, far enough from everything else. Step outside to your private deck where the longleaf pines frame the water. The kind of quiet that takes a day to stop feeling strange.",
-      priceFrom: 609,
+      priceFrom: 295,
       image: '/images/villa/01_Exterior/1.webp',
       gallery: [
         '/images/villa/01_Exterior/1.webp',

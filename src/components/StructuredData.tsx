@@ -25,7 +25,7 @@ const resort = {
     latitude: 34.5734,
     longitude: -80.038,
   },
-  priceRange: '$609–$1200',
+  priceRange: '$295–$1200',
   checkinTime: '15:00',
   checkoutTime: '11:00',
   petsAllowed: true,
@@ -83,11 +83,11 @@ const resort = {
       ],
       offers: {
         '@type': 'Offer',
-        price: '609',
+        price: '295',
         priceCurrency: 'USD',
         priceSpecification: {
           '@type': 'UnitPriceSpecification',
-          price: '609',
+          price: '295',
           priceCurrency: 'USD',
           unitText: 'NIGHT',
         },
