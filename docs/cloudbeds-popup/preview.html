@@ -30,7 +30,7 @@
   <div class="bar">
     <strong>Harness</strong>
     <button id="reset">Clear session flag &amp; reload</button>
-    <span>key: <code>hs_farmbox_popup_seen_v2</code></span>
+    <span>key: <code>hs_farmbox_popup_seen_v3</code></span>
     <span id="flag"></span>
   </div>
 
@@ -48,9 +48,9 @@
     for (var d = 1; d <= 28; d++) { cal.insertAdjacentHTML('beforeend', '<div>' + d + '</div>'); }
 
     document.getElementById('flag').textContent =
-      'seen = ' + (sessionStorage.getItem('hs_farmbox_popup_seen_v2') || 'null');
+      'seen = ' + (sessionStorage.getItem('hs_farmbox_popup_seen_v3') || 'null');
     document.getElementById('reset').onclick = function () {
-      sessionStorage.removeItem('hs_farmbox_popup_seen_v2');
+      sessionStorage.removeItem('hs_farmbox_popup_seen_v3');
       location.reload();
     };
 

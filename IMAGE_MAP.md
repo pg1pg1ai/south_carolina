@@ -353,21 +353,20 @@ this site:
 
 | Slot | Disk path | Referenced at | Displayed |
 |---|---|---|---|
-| Farm basket photo, full-bleed across the top of the pop-up card. **Also used on the site** by `src/components/blocks/FarmBasketPopup.tsx`, which references it by the ordinary relative path `/images/sandhills/farm-basket.webp` | `public/images/sandhills/farm-basket.webp` (`.jpg` sibling alongside, unused fallback) | **`docs/cloudbeds-popup/popup.js`, the `PHOTO_URL` constant** (authoritative — popup.js builds the figure if the markup lacks one). Mirrored in `docs/cloudbeds-popup/header.html` as the `data-hs-img` `src`; change both. | 440px wide desktop, full card width on mobile, 3:2 |
+| Halloween movie-night photo, full-bleed across the top of the pop-up card. **Also used on the site** by `src/components/blocks/FarmBasketPopup.tsx`, which references it by the ordinary relative path `/images/sandhills/halloween-movie-night.webp` | `public/images/sandhills/halloween-movie-night.webp` (`.jpg` sibling alongside, unused fallback) | **`docs/cloudbeds-popup/popup.js`, the `PHOTO_URL` constant** (authoritative — popup.js builds the figure if the markup lacks one). Mirrored in `docs/cloudbeds-popup/header.html` as the `data-hs-img` `src`; change both. | 440px wide desktop, full card width on mobile, 3:2 |
 
-Cropped from a 725x1280 portrait original (`IMG_8478`) at `560x373+80+420` —
-a 3:2 frame centred on the basket, with the villa deck and stairs above for
-context and grass below. Exported at native resolution (560px for a 440px box,
-so ~1.3x): if a higher-resolution original turns up, re-crop the same region and
-export at 1120x746 for a true 2x.
+Cropped from the client's 801x1280 portrait original (Google Drive, Oct 2026) at
+`801x534+0+500` — a 3:2 frame on the villa, firepit, guests and projector
+screen, trimming the tree canopy above and lawn below. 801px for a 440px box
+(~1.8x). The previous farm-basket photo (`farm-basket.webp`) stays on disk,
+unreferenced, in case that offer returns.
 
-Was previously a 2:1 band at `460x230+110+500`; heightened at the client's
-request. The ratio is mirrored in three places — `aspect-ratio` in
-`styles.css`, the `width`/`height` attributes in `header.html`, and
-`PHOTO_W`/`PHOTO_H` in `popup.js` — all three must move together.
+The ratio is mirrored in three places — `aspect-ratio` in `styles.css`, the
+`width`/`height` attributes in `header.html`, and `PHOTO_W`/`PHOTO_H` in
+`popup.js` — all three must move together.
 
-Replacing it: keep the 2:1 ratio and the filename, or the pop-up markup and the
-`object-position: center 54%` in `docs/cloudbeds-popup/styles.css` both need
+Replacing it: keep the 3:2 ratio and the filename, or the pop-up markup and the
+`object-position: center 50%` in `docs/cloudbeds-popup/styles.css` both need
 updating. Deploy the site before pasting the pop-up — the image must be live at
 that URL first, or guests see the pop-up without it (`popup.js` hides the frame
 when the photo fails, so it degrades cleanly rather than showing a broken icon).

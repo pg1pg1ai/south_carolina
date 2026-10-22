@@ -24,18 +24,18 @@ const SHOW_DELAY_MS = 15000;
  *  back to once-per-session. */
 const STORAGE_KEY: string | null = null;
 
-const PHOTO = '/images/sandhills/farm-basket.webp';
+const PHOTO = '/images/sandhills/halloween-movie-night.webp';
 const PHOTO_ALT =
-  'A wicker basket on the lawn holding red wine, peaches, grapes, a jar of honey and farmhouse cheese.';
+  'Guests wrapped in blankets by a firepit at dusk, watching a projector screen beside the villa, jack-o’-lanterns lit on the steps.';
 
 const WHATSAPP_HREF = `${CONTACT_WHATSAPP_HREF}?text=${encodeURIComponent(
-  'Hi! I saw the 2-night farm basket offer — I’d like to book a stay.',
+  'Hi! I saw the Halloween movie night offer — I’d like to book a stay.',
 )}`;
 
 const COPY = {
-  eyebrow: 'Special stay offer',
-  title: 'Your Farm Basket is On Us',
-  body: 'Book a 2-night stay at Horizons Sandhills and enjoy a complimentary basket of fresh farm products during your stay.',
+  eyebrow: 'Special Halloween offer',
+  title: 'Movie Night Under the Stars',
+  body: 'Book your Halloween stay and enjoy a Halloween movie night on us with a projector, popcorn, treats, drinks and themed decor.',
   cta: 'Book your stay',
   whatsapp: 'Message us on WhatsApp',
 };
@@ -166,12 +166,12 @@ export default function FarmBasketPopup() {
               <div className="-mx-[22px] -mt-[36px] mb-[28px] sm:-mx-[38px] sm:-mt-[42px] sm:mb-[34px] overflow-hidden rounded-t-[20px] sm:rounded-t-[18px] bg-surface">
                 <img
                   src={PHOTO}
-                  width={560}
-                  height={373}
+                  width={801}
+                  height={534}
                   alt={PHOTO_ALT}
                   onError={() => setPhotoOk(false)}
                   className="block w-full h-auto aspect-[3/2] object-cover"
-                  style={{ objectPosition: 'center 58%' }}
+                  style={{ objectPosition: 'center 50%' }}
                 />
               </div>
             )}

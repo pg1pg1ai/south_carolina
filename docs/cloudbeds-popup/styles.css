@@ -81,7 +81,7 @@
   height: auto;
   aspect-ratio: 3 / 2;
   object-fit: cover;
-  object-position: center 58%;  /* favours the basket if the box ever crops */
+  object-position: center 50%;  /* subject is centred in the crop */
 }
 
 /* The pop-up code sets this if the photo fails to load, so a broken image can
@@ -230,7 +230,7 @@
 
 /* Short viewports (old small phones, or a landscape phone): flatten the photo
    so the card stops scrolling and both CTAs stay above the fold. object-fit
-   crops the 3:2 source back to 2:1, and object-position keeps the basket. */
+   crops the 3:2 source back to 2:1, and object-position keeps the scene centred. */
 @media (max-height: 600px) {
   .hs-farmbox__img { aspect-ratio: 2 / 1; }
 }
