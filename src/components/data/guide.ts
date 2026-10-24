@@ -123,7 +123,8 @@ export const guideData = {
       'Follow your GPS to the property address. Set navigation before you leave — cell service gets weaker as you approach.',
       'Park in the designated parking space.',
       'Guests are not permitted to drive on premises.',
-      'Continue past the gate to your assigned parking lot. The gate code is 4565.',
+      'Continue past the gate to your assigned parking lot.',
+      'Do not drive past posted prohibited signs. Violations will incur a $200 fine.',
       'Please avoid driving on unmarked paths. They are for walking only.',
     ],
     parking: [
