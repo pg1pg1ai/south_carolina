@@ -111,7 +111,7 @@ export const guideData = {
     },
   },
 
-  wifi: { network: 'Horizons Sandhills Guest', password: '@HorizonsSandhills' },
+  wifi: { network: 'Horizons Sandhills Guest', password: 'sandhills' },
 
   offline: {
     title: 'Save this guide',
@@ -616,7 +616,7 @@ export const guideData = {
   },
 
   faq: [
-    { q: 'What is the Wi-Fi password?', a: 'The network is “Horizons Sandhills Guest” and the password is “@HorizonsSandhills”. Both are in Start Here with one-tap copy buttons.' },
+    { q: 'What is the Wi-Fi password?', a: 'The network is “Horizons Sandhills Guest” and the password is “sandhills”. Both are in Start Here with one-tap copy buttons.' },
     { q: 'How do I contact the property manager?', a: `Andrii is on the property and available 24/7 — call or text ${GUIDE_PHONE_DISPLAY}.` },
     { q: 'How do I use the sauna?', a: 'See the Cedar Barrel Sauna card under Amenities — give it about fifteen minutes to warm up.' },
     { q: 'Where should I park?', a: 'Use your assigned lot: A or B for the Forest Villa, C for the Guest House, D for overflow. EV chargers are at Parking A.' },
