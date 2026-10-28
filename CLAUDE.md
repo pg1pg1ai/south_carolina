@@ -154,8 +154,9 @@ asking: a Safety section and a Checkout section with its checklist. Late checkou
 now lives only on the hero's Checkout card. (The Footer booking CTA block was
 *not* removed site-wide — `Footer.tsx` lines ~77-92 still render "Pick your
 dates — the pines will handle the rest." + a "Book Your Stay" button, on every
-page that renders `Footer`. The segment landing pages don't render `Footer` at
-all, by design — see "Segment Landing Pages" below.)
+page that renders the full `Footer`. The segment landing pages render
+`<Footer compact />`, which drops that block and the anchor links — see
+"Segment Landing Pages" below.)
 
 ---
 
@@ -174,11 +175,17 @@ of 13 `Segment` objects (hero, amenities, video, finalCta, leadLabel, seo).
 explicitly, never a `/:slug` catch-all, which would swallow every typo and
 unknown path on the rest of the site.
 
-**By design, these pages render no `StickyHeader` and no `Footer`** — just
-`SegmentHero`, `AmenityCards`, `VideoStrip`, `SegmentCta`, and
-`RequestFormModal`, mounted directly by `SegmentLanding`. There is no
-in-site navigation onto or off of them; `public/sitemap.xml` is Google's only
-discovery path.
+**These pages don't use the main site's `StickyHeader`** — `SegmentLanding`
+mounts its own `SegmentHeader` (logo → `/`, WhatsApp contact, a CTA that opens
+the request form; transparent over the hero, solid dark once scrolled), then
+`SegmentHero`, `AmenityCards`, `VideoStrip`, `SegmentCta`, `<Footer compact />`
+(socials + copyright only: no anchor links, no `openBooking()` block) and
+`RequestFormModal`. Layout follows the client's mini-site revisions (Oct 2026):
+the hero is full window height, the amenity cards copy the main site's "Just
+Beyond the Trees" cards, the video row fits one desktop screen and becomes an
+arrow carousel on mobile, and the final CTA is a full photo section like "Take
+the Stay. Make the Story." Nothing on the main site links to these pages;
+`public/sitemap.xml` is Google's only discovery path.
 
 **Every CTA on every segment page opens `RequestFormModal`** (`src/components/blocks/RequestFormModal.tsx`)
 — never `openBooking()`. These are lead-capture pages, not booking hand-offs:

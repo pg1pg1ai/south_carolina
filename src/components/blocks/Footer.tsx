@@ -70,10 +70,14 @@ const cols: { title: string; links: FooterLink[] }[] = [
   },
 ];
 
-export default function Footer() {
+/** `compact` (segment landing pages): drops the booking block and the anchor
+ *  links — those pages have their own CTA, which opens the request form rather
+ *  than openBooking(), and none of the main page's anchors exist there. */
+export default function Footer({ compact = false }: { compact?: boolean } = {}) {
   return (
-    <footer data-zone="dark" className="bg-nightWarm text-linen/70 pt-16 pb-10 px-6">
+    <footer data-zone="dark" className={`bg-nightWarm text-linen/70 px-6 ${compact ? 'pt-6 pb-10' : 'pt-16 pb-10'}`}>
       <div className="max-w-content mx-auto">
+        {!compact && (<>
         {/* Booking CTA — opens the same date-picker popup as the header Book button */}
         <div className="mb-12 pb-12" style={{ borderBottom: '1px solid rgba(231,222,199,0.10)' }}>
           <p className="eyebrow text-linen/40 mb-3">Ready when you are</p>
@@ -112,9 +116,10 @@ export default function Footer() {
             </div>
           ))}
         </div>
+        </>)}
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8">
-          <a href="#" className="inline-flex items-center" aria-label="Horizons Sandhills">
+          <a href={compact ? '/' : '#'} className="inline-flex items-center" aria-label="Horizons Sandhills">
             <div
               role="img"
               aria-label="Horizons Sandhills"
