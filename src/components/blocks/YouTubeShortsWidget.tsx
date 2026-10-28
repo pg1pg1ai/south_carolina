@@ -15,9 +15,14 @@ export default function YouTubeShortsWidget() {
   return (
     <section data-zone="light" className="bg-bone py-20 px-6 md:py-28 md:px-12 lg:px-16">
       <div className="max-w-content mx-auto">
-        <RevealOnScroll className="mb-10 md:mb-14 max-w-3xl">
-          <p className="eyebrow text-signal">Featured Videos</p>
-          <h2 className="display-h2 mt-4 text-ink text-[clamp(28px,4vw,48px)]">Life at Horizons Sandhills, in 60 seconds.</h2>
+        <RevealOnScroll className="mb-10 md:mb-14">
+          {/* Same heading treatment as VillaCascade's section headings ("Life Outside the Villa") */}
+          <h2
+            className="font-display text-ink md:whitespace-nowrap"
+            style={{ fontVariationSettings: '"opsz" 144, "SOFT" 50, "WONK" 0', fontWeight: 380, fontSize: 'clamp(2rem, 4.5vw, 3.8rem)', lineHeight: 1.05, letterSpacing: '-0.02em' }}
+          >
+            A Glimpse of Your Getaway
+          </h2>
         </RevealOnScroll>
 
         <RevealOnScroll variant="stagger-parent" className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
