@@ -133,8 +133,8 @@ the file's contents, not its wrapper.
 
 ## The photo
 
-The pop-up leads with `halloween-movie-night.webp` — guests at a projector
-screen beside the villa, cropped 3:2 and full-bleed across the top of the card.
+The pop-up leads with `farm-basket.webp` — the gift basket on the lawn, cropped
+2:1 and full-bleed across the top of the card.
 
 **`popup.js` owns the photo, the same way it owns the copy.** `PHOTO_URL` sits
 at the top of that file next to `COPY`. If the Custom Header block is stale, or
@@ -145,7 +145,7 @@ it when both are present.
 
 The URL **must be absolute**, because this runs on `us2.cloudbeds.com` and a
 relative path would resolve against Cloudbeds. It points at
-`https://sandhills.gohorizons.com/images/sandhills/halloween-movie-night.webp` — that host
+`https://sandhills.gohorizons.com/images/sandhills/farm-basket.webp` — that host
 is what actually serves the site. `horizonssandhills.com` does **not** resolve,
 despite being hardcoded as `SITE_URL` in `src/components/StructuredData.tsx`
 (worth fixing separately: every schema.org and canonical URL the site emits
@@ -191,7 +191,7 @@ under "Off-site: Cloudbeds booking-engine pop-up".
 - Opens **1.8s** after load, so it never lands on top of the guest's first tap
   on the calendar.
 - Closes on **✕**, **click outside**, and **Esc**.
-- **Once per session** — `sessionStorage` key `hs_farmbox_popup_seen_v3`, set the
+- **Once per session** — `sessionStorage` key `hs_farmbox_popup_seen_v4`, set the
   moment it opens, so it stays gone across booking steps and after either CTA.
   The key is bumped from `hs_farmbox_popup_seen` so anyone mid-session on the
   previous pop-up still sees this one.
@@ -203,7 +203,7 @@ under "Off-site: Cloudbeds booking-engine pop-up".
 - **`Message us on WhatsApp`** opens `https://wa.me/17546679090` in a new tab
   (the number in `src/lib/contact.ts`) and closes the pop-up, leaving the
   booking tab clean to come back to. The link is prefilled with *"Hi! I saw the
-  Halloween movie night offer — I'd like to book a stay."* so the team can tell a
+  2-night farm basket offer — I'd like to book a stay."* so the team can tell a
   booking-engine lead from a site lead; **drop the `?text=` in `popup.js` if the
   client wants it to open empty.**
 - **The photo** sits full-bleed across the top of the card. If it fails to load,
@@ -233,18 +233,14 @@ node docs/cloudbeds-popup/build-min.cjs
 The same wording sits in `header.html` as a no-JS fallback; update it too if you
 want the two to match.
 
-Current wording is the client's Halloween brief (Oct 2026) verbatim, bar
-sentence-casing the two buttons (CSS applies `text-transform: uppercase`):
+Current wording is the spec doc verbatim, bar sentence-casing the two buttons
+(the doc sets them in caps; CSS applies `text-transform: uppercase`, so caps in
+the string would double up in any future non-uppercase context):
 
-> eyebrow **Special Halloween offer** · headline **Movie Night Under the Stars**
-> · body **Book your Halloween stay and enjoy a Halloween movie night on us with
-> a projector, popcorn, treats, drinks and themed decor.**
+> eyebrow **Special stay offer** · headline **Your Farm Basket is On Us**
+> · body **Book a 2-night stay at Horizons Sandhills and enjoy a complimentary
+> basket of fresh farm products during your stay.**
 > · **Book your stay** · **Message us on WhatsApp**
-
-The previous offer (farm basket) is in git history; the `hs-farmbox` ids and
-class names were kept so the three dashboard fields stay a straight repaste.
-The session key was bumped to `hs_farmbox_popup_seen_v3` so guests who
-dismissed the farm-basket offer still see this one.
 
 ---
 
