@@ -5,8 +5,8 @@ export const CLOUDBEDS_PROPERTY_ID = 'REPLACE_WITH_PROPERTY_ID';
 
 export const sandhillsData = {
   meta: {
-    title: 'Horizons Sandhills — A Hundred and Twenty-Six Acres of Quiet',
-    description: 'Premium glamping retreat on 126 acres of longleaf pine savanna in Carolina Sandhills, McBee, SC.',
+    title: 'Luxury Forest Cabins in South Carolina | Horizons Sandhills',
+    description: 'Escape to a private 126-acre South Carolina retreat with modern forest cabins, an 18-acre lake, a wood-fired sauna, kayaks, paddleboards and e-bikes.',
   },
   hero: {
     eyebrow: 'Private lakefront villas · Just 90 minutes from Charlotte, NC',
