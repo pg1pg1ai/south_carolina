@@ -309,7 +309,7 @@ export const sandhillsData = {
     { q: 'Can I book Horizons Sandhills for a group?', a: 'Yes. We welcome family gatherings, friend groups, retreats, corporate groups, celebrations, and other private stays. Unlike smaller stays, group reservations can be booked year-round through our customer service team: +1 (754) 667-9090. To reserve the entire property just for your group, a reservation of 6 forest villas is required.' },
     { q: 'Can we host an event at Horizons Sandhills?', a: 'Yes. The property offers indoor and outdoor spaces suitable for private events and gatherings. Also, Horizons Sandhills does not have any neighbors or noise restrictions for group reservations.' },
     { q: 'Do you have an indoor event space?', a: 'Yes. We have two indoor event spaces: one with a professional kitchen and a bathroom for around 70 guests comfortably, and another one with a bathroom and for around 30 guests comfortably, with an adjacent lounge area, fireplace, and grilling area deck.' },
-    { q: 'Are pets allowed?', a: "Yes. Horizons Sandhills is pet-friendly. Guests may bring up to 3 pets per accommodation for a $60 pet fee per stay. For everyone's safety, we require that pets are leashed while in common areas." },
+    { q: 'Are pets allowed?', a: "Yes. Horizons Sandhills is pet-friendly. Guests may bring up to 3 pets per accommodation for a $50 pet fee per stay. For everyone's safety, we require that pets are leashed while in common areas." },
     { q: 'Is there a manager on-site?', a: 'Yes. Our property manager is available on-site 24/7 to assist guests throughout their stay.' },
   ],
   finalCta: {

@@ -185,7 +185,7 @@ const faqSchema = {
       name: 'Are pets allowed?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: "Yes. Horizons Sandhills is pet-friendly. Guests may bring up to 3 pets per accommodation for a $60 pet fee per stay. For everyone's safety, we require that pets are leashed while in common areas.",
+        text: "Yes. Horizons Sandhills is pet-friendly. Guests may bring up to 3 pets per accommodation for a $50 pet fee per stay. For everyone's safety, we require that pets are leashed while in common areas.",
       },
     },
     {

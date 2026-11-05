@@ -816,7 +816,7 @@ export default function VillaCascade() {
                 <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: 'clamp(14px, 2.4vw, 40px)', marginBottom: 'clamp(30px, 4vh, 52px)' }}>
                   {[
                     { label: 'Daily Events', pre: 'Up to', num: '200', unit: 'guests', note: 'for private gatherings & celebrations' },
-                    { label: 'Overnight Stay', pre: 'Up to', num: '40', unit: 'guests', note: 'adults and kids are welcome' },
+                    { label: 'Overnight Stay', pre: 'Up to', num: '32', unit: 'guests', note: 'adults and kids are welcome' },
                     { label: 'Minimum Stay', pre: 'From', num: '1', unit: 'night', note: "stay longer — you won't want to leave" },
                   ].map((card) => (
                     <motion.div
