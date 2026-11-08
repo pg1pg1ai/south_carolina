@@ -447,7 +447,7 @@ export const guideData = {
       ],
     },
     saunaGuidelines: {
-      hours: '5:00 PM – 10:00 PM, daily',
+      hours: 'During winter, the sauna is available from 5 to 7 PM.',
       heatingNote: 'To avoid unnecessary heating, we prepare the sauna only when guests would like to use it. Please let our team know if you are interested, and we will be happy to get it ready. 1 (one) complimentary sauna session is included in your stay within the operating hours.',
       sharedNote: 'During regular operating hours, the sauna is a shared amenity available to all guests staying at the property. We kindly ask everyone to be respectful of other guests and help us create a relaxing atmosphere for all.',
       privateNote: 'If you would like to enjoy the sauna exclusively for yourself, your family, or your group outside of regular operating hours, private sessions may be available. Please speak with a manager in advance to arrange a private booking.',
