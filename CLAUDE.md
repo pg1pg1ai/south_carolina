@@ -176,16 +176,32 @@ explicitly, never a `/:slug` catch-all, which would swallow every typo and
 unknown path on the rest of the site.
 
 **These pages don't use the main site's `StickyHeader`** — `SegmentLanding`
-mounts its own `SegmentHeader` (logo → `/`, WhatsApp contact, a CTA that opens
-the request form; transparent over the hero, solid dark once scrolled), then
-`SegmentHero`, `AmenityCards`, `VideoStrip`, `SegmentCta`, `<Footer compact />`
-(socials + copyright only: no anchor links, no `openBooking()` block) and
-`RequestFormModal`. Layout follows the client's mini-site revisions (Oct 2026):
-the hero is full window height, the amenity cards copy the main site's "Just
-Beyond the Trees" cards, the video row fits one desktop screen and becomes an
-arrow carousel on mobile, and the final CTA is a full photo section like "Take
-the Stay. Make the Story." Nothing on the main site links to these pages;
-`public/sitemap.xml` is Google's only discovery path.
+mounts its own `SegmentHeader`, then `SegmentHero`, `AmenityCards`,
+`VideoStrip`, `GettingHere tone="dark"` (the main site's block in a dark palette), `SegmentCta`,
+`<Footer compact />` (socials + copyright only: no anchor links, no
+`openBooking()` block) and `RequestFormModal`. Nothing on the main site links
+to these pages; `public/sitemap.xml` is Google's only discovery path.
+
+Layout follows the client's mini-LP revisions (round 1 Oct 2026, round 2
+Nov 2026):
+- **One dark page.** The wrapper is `bg-night` + `overflow-x-clip`; sections
+  have no fills of their own, and use `SectionGlow` colour pools and gradient
+  fades instead, so there's no hard edge between sections. Don't put a light
+  section back in. Photo scrims sit only behind the copy.
+- **Header** behaves like the main site's: full-colour `/logo.svg`, 64→36px
+  on desktop as you scroll (32→28 mobile), with a blurred, masked backdrop
+  fading in rather than a solid bar. The CTA shows the page's own `hero.cta`
+  on desktop *and* mobile; on narrow phones the WhatsApp icon drops first.
+- **Hero**: eyebrow at the top, headline at the bottom, `*accent*` words in
+  `hero.headline` set italic in `ember`, plus a glass panel of property facts.
+- **Videos**: exactly four per page (`FourShorts` tuple). On desktop the
+  heading, the YouTube link and the 4-col grid share one width, sized from the
+  viewport height so the row fits one screen; arrow carousel on mobile.
+- **Final CTA**: both buttons are the same size; headlines over 40 chars step
+  down a size so they stay on two lines.
+- **Copy**: headings are Title Case (prepositions, articles and short
+  conjunctions lowercase), and the property is always "Horizons Sandhills",
+  never bare "Horizons".
 
 **Every CTA on every segment page opens `RequestFormModal`** (`src/components/blocks/RequestFormModal.tsx`)
 — never `openBooking()`. These are lead-capture pages, not booking hand-offs:

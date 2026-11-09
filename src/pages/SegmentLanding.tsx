@@ -7,7 +7,9 @@ import VideoStrip from '../components/segments/VideoStrip';
 import SegmentCta from '../components/segments/SegmentCta';
 import RequestFormModal from '../components/blocks/RequestFormModal';
 import Footer from '../components/blocks/Footer';
+import GettingHere from '../components/blocks/GettingHere';
 import { SITE_ORIGIN } from '../lib/site';
+
 
 export default function SegmentLanding({ segment }: { segment: Segment }) {
   useEffect(() => {
@@ -32,12 +34,16 @@ export default function SegmentLanding({ segment }: { segment: Segment }) {
   }, [segment]);
 
   return (
-    <div className="min-h-screen bg-bone">
+    // One continuous dark background for the whole page; sections are
+    // transparent and blend into each other (client, round 2). overflow-x-clip
+    // (not hidden) contains the sections' glow layers without breaking sticky.
+    <div className="min-h-screen overflow-x-clip bg-night">
       <SegmentHeader cta={segment.hero.cta} />
       <main>
         <SegmentHero hero={segment.hero} />
         <AmenityCards amenities={segment.amenities} />
         <VideoStrip video={segment.video} />
+        <GettingHere tone="dark" />
         <SegmentCta finalCta={segment.finalCta} />
       </main>
       <Footer compact />
