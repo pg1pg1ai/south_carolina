@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom';
 import Button from '../primitives/Button';
 import { openBooking } from '../data/booking';
 import { sendInquiry } from '../../lib/sendInquiry';
+import ConsentCheckbox, { CONSENT_RECORD } from '../primitives/ConsentCheckbox';
 
 interface Props {
   sub: string;
@@ -148,16 +149,17 @@ function QuestionModal({ onClose }: { onClose: () => void }) {
   const [phone, setPhone]       = useState('');
   const [email, setEmail]       = useState('');
   const [question, setQuestion] = useState('');
+  const [consent, setConsent]   = useState(false);
   const [done, setDone]         = useState(false);
   const [err, setErr]           = useState(false);
   const [sending, setSending]   = useState(false);
   const [sendFailed, setSendFailed] = useState(false);
 
   const submit = async () => {
-    if (!name || !phone || !email || !question) { setErr(true); setTimeout(() => setErr(false), 1200); return; }
+    if (!name || !phone || !email || !question || !consent) { setErr(true); setTimeout(() => setErr(false), 1200); return; }
     setSending(true);
     setSendFailed(false);
-    const ok = await sendInquiry('question', { name, phone, email, question });
+    const ok = await sendInquiry('question', { name, phone, email, question, consent: CONSENT_RECORD });
     setSending(false);
     if (ok) { setDone(true); } else { setSendFailed(true); setTimeout(() => setSendFailed(false), 2500); }
   };
@@ -179,6 +181,7 @@ function QuestionModal({ onClose }: { onClose: () => void }) {
             <Field label="Phone number"  type="tel" ph="+1 (___) ___-____" val={phone} set={setPhone} err={err && !phone} />
             <Field label="Email address" type="email" ph="you@example.com" val={email} set={setEmail} err={err && !email} />
             <Field label="Your question" ph="What would you like to know?" val={question} set={setQuestion} err={err && !question} multiline />
+            <ConsentCheckbox id="question-consent" checked={consent} onChange={setConsent} err={err} />
             <button onClick={submit} disabled={sending} className="w-full font-eyebrow font-light text-linen bg-signal hover:bg-signal2 transition-colors py-3 mt-1 disabled:opacity-60 disabled:cursor-default" style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0, border: 'none', cursor: sending ? 'default' : 'pointer', background: sendFailed ? '#9A2E22' : undefined }}>
               {sending ? 'Sending…' : sendFailed ? "Couldn't send — try again" : 'Send my question →'}
             </button>
@@ -198,16 +201,17 @@ function CorpModal({ onClose }: { onClose: () => void }) {
   const [email, setEmail]       = useState('');
   const [guests, setGuests]     = useState('');
   const [details, setDetails]   = useState('');
+  const [consent, setConsent]   = useState(false);
   const [done, setDone]         = useState(false);
   const [err, setErr]           = useState(false);
   const [sending, setSending]   = useState(false);
   const [sendFailed, setSendFailed] = useState(false);
 
   const submit = async () => {
-    if (!company || !name || !phone || !email) { setErr(true); setTimeout(() => setErr(false), 1200); return; }
+    if (!company || !name || !phone || !email || !consent) { setErr(true); setTimeout(() => setErr(false), 1200); return; }
     setSending(true);
     setSendFailed(false);
-    const ok = await sendInquiry('corporate-quote', { company, name, phone, email, guests, details });
+    const ok = await sendInquiry('corporate-quote', { company, name, phone, email, guests, details, consent: CONSENT_RECORD });
     setSending(false);
     if (ok) { setDone(true); } else { setSendFailed(true); setTimeout(() => setSendFailed(false), 2500); }
   };
@@ -234,6 +238,7 @@ function CorpModal({ onClose }: { onClose: () => void }) {
             <Field label="Work email"     type="email" ph="you@company.com" val={email} set={setEmail} err={err && !email} />
             <Field label="Estimated guests" type="number" ph="e.g. 12" val={guests} set={setGuests} />
             <Field label="Tell us more"   ph="Dates, needs, questions…" val={details} set={setDetails} multiline />
+            <ConsentCheckbox id="corporate-consent" checked={consent} onChange={setConsent} err={err} />
             <button onClick={submit} disabled={sending} className="w-full font-eyebrow font-light text-white hover:brightness-110 transition-all py-3 mt-1 disabled:opacity-60 disabled:cursor-default" style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0, border: 'none', cursor: sending ? 'default' : 'pointer', background: sendFailed ? '#B05329' : '#2E6AB5' }}>
               {sending ? 'Sending…' : sendFailed ? "Couldn't send — try again" : 'Send quotation request →'}
             </button>

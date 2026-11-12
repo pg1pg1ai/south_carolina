@@ -2,6 +2,8 @@ import { Calendar } from 'lucide-react';
 import { openBooking } from '../data/booking';
 import Button from '../primitives/Button';
 import { CONTACT_PHONE_HREF, CONTACT_WHATSAPP_HREF } from '../../lib/contact';
+import { PRIVACY_POLICY_PATH } from '../../pages/PrivacyPolicy';
+import { openPrivacyChoices } from '../../lib/privacyChoices';
 
 // Monochrome brand glyphs — lucide-react doesn't ship brand/social icons, so
 // these are small self-contained filled-path SVGs (fill: currentColor).
@@ -157,7 +159,13 @@ export default function Footer({ compact = false }: { compact?: boolean } = {}) 
             ))}
           </ul>
 
-          <p className="text-linen/40 text-sm">© 2026 Horizons Sandhills, South Carolina.</p>
+          <div className="flex flex-col items-center md:items-end gap-1.5 text-sm">
+            <div className="flex items-center gap-4">
+              <a href={PRIVACY_POLICY_PATH} className="text-linen/60 hover:text-linen transition-colors underline underline-offset-4 decoration-linen/30 focus-visible:outline-none focus-visible:text-linen">Privacy Policy</a>
+              <button type="button" onClick={openPrivacyChoices} className="text-linen/60 hover:text-linen transition-colors underline underline-offset-4 decoration-linen/30 focus-visible:outline-none focus-visible:text-linen" style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', font: 'inherit' }}>Your Privacy Choices</button>
+            </div>
+            <p className="text-linen/40">© 2026 Horizons Sandhills, South Carolina.</p>
+          </div>
         </div>
       </div>
     </footer>

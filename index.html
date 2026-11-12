@@ -1,6 +1,26 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Privacy choices — must run BEFORE Google Tag Manager.
+         Targeted-advertising opt-out comes from the footer "Your Privacy Choices" link (saved in localStorage)
+         or from the browser's Global Privacy Control signal. It sets Google Consent Mode defaults (Google Ads tags
+         in GTM honour these automatically) and pushes `ad_opt_out` to the dataLayer for GTM to block the Meta Pixel.
+         Logic mirrored in src/lib/privacyChoices.ts — keep the storage key in sync. -->
+    <script>
+      (function (w) {
+        var saved = null;
+        try { saved = w.localStorage.getItem('hz_ad_opt_out'); } catch (e) {}
+        var gpc = w.navigator.globalPrivacyControl === true;
+        var optOut = gpc || saved === '1';
+        var ad = optOut ? 'denied' : 'granted';
+        w.dataLayer = w.dataLayer || [];
+        function gtag() { w.dataLayer.push(arguments); }
+        w.gtag = w.gtag || gtag;
+        gtag('consent', 'default', { ad_storage: ad, ad_user_data: ad, ad_personalization: ad, analytics_storage: 'granted' });
+        if (optOut) gtag('set', 'ads_data_redaction', true);
+        w.dataLayer.push({ event: 'privacy_choices', ad_opt_out: optOut, gpc: gpc });
+      })(window);
+    </script>
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],

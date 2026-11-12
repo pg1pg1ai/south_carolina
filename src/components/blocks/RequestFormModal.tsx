@@ -5,6 +5,7 @@ import { sendInquiry } from '../../lib/sendInquiry';
 import { CONTACT_WHATSAPP_HREF } from '../../lib/contact';
 import { REQUEST_FORM_EVENT } from '../../lib/requestForm';
 import WhatsAppIcon from '../icons/WhatsAppIcon';
+import ConsentCheckbox, { CONSENT_RECORD } from '../primitives/ConsentCheckbox';
 
 const ACCENT = '#B05329'; // brand signal
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -44,6 +45,7 @@ export default function RequestFormModal({ leadLabel }: { leadLabel: string }) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
+  const [consent, setConsent] = useState(false);
   const [done, setDone] = useState(false);
   const [err, setErr] = useState(false);
   const [sending, setSending] = useState(false);
@@ -102,14 +104,14 @@ export default function RequestFormModal({ leadLabel }: { leadLabel: string }) {
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!name || !phone || !email || !emailOk) {
+    if (!name || !phone || !email || !emailOk || !consent) {
       setErr(true);
       setTimeout(() => setErr(false), 1200);
       return;
     }
     setSending(true);
     setSendFailed(false);
-    const ok = await sendInquiry('landing-request', { page: leadLabel, name, phone, email });
+    const ok = await sendInquiry('landing-request', { page: leadLabel, name, phone, email, consent: CONSENT_RECORD });
     setSending(false);
     if (ok) { setDone(true); } else { setSendFailed(true); setTimeout(() => setSendFailed(false), 2500); }
   };
@@ -159,6 +161,7 @@ export default function RequestFormModal({ leadLabel }: { leadLabel: string }) {
                   <Field id="request-form-name" label="Name" ph="First and last" val={name} set={setName} err={err && !name} autoComplete="name" />
                   <Field id="request-form-phone" label="Phone" type="tel" ph="+1 (___) ___-____" val={phone} set={setPhone} err={err && !phone} autoComplete="tel" />
                   <Field id="request-form-email" label="Email" type="email" ph="you@example.com" val={email} set={setEmail} err={err && (!email || !emailOk)} autoComplete="email" />
+                  <ConsentCheckbox id="request-form-consent" checked={consent} onChange={setConsent} err={err} />
                   <button type="submit" disabled={sending} className="w-full font-eyebrow font-light text-white hover:brightness-110 transition-all py-3 mt-1 disabled:opacity-60 disabled:cursor-default" style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0, border: 'none', cursor: sending ? 'default' : 'pointer', background: sendFailed ? '#9A4722' : ACCENT }}>
                     {sending ? 'Sending…' : sendFailed ? "Couldn't send — try again" : 'Send request'}
                   </button>

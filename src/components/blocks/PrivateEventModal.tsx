@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { sendInquiry } from '../../lib/sendInquiry';
+import ConsentCheckbox, { CONSENT_RECORD } from '../primitives/ConsentCheckbox';
 
 /** Fire from any private-hire / corporate CTA to open the inquiry form. */
 export const openPrivateEvent = () => window.dispatchEvent(new CustomEvent('open-private-event'));
@@ -29,6 +30,7 @@ export default function PrivateEventModal() {
   const [email, setEmail] = useState('');
   const [guests, setGuests] = useState('');
   const [details, setDetails] = useState('');
+  const [consent, setConsent] = useState(false);
   const [done, setDone] = useState(false);
   const [err, setErr] = useState(false);
   const [sending, setSending] = useState(false);
@@ -48,10 +50,10 @@ export default function PrivateEventModal() {
   }, [open]);
 
   const submit = async () => {
-    if (!company || !name || !phone || !email) { setErr(true); setTimeout(() => setErr(false), 1200); return; }
+    if (!company || !name || !phone || !email || !consent) { setErr(true); setTimeout(() => setErr(false), 1200); return; }
     setSending(true);
     setSendFailed(false);
-    const ok = await sendInquiry('private-event', { company, name, phone, email, guests, details });
+    const ok = await sendInquiry('private-event', { company, name, phone, email, guests, details, consent: CONSENT_RECORD });
     setSending(false);
     if (ok) { setDone(true); } else { setSendFailed(true); setTimeout(() => setSendFailed(false), 2500); }
   };
@@ -93,6 +95,7 @@ export default function PrivateEventModal() {
                   <Field label="Work email"     type="email" ph="you@company.com" val={email} set={setEmail} err={err && !email} />
                   <Field label="Estimated guests" type="number" ph="e.g. 40" val={guests} set={setGuests} />
                   <Field label="Tell us more"   ph="Dates, headcount, what you have in mind…" val={details} set={setDetails} multiline />
+                  <ConsentCheckbox id="private-event-consent" checked={consent} onChange={setConsent} err={err} />
                   <button onClick={submit} disabled={sending} className="w-full font-eyebrow font-light text-white hover:brightness-110 transition-all py-3 mt-1 disabled:opacity-60 disabled:cursor-default" style={{ fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', borderRadius: 0, border: 'none', cursor: sending ? 'default' : 'pointer', background: sendFailed ? '#B05329' : ACCENT }}>
                     {sending ? 'Sending…' : sendFailed ? "Couldn't send — try again" : 'Send request →'}
                   </button>

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { sendInquiry } from '../../lib/sendInquiry';
+import ConsentCheckbox, { CONSENT_RECORD } from '../primitives/ConsentCheckbox';
 
 // ── Decorative text fill styles ───────────────────────────────────────────────
 
@@ -110,20 +111,21 @@ export default function LandStory() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [when, setWhen] = useState('');
+  const [consent, setConsent] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [activeMilestone, setActiveMilestone] = useState<number | null>(null);
   const [sending, setSending] = useState(false);
   const [sendFailed, setSendFailed] = useState(false);
 
   const handleSubmit = async () => {
-    if (!name || !phone) {
+    if (!name || !phone || !consent) {
       setPhoneError(true);
       setTimeout(() => setPhoneError(false), 1200);
       return;
     }
     setSending(true);
     setSendFailed(false);
-    const ok = await sendInquiry('booking-interest', { name, phone, when });
+    const ok = await sendInquiry('booking-interest', { name, phone, when, consent: CONSENT_RECORD });
     setSending(false);
     if (ok) { setSubmitted(true); } else { setSendFailed(true); setTimeout(() => setSendFailed(false), 2500); }
   };
@@ -335,6 +337,8 @@ export default function LandStory() {
                     <option value="exploring">Just exploring</option>
                   </select>
                 </div>
+
+                <ConsentCheckbox id="booking-interest-consent" checked={consent} onChange={setConsent} err={phoneError} />
 
                 <button
                   onClick={handleSubmit}

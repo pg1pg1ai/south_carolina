@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import Footer from '../components/blocks/Footer';
 import { useState, useEffect } from 'react';
 import { ArrowLeft, BedDouble, Bath, Wifi, Flame, Waves, TreePine, Coffee, Star, Box, Users } from 'lucide-react';
 import { sandhillsData, CLOUDBEDS_PROPERTY_ID } from '../components/data/sandhills';
@@ -229,6 +230,7 @@ export default function StayDetail() {
           </div>
         </div>
       </div>
+      <Footer compact />
     </div>
   );
 }
