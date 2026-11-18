@@ -180,7 +180,7 @@ function Reviews() {
   return (
     <section className="qb g" style={{ backgroundImage: 'linear-gradient(180deg,#141915,rgba(20,25,21,.55) 30%,rgba(20,25,21,.55) 70%,#141915),url(/images/sandhills/waiting.webp)' }}>
       <div className="w">
-        <p className="eb">Five stars on Google</p><span className="stars" aria-label="5 out of 5 stars">★★★★★</span>
+        <p className="eb">Guest reviews on Google</p><span className="stars" aria-label="5 out of 5 stars">★★★★★</span>
         <div className="qslides" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>{reviews.map((r, k) => <blockquote key={r.name} className={k === i ? 'on' : ''} aria-hidden={k !== i}>“{r.quote}”</blockquote>)}</div>
         <div className="qmeta"><cite>{reviews[i].name} · Google review</cite><div className="qdots">{reviews.map((r, k) => <button key={r.name} type="button" className={k === i ? 'on' : ''} onClick={() => setI(k)} aria-label={`Show review ${k + 1}`} />)}</div></div>
       </div>
