@@ -51,10 +51,14 @@ directions[3], gallery[16], reviews[3], pressQuote, nearby[4], faq[7], finalCta
 - `REPLACE_WITH_FOREST_VILLA_ROOM_TYPE_ID`
 - `REPLACE_WITH_THE_HOUSE_ROOM_TYPE_ID`
 
-**Booking hand-off** — the site never embeds the Cloudbeds widget. Every CTA
-fires `openBooking()` (`data/booking.ts`) → `BookingModal` → a hand-off to
-`CLOUDBEDS_RESERVATION_URL` with dates pre-filled. Anything that has to run
-*inside* the booking engine therefore lives in the Cloudbeds dashboard, not
+**Booking stays on the site** (since 2026-11-19). Every CTA fires `openBooking()`
+(`data/booking.ts`) → `BookingModal`: step 1 is our date picker, step 2 mounts
+Cloudbeds' `<cb-immersive-experience>` (property `Dc79Gd`, island `us2`) inside the
+same window, with dates passed through URL params. It only loads on domains listed in
+Cloudbeds → Settings → Booking Engine → Embeds → Whitelisted domains
+(`sandhills.gohorizons.com` is listed; localhost and *.vercel.app are not, so test on
+the live domain). Anything that has to run *inside* the booking engine still lives in
+the Cloudbeds dashboard, not
 here — see [`docs/cloudbeds-popup/`](./docs/cloudbeds-popup/README.md) for the
 farm-basket promo pop-up (three blocks pasted into Settings → Booking Engine →
 Customize) and its local test harness.
