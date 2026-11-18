@@ -24,7 +24,7 @@ npm run preview    # preview production build
 - **Tailwind CSS 3.4** — design tokens in `tailwind.config.ts`; raw `rgba`/hex used in inline styles for motion values only
 - **Lucide React** — utility icons (chevrons, close, etc.)
 - **@phosphor-icons/react** — decorative duotone icons in HeroImmersive GLANCE block only; use `Icon` suffix (e.g. `TreeEvergreenIcon`)
-- **React Router 7** — 19 routes: `/` → `SandhillsLanding`, `/stays/:slug` → `StayDetail`, `/guide` → `GuestGuide`, `/blog` → `BlogIndex`, `/blog/:slug` → `ArticlePage`, `/preview/homepage-widgets` → `PreviewHomepageWidgets`, plus 13 segment landing pages (`/romantic`, `/family`, `/girls-weekend`, `/bachelorette`, `/birthday`, `/celebrations`, `/wellness-retreat`, `/corporate-retreat`, `/group`, `/solo`, `/remote-work`, `/road-trip`, `/pet-friendly`) generated explicitly from the `segments` registry in `src/App.tsx` — see "Segment Landing Pages" below
+- **React Router 7** — 19 routes: `/` → `SandhillsLanding`, `/stays/:slug` → `StayDetail`, `/guide` → `GuestGuide`, `/blog` → `BlogIndex`, `/blog/:slug` → `ArticlePage`, `/preview/homepage-widgets` → `PreviewHomepageWidgets`, `/events` → `EventsLanding` (full-property private events: own dark page, styles scoped under `.ev` in `src/components/events/events.css`, content in `src/components/data/events.ts`, inline request form posting `event-request` via `sendInquiry`), plus 13 segment landing pages (`/romantic`, `/family`, `/girls-weekend`, `/bachelorette`, `/birthday`, `/celebrations`, `/wellness-retreat`, `/corporate-retreat`, `/group`, `/solo`, `/remote-work`, `/road-trip`, `/pet-friendly`) generated explicitly from the `segments` registry in `src/App.tsx` — see "Segment Landing Pages" below
 
 ---
 
@@ -328,6 +328,8 @@ Accents:   honey #A67C52 · honeyDark #3D2F1F · wiregrass #C9A96E
            signal #B05329 · signal2 #9A4722 · ember #D4804E
 
 Fonts:  display → Fraunces, Canela, Georgia, serif  (headlines)
+        coco/sans2 → Urbanist (Google Fonts, OFL): hero wordmark + /events display type.
+                 Replaced Coco Sharp Nov 2026 (those files were the Zetafonts personal-use trial). Don't reinstate them.
         eyebrow → Inter Tight, Inter  (small-caps labels, .eyebrow class)
         body    → Inter, system-ui
 

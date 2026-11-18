@@ -83,7 +83,7 @@ export default function FinalCtaImmersive({ sub, image }: Props) {
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
             <Button onClick={openBooking} variant="primary">Reserve Your Stay</Button>
-            <Button onClick={() => setCorpOpen(true)} variant="ghost-light" className="backdrop-blur-md">Plan a Private Event</Button>
+            <Button href="/events" variant="ghost-light" className="backdrop-blur-md">Plan a Private Event</Button>
             <Button onClick={() => setQuestionOpen(true)} variant="ghost-light" className="backdrop-blur-md">Ask a Question</Button>
           </div>
         </motion.div>

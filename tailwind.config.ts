@@ -28,8 +28,10 @@ export default {
       },
       fontFamily: {
         display: ['Fraunces', 'Canela', 'Georgia', 'serif'],
-        coco: ['"Coco Sharp"', '"Encode Sans Expanded"', 'ui-sans-serif', 'sans-serif'],
-        sans2: ['"Coco Sharp"', '"Encode Sans Expanded"', 'ui-sans-serif', 'sans-serif'],
+        // Urbanist (Google Fonts, OFL) replaced Coco Sharp in Nov 2026: the Coco Sharp files were the Zetafonts trial
+        // (personal use only, numerals render as a "TRIAL ONLY" stamp). Key kept as `coco` so existing classes still work.
+        coco: ['Urbanist', '"Encode Sans Expanded"', 'ui-sans-serif', 'sans-serif'],
+        sans2: ['Urbanist', '"Encode Sans Expanded"', 'ui-sans-serif', 'sans-serif'],
         body: ['Inter', 'system-ui', 'sans-serif'],
         eyebrow: ['"Inter Tight"', 'Inter', 'sans-serif'],
       },

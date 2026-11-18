@@ -4,7 +4,7 @@ import { TreeEvergreenIcon, WavesIcon, HouseSimpleIcon, BicycleIcon, PathIcon, F
 import Button from '../primitives/Button';
 import { openBooking } from '../data/booking';
 
-export const FONT     = 'Coco Sharp, Encode Sans Expanded, ui-sans-serif';
+export const FONT     = 'Urbanist, Encode Sans Expanded, ui-sans-serif';
 const LEFT     = 'max(24px, calc(50vw - 760px))';
 
 export const PRESS = [

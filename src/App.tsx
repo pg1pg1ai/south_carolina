@@ -9,6 +9,7 @@ import PrivacyPolicy, { PRIVACY_POLICY_PATH } from './pages/PrivacyPolicy';
 import { segments } from './components/data/segments';
 import PrivacyChoicesModal from './components/blocks/PrivacyChoicesModal';
 import SegmentLanding from './pages/SegmentLanding';
+import EventsLanding from './pages/EventsLanding';
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/blog/:slug" element={<ArticlePage />} />
         <Route path="/preview/homepage-widgets" element={<PreviewHomepageWidgets />} />
         <Route path={PRIVACY_POLICY_PATH} element={<PrivacyPolicy />} />
+        <Route path="/events" element={<EventsLanding />} />
         {segments.map((s) => (
           <Route key={s.slug} path={`/${s.slug}`} element={<SegmentLanding segment={s} />} />
         ))}

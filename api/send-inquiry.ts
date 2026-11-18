@@ -11,6 +11,7 @@ const DEFAULT_TO_EMAILS = ['hello@gohorizons.com', 'aiartificial.horizons@gmail.
 
 const FORM_LABELS: Record<string, string> = {
   'private-event': 'Private Event Inquiry',
+  'event-request': 'Full-Property Event Request (/events)',
   'booking-interest': 'Booking Interest',
   'corporate-quote': 'Corporate Quotation Request',
   'question': 'Website Question',

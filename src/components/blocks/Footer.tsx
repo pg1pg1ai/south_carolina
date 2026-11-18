@@ -66,7 +66,7 @@ const cols: { title: string; links: FooterLink[] }[] = [
     links: [
       { label: 'Check Availability', onClick: openBooking },
       { label: 'Getting Here', href: '/#getting-here' },
-      { label: 'Private Events', href: '/#events' },
+      { label: 'Private Events', href: '/events' },
       { label: 'Contact Us', href: '/#reserve' },
     ],
   },

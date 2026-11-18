@@ -4,7 +4,6 @@ import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent, 
 import { Wifi, Bath, Utensils, Armchair, Users, Flame, Snowflake, Clock, Ban, Sailboat, Waves, Route, MapPin, TreePine, Compass, ShieldCheck, Gift, Bug, Sprout, Handshake, ArrowLeft, ArrowRight } from 'lucide-react';
 import Img from '../primitives/Img';
 import { sandhillsData } from '../data/sandhills';
-import { openPrivateEvent } from './PrivateEventModal';
 import PhotoGalleryModal from './PhotoGalleryModal';
 
 // ── Card data ─────────────────────────────────────────────────────────────────
@@ -902,7 +901,7 @@ export default function VillaCascade() {
                     The whole property becomes <span style={{ fontStyle: 'italic', color: '#C2632F' }}>the event.</span>
                   </motion.h3>
                   <button
-                    onClick={openPrivateEvent}
+                    onClick={() => { window.location.href = '/events'; }}
                     className="self-start md:self-auto"
                     style={{
                       display: 'inline-flex', alignItems: 'center', gap: 10,
