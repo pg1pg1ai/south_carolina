@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Users, X } from 'lucide-react';
-import { MIN_NIGHTS } from '../data/booking';
+import { MIN_NIGHTS, openBooking, fmtIso } from '../data/booking';
 
 interface Props {
-  propertyId: string;
+  /** Kept for the stay data shape; booking now runs through BookingModal's in-site engine. */
+  propertyId?: string;
   roomTypeId?: string;
   maxGuests: number;
   priceFrom: number;
@@ -15,9 +16,6 @@ const MONTH_NAMES = [
   'July', 'August', 'September', 'October', 'November', 'December',
 ];
 
-function fmtIso(d: Date) {
-  return d.toISOString().slice(0, 10);
-}
 
 function fmtShort(d: Date | null) {
   if (!d) return null;
@@ -44,7 +42,7 @@ function addDays(d: Date, n: number) {
   return r;
 }
 
-export default function BookingWidget({ propertyId, roomTypeId, maxGuests, priceFrom }: Props) {
+export default function BookingWidget({ maxGuests, priceFrom }: Props) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -111,16 +109,6 @@ export default function BookingWidget({ propertyId, roomTypeId, maxGuests, price
     ? Math.round((checkOut.getTime() - checkIn.getTime()) / 86400000)
     : null;
 
-  const buildUrl = () => {
-    const params = new URLSearchParams({
-      adults: String(adults),
-      children: String(children),
-    });
-    if (checkIn) params.set('checkin', fmtIso(checkIn));
-    if (checkOut) params.set('checkout', fmtIso(checkOut));
-    if (roomTypeId) params.set('roomtype_id', roomTypeId);
-    return `https://hotels.cloudbeds.com/reservation/${propertyId}?${params}`;
-  };
 
   const days = calDays(cal.year, cal.month);
   const rangeEnd = checkOut ?? hover;
@@ -334,14 +322,13 @@ export default function BookingWidget({ propertyId, roomTypeId, maxGuests, price
             <span className="text-ink font-medium">${(priceFrom * nights).toLocaleString()}</span>
           </div>
         )}
-        <a
-          href={buildUrl()}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          type="button"
+          onClick={() => openBooking(checkIn && checkOut ? { checkin: checkIn, checkout: checkOut, adults, children } : undefined)}
           className="block w-full text-center bg-signal hover:bg-signal2 active:scale-[0.98] text-linen font-eyebrow text-xs uppercase tracking-widest py-3.5 rounded-xl transition-all duration-200"
         >
           {checkIn && checkOut ? 'Reserve' : 'Check Availability'}
-        </a>
+        </button>
         <p className="font-eyebrow text-xs text-ink2/50 text-center">Free cancellation · 14 days out</p>
       </div>
     </div>

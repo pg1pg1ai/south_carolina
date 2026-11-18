@@ -60,13 +60,18 @@ export default function FarmBasketPopup() {
 
   useEffect(() => {
     if (seen()) return;
+    // A guest who already opened the booking window has the offer's goal covered; never interrupt them.
+    let booking = false;
+    const onBooking = () => { booking = true; };
+    window.addEventListener('open-booking', onBooking);
     const t = setTimeout(() => {
+      if (booking || document.querySelector('[data-booking-modal]')) return;
       lastFocused.current = document.activeElement as HTMLElement | null;
       setArmed(true);
       setOpen(true);
       markSeen();
     }, SHOW_DELAY_MS);
-    return () => clearTimeout(t);
+    return () => { clearTimeout(t); window.removeEventListener('open-booking', onBooking); };
   }, []);
 
   const dismiss = useCallback(() => {
@@ -118,6 +123,7 @@ export default function FarmBasketPopup() {
      fine, but the overlay is not worth the risk. */
   return createPortal(
     <motion.div
+      data-site-overlay=""
       className="fixed inset-0 z-[300] flex items-center justify-center p-[14px] sm:p-5"
           style={{
             background: 'rgba(10,8,5,0.62)',
