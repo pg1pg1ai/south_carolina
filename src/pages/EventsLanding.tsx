@@ -1,8 +1,9 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import {
-  animate, motion, useInView, useMotionValueEvent, useReducedMotion, useScroll, useTransform,
+  AnimatePresence, animate, motion, useInView, useMotionValueEvent, useReducedMotion, useScroll, useTransform,
 } from 'framer-motion';
 import Footer from '../components/blocks/Footer';
+import BookingModal from '../components/blocks/BookingModal';
 import GettingHere from '../components/blocks/GettingHere';
 import ConsentCheckbox, { CONSENT_RECORD } from '../components/primitives/ConsentCheckbox';
 import WhatsAppIcon from '../components/icons/WhatsAppIcon';
@@ -169,13 +170,19 @@ function Why() {
 
 function Reviews() {
   const [i, setI] = useState(0);
-  useEffect(() => { const t = setInterval(() => setI((x) => (x + 1) % reviews.length), 6000); return () => clearInterval(t); }, []);
+  const [paused, setPaused] = useState(false);
+  const reduce = useReducedMotion();
+  useEffect(() => {
+    if (paused || reduce) return;
+    const t = setInterval(() => setI((x) => (x + 1) % reviews.length), 6000);
+    return () => clearInterval(t);
+  }, [paused, reduce]);
   return (
     <section className="qb g" style={{ backgroundImage: 'linear-gradient(180deg,#141915,rgba(20,25,21,.55) 30%,rgba(20,25,21,.55) 70%,#141915),url(/images/sandhills/waiting.webp)' }}>
       <div className="w">
         <p className="eb">Five stars on Google</p><span className="stars" aria-label="5 out of 5 stars">★★★★★</span>
-        <div className="qslides">{reviews.map((r, k) => <blockquote key={r.name} className={k === i ? 'on' : ''} aria-hidden={k !== i}>“{r.quote}”</blockquote>)}</div>
-        <div className="qmeta"><cite>{reviews[i].name} · Google review</cite><div className="qdots">{reviews.map((r, k) => <i key={r.name} className={k === i ? 'on' : ''} />)}</div></div>
+        <div className="qslides" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>{reviews.map((r, k) => <blockquote key={r.name} className={k === i ? 'on' : ''} aria-hidden={k !== i}>“{r.quote}”</blockquote>)}</div>
+        <div className="qmeta"><cite>{reviews[i].name} · Google review</cite><div className="qdots">{reviews.map((r, k) => <button key={r.name} type="button" className={k === i ? 'on' : ''} onClick={() => setI(k)} aria-label={`Show review ${k + 1}`} />)}</div></div>
       </div>
     </section>
   );
@@ -278,7 +285,7 @@ function Estimator({ onRequest }: { onRequest: (p: Partial<Plan>) => void }) {
   const villas = over ? Math.min(g, 24) : 0, house = over ? Math.min(Math.max(g - 24, 0), 8) : 0;
   const rv = over ? Math.min(Math.max(g - 32, 0), 68) : 0, day = over ? Math.max(g - 100, 0) : g;
   const sleep = !over ? `A day event for ${g} guests.` : g <= 32 ? 'Everyone sleeps in the villas and the Guest House.'
-    : g <= 100 ? `${g - 32} guests stay in RVs on the 16 hookups; we recommend the vendor.` : `Up to 100 stay overnight; the other ${g - 100} join for the day.`;
+    : g <= 100 ? `${g - 32} guests stay in RVs on the 16 hookups. We'll connect you with a trusted RV rental vendor.` : `Up to 100 stay overnight; the other ${g - 100} join for the day.`;
   const fit = g <= 30 ? 'The Lounge fits you, and the Event Hall is yours too.' : g <= 70 ? 'The Event Hall seats everyone indoors, with the Lounge for breakouts.'
     : 'Dinner moves outdoors to the fields, with both indoor spaces as the rain plan.';
   const bars = [['Forest Villas', villas, 24], ['Guest House', house, 8], ['RV hookups', rv, 68], ['Day guests', day, 200]] as const;
@@ -345,8 +352,34 @@ function Faq() {
     <section className="g" style={{ paddingTop: 0 }} aria-labelledby="ev-faq"><div className="w faqg">
       <Rv><p className="eb">FAQ for organizers</p><h2 id="ev-faq">Planning Questions, <em>Answered.</em></h2>
         <p className="lead">Can't find yours? <a href="#plan" onClick={(e) => { e.preventDefault(); scrollToPlan(); }}>Ask the team</a>, they reply within an hour.</p></Rv>
-      <div className="faq">{faq.map((f, i) => <details key={f.q} open={i === 0}><summary>{f.q}</summary><p>{f.a}</p></details>)}</div>
+      <FaqList />
     </div></section>
+  );
+}
+
+function FaqList() {
+  const [open, setOpen] = useState<number | null>(null);
+  const reduce = useReducedMotion();
+  return (
+    <div className="faq">
+      {faq.map((f, i) => {
+        const on = open === i;
+        return (
+          <div key={f.q} className={`fq${on ? ' on' : ''}`}>
+            <h3><button type="button" aria-expanded={on} aria-controls={`ev-fa-${i}`} id={`ev-fq-${i}`} onClick={() => setOpen(on ? null : i)}>{f.q}</button></h3>
+            <AnimatePresence initial={false}>
+              {on && (
+                <motion.div id={`ev-fa-${i}`} role="region" aria-labelledby={`ev-fq-${i}`} className="fa"
+                  initial={reduce ? false : { height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}
+                  exit={reduce ? undefined : { height: 0, opacity: 0 }} transition={{ duration: 0.45, ease: EASE }}>
+                  <p>{f.a}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
@@ -427,7 +460,11 @@ function PlanForm({ plan, setPlan }: { plan: Plan; setPlan: (p: Plan) => void })
 function MobileBar() {
   const [show, setShow] = useState(false);
   const { scrollY } = useScroll();
-  useMotionValueEvent(scrollY, 'change', (y) => setShow(y > window.innerHeight * 0.8));
+  useMotionValueEvent(scrollY, 'change', (y) => {
+    const plan = document.getElementById('plan')?.getBoundingClientRect();
+    const formOnScreen = !!plan && plan.top < window.innerHeight && plan.bottom > 0;
+    setShow(y > window.innerHeight * 0.8 && !formOnScreen);
+  });
   return (
     <div className={`mbar${show ? ' show' : ''}`}>
       <a className="btn ghost" href={CONTACT_WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" aria-label="Text us on WhatsApp"><WhatsAppIcon /></a>
@@ -450,11 +487,19 @@ export default function EventsLanding() {
     canonical.rel = 'canonical';
     canonical.href = `${SITE_ORIGIN}/events`;
     document.head.appendChild(canonical);
+    const ld = document.createElement('script');
+    ld.type = 'application/ld+json';
+    ld.text = JSON.stringify({
+      '@context': 'https://schema.org', '@type': 'FAQPage',
+      mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+    });
+    document.head.appendChild(ld);
     window.scrollTo(0, 0);
     return () => {
       document.title = prevTitle;
       if (prevDesc !== null) descTag?.setAttribute('content', prevDesc);
       canonical.remove();
+      ld.remove();
     };
   }, []);
 
@@ -477,8 +522,9 @@ export default function EventsLanding() {
         <Faq />
         <PlanForm plan={plan} setPlan={setPlan} />
       </main>
-      <Footer compact />
+      <Footer />
       <MobileBar />
+      <BookingModal />
     </div>
   );
 }
