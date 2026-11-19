@@ -136,3 +136,5 @@ details[open] summary .chev { transform: rotate(45deg); }
   .print-show { display: block !important; }
   .guide-card { break-inside: avoid; }
 }
+/* Getting Here on dark pages: real terrain map, softened to sit with the dark greens */
+.gh-terrain .mapboxgl-canvas{filter:saturate(.72) sepia(.14) brightness(.95) contrast(1.02)}
