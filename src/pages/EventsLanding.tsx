@@ -9,7 +9,7 @@ import ConsentCheckbox, { CONSENT_RECORD } from '../components/primitives/Consen
 import WhatsAppIcon from '../components/icons/WhatsAppIcon';
 import { guideData } from '../components/data/guide';
 import {
-  EVENT_TYPES, MAP_CROP, NIGHTLY_RATE, DAY_RATE, DAY_HOURS, DEPOSIT, activities, eventsSeo, facts, faq, formats, hero, included,
+  EVENT_TYPES, MAP_CROP, NIGHTLY_RATE, WEEKEND_RATE, DAY_RATE, DAY_RATE_WEEKEND, DAY_HOURS, DEPOSIT, activities, eventsSeo, facts, faq, formats, hero, included,
   occasions, reviews, spaces, steps, why, type EventType,
 } from '../components/data/events';
 import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_HREF, CONTACT_WHATSAPP_HREF } from '../lib/contact';
@@ -348,8 +348,9 @@ function Estimator({ onRequest }: { onRequest: (p: Partial<Plan>) => void }) {
             <button type="button" className={!over ? 'on' : ''} onClick={() => setOver(false)} aria-pressed={!over}>Day event only</button></div></div>
         </div>
         <div className="out">
-          <span className="k">All-inclusive, tax included, from</span>
-          <div className="price">${(over ? NIGHTLY_RATE * n : DAY_RATE).toLocaleString('en-US')}<small>{over ? ` for ${n} ${n > 1 ? 'nights' : 'night'}` : ` for the day, ${DAY_HOURS}`}</small></div>
+          <span className="k">All-inclusive, starting from</span>
+          <div className="price">${(over ? NIGHTLY_RATE * n : DAY_RATE).toLocaleString('en-US')}<small>{over ? ` for ${n} ${n > 1 ? 'weeknights' : 'weeknight'}` : ` for the day, ${DAY_HOURS}`}</small></div>
+          <p className="pnote">{over ? 'Friday and Saturday nights are $' + WEEKEND_RATE.toLocaleString('en-US') + '.' : '$' + DAY_RATE_WEEKEND.toLocaleString('en-US') + ' on a Friday or Saturday.'} Tax is added at checkout.</p>
           <p className="incl">{over ? 'The whole property: 6 Forest Villas, the Guest House, both indoor spaces, the lake, the grounds and 20+ activities.' : 'Both indoor spaces, the lake, the grounds and 20+ activities. The villas and the Guest House stay closed.'}</p>
           <div className="bars">{bars.map(([l, v, max]) => <div className="bar" key={l}><span>{l}</span><span className="t"><i style={{ width: `${(v / max) * 100}%` }} /></span><b>{v}</b></div>)}</div>
           <p className="verdict">{sleep} {fit}</p>
@@ -384,7 +385,7 @@ function HowItWorks() {
         {steps.map((s, i) => <Rv key={s.title} className="sp" delay={i * 0.08}><span className="n">{i + 1}</span><b>{s.title}</b><p>{s.body}</p></Rv>)}
       </div>
       <Rv className="allin">
-        <div className="p">${NIGHTLY_RATE.toLocaleString('en-US')}<small><span>Per night · whole property</span> <span>Tax included</span></small></div>
+        <div className="p">${NIGHTLY_RATE.toLocaleString('en-US')}<small><span>Per weeknight · whole property</span> <span>${WEEKEND_RATE.toLocaleString('en-US')} Fri &amp; Sat · plus tax</span></small></div>
         <ul>{included.map((x) => <li key={x}>{x}</li>)}</ul>
         <button type="button" className="btn" onClick={scrollToPlan}>Start With Your Dates <Arrow /></button>
       </Rv>

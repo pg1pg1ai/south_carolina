@@ -288,3 +288,4 @@
   .ev .fcard .chips{display:grid;grid-template-columns:1fr 1fr;gap:6px}
   .ev .fcard .chips .chip{min-height:42px;padding:6px 10px;font-size:13px;line-height:1.2;text-align:center;white-space:normal}
 }
+.ev .out .pnote{margin:6px 0 0;font-size:13px;color:#5A5650}

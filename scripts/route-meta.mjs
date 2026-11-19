@@ -10,7 +10,7 @@ const ROUTES = [
     path: 'events',
     title: 'Private Events & Full-Property Buyouts | Horizons Sandhills',
     description:
-      'Book all of Horizons Sandhills for your retreat, wedding or celebration: 126 private acres, an 18-acre lake, two indoor event spaces and room for 32 overnight (100 with RVs). All-inclusive from $1,770 per night, tax included.',
+      'Book all of Horizons Sandhills for your retreat, wedding or celebration: 126 private acres, an 18-acre lake, two indoor event spaces and room for 32 overnight (100 with RVs). All-inclusive from $1,770 per night.',
     image: '/images/og/events.jpg',
     preload: '/images/segments/heroes/birthday.webp',
   },

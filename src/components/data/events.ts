@@ -2,7 +2,8 @@
  * /events — full-property private events landing page.
  * Copy follows the team brief (Google Doc "Horizons Sandhills - Events page", Nov 2026) with the owner's
  * answers of 2026-11-18: replies within an hour, 30% deposit locks in dates, $1,770/night all-inclusive
- * the Stage pavilion is not featured here. 2026-11-19: tax included, no minimum stay; day events
+ * the Stage pavilion is not featured here. 2026-11-19: tax is added at checkout (Cloudbeds), no minimum stay;
+ * nights follow the villa rates (6 x $295 weeknights, 6 x $365 Fri/Sat); day events
  * (no overnight stays) are the nightly rate less $50 per unit not cleaned: 6 villas + the Guest House.
  */
 
@@ -18,16 +19,18 @@ export const EVENT_TYPES = [
 ] as const;
 export type EventType = (typeof EVENT_TYPES)[number];
 
-export const NIGHTLY_RATE = 1770;
+export const NIGHTLY_RATE = 1770; // weeknight: 6 Forest Villas x $295
+export const WEEKEND_RATE = 2190; // Friday and Saturday nights: 6 x $365
 export const DEPOSIT = '30%';
 /** Day event: no cabins used, so no cleaning: $50 off for each of the 7 units. */
-export const DAY_RATE = NIGHTLY_RATE - 7 * 50;
+export const DAY_RATE = NIGHTLY_RATE - 7 * 50; // $1,420 weekdays
+export const DAY_RATE_WEEKEND = WEEKEND_RATE - 7 * 50; // $1,840 Fri/Sat
 export const DAY_HOURS = '10 am to 10 pm';
 
 export const eventsSeo = {
   title: 'Private Events & Full-Property Buyouts | Horizons Sandhills',
   description:
-    'Book all of Horizons Sandhills for your retreat, wedding or celebration: 126 private acres, an 18-acre lake, two indoor event spaces and room for 32 overnight (100 with RVs). All-inclusive from $1,770 per night, tax included.',
+    'Book all of Horizons Sandhills for your retreat, wedding or celebration: 126 private acres, an 18-acre lake, two indoor event spaces and room for 32 overnight (100 with RVs). All-inclusive from $1,770 per night.',
 };
 
 export const hero = {
@@ -44,7 +47,7 @@ export const facts = [
   { value: 200, label: 'Day guests' },
   { text: '32/100', label: 'Overnight / with RVs' },
   { value: 2, label: 'Indoor spaces' },
-  { text: '$1,770', label: 'Per night, tax included' },
+  { text: '$1,770', label: 'From, per night' },
 ] as const;
 
 export const occasions = ['Corporate Retreats', 'Weddings', 'Family Reunions', 'Wellness & Faith Retreats', 'Birthday Weekends', 'Bachelor & Bachelorette', 'Private Celebrations'];
@@ -116,7 +119,7 @@ export const included = ['All 6 Forest Villas', 'The Guest House', 'The Event Ha
 export const faq = [
   { q: 'How do I book the whole property?', a: 'Reserve all 6 Forest Villas and the property is yours during your dates. Group bookings are available year-round through our website or team: +1 (754) 667-9090.' },
   { q: 'How many guests can you host?', a: 'Up to 200 guests for day events and 32 overnight in our Villas and Guest House. With our 16 RV hookups, up to 100 guests can stay overnight.' },
-  { q: 'What is included in the price?', a: 'Everything on the property: all 6 Forest Villas, the Guest House, both indoor event spaces, the grounds, the lake and 20+ complimentary activities. Tax is included, and there is no minimum stay. Day events without overnight stays are $1,420, from 10 am to 10 pm.' },
+  { q: 'What is included in the price?', a: 'Everything on the property: all 6 Forest Villas, the Guest House, both indoor event spaces, the grounds, the lake and 20+ complimentary activities. Weeknights are $1,770 and Friday or Saturday nights $2,190, with tax added at checkout. There is no minimum stay. Day events without overnight stays start at $1,420, from 10 am to 10 pm.' },
   { q: 'Do you have indoor event spaces?', a: 'Yes, two. One for up to 70 guests with a professional kitchen and restroom, and one for up to 30 guests with a restroom, fireplace lounge and grill deck.' },
   { q: 'Are there noise restrictions?', a: 'No. Horizons Sandhills has no neighbors and no noise restrictions for group reservations.' },
   { q: 'Is there someone on-site during our event?', a: 'Yes. Our property manager is on site 24/7.' },
@@ -125,7 +128,7 @@ export const faq = [
   { q: 'Can we bring our own alcohol?', a: 'Yes, you can bring your own alcohol.' },
   { q: 'Do we need event insurance?', a: 'You would need event insurance dependent on the type of your event.' },
   { q: 'How do deposits and cancellations work?', a: `A ${DEPOSIT} deposit locks in your dates. Cancellation is free up to 7 days before the event. Cancelling between 4 and 7 days before arrival qualifies for a 50% refund. Cancellations less than 4 days before arrival are non-refundable, including taxes and fees.` },
-  { q: 'Can we book just the event space, without staying overnight?', a: 'Yes. A day event gives you the whole property from 10 am to 10 pm for $1,420, tax included. The villas and the Guest House stay closed, which is why it costs less than a night.' },
+  { q: 'Can we book just the event space, without staying overnight?', a: 'Yes. A day event gives you the whole property from 10 am to 10 pm for $1,420 on weekdays or $1,840 on a Friday or Saturday, plus tax. The villas and the Guest House stay closed, which is why it costs less than a night.' },
   { q: 'What time is check-in?', a: 'Check-in is at 2 PM, and check-out is at 12 PM the following day. Early or late check-ins and check-outs can be accommodated with prior notice, subject to fees.' },
   { q: 'Can we bring pets?', a: 'Yes. Up to 3 pets per accommodation, $50 pet fee per stay. Pets stay leashed in common areas.' },
 ];
