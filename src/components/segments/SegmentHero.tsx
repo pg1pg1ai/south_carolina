@@ -8,7 +8,7 @@ import { openRequestForm } from '../../lib/requestForm';
 const FACTS = [
   { value: '126', label: 'Private acres' },
   { value: '18-acre', label: 'Private lake' },
-  { value: '1 hr 30', label: 'From Charlotte' },
+  { value: '1 hr 40', label: 'From Charlotte' },
 ] as const;
 
 /** `*accent*` runs in the headline → italic, brand accent colour. */

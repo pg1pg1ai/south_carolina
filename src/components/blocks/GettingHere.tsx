@@ -1,17 +1,42 @@
 import { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import RouteChips from './RouteChips';
+import { ROUTES } from '../data/routes';
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN as string;
-const PROPERTY_COORDS: [number, number] = [-80.042, 34.576];
+const PROPERTY_COORDS: [number, number] = [-80.0975, 34.605]; // 423 Woodmen Rd (geocoded), not Patrick town centre
 
 const TOWNS = [
-  { name: 'Cheraw, SC',        note: 'Nearest town',      time: '18 min',  coords: [-79.875, 34.700] as [number, number] },
-  { name: 'Camden, SC',        note: 'Historic district', time: '32 min',  coords: [-80.607, 34.247] as [number, number] },
-  { name: 'Florence, SC',      note: 'Regional center',   time: '45 min',  coords: [-79.763, 34.195] as [number, number] },
-  { name: 'Columbia, SC',      note: 'State capital',     time: '1 hr',    coords: [-81.035, 33.999] as [number, number] },
-  { name: 'Charlotte, NC',     note: 'Major city',        time: '1 hr 30', coords: [-80.843, 35.227] as [number, number] },
-  { name: 'Raleigh-Durham, NC',note: 'Research triangle', time: '2 hr 30', coords: [-78.898, 35.994] as [number, number] },
+  { name: 'Cheraw, SC',        note: 'Nearest town',      time: ROUTES['Cheraw, SC'].time,  coords: [-79.875, 34.700] as [number, number] },
+  { name: 'Camden, SC',        note: 'Historic district', time: ROUTES['Camden, SC'].time,  coords: [-80.607, 34.247] as [number, number] },
+  { name: 'Florence, SC',      note: 'Regional center',   time: ROUTES['Florence, SC'].time,  coords: [-79.763, 34.195] as [number, number] },
+  { name: 'Columbia, SC',      note: 'State capital',     time: ROUTES['Columbia, SC'].time,    coords: [-81.035, 33.999] as [number, number] },
+  { name: 'Charlotte, NC',     note: 'Major city',        time: ROUTES['Charlotte, NC'].time, coords: [-80.843, 35.227] as [number, number] },
+  { name: 'Raleigh-Durham, NC',note: 'Research triangle', time: ROUTES['Raleigh-Durham, NC'].time, coords: [-78.898, 35.994] as [number, number] },
+];
+
+/** Drive times above come from Mapbox driving directions to PROPERTY_COORDS,
+ *  saved with each route's geometry in data/routes.ts (rounded to 5 min).
+ *  Dark pages ("Every road leads here") frame the closer towns; Raleigh's
+ *  route runs off the edge and RouteChips pins its chip where it enters. */
+const CROP = TOWNS.filter((t) => !t.name.startsWith('Raleigh')).reduce(
+  (b, t) => b.extend(t.coords),
+  new mapboxgl.LngLatBounds(PROPERTY_COORDS, PROPERTY_COORDS),
+);
+const CROP_PAD = { top: 40, bottom: 40, left: 40, right: 110 };
+const ROUTE_FC: GeoJSON.FeatureCollection<GeoJSON.LineString> = {
+  type: 'FeatureCollection',
+  features: TOWNS.map((t) => ({
+    type: 'Feature',
+    properties: { name: t.name },
+    geometry: { type: 'LineString', coordinates: ROUTES[t.name].coords },
+  })),
+};
+/** Marching-ants steps for the flowing dash (Mapbox's ant-path pattern). */
+const DASH_SEQ = [
+  [0, 4, 3], [0.5, 4, 2.5], [1, 4, 2], [1.5, 4, 1.5], [2, 4, 1], [2.5, 4, 0.5], [3, 4, 0],
+  [0, 0.5, 3, 3.5], [0, 1, 3, 3], [0, 1.5, 3, 2.5], [0, 2, 3, 2], [0, 2.5, 3, 1.5], [0, 3, 3, 1], [0, 3.5, 3, 0.5],
 ];
 
 /** Map + list palettes. `light` is the main site; `dark` is the segment
@@ -25,7 +50,7 @@ const TONES = {
     route: '#B05329', origin: '#5A5650',
   },
   dark: {
-    style: 'mapbox://styles/mapbox/dark-v11',
+    style: 'mapbox://styles/mapbox/outdoors-v12',
     land: '#1F2620', water: '#2E3D30', waterOpacity: 0.9, green: 'rgba(120,150,110,0.12)',
     building: 'rgba(231,222,199,0.06)', roadMajor: 'rgba(231,222,199,0.38)', road: 'rgba(231,222,199,0.14)',
     waterLine: '#3E4F3A', label: '#B8AE94', halo: '#1A1F1B',
@@ -43,6 +68,7 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
   const [activeCity, setActiveCity] = useState<string | null>(null);
   const [hoveredCity, setHoveredCity] = useState<string | null>(null);
   const [routeLoading, setRouteLoading] = useState(false);
+  const [mapReady, setMapReady] = useState<mapboxgl.Map | null>(null);
 
   useEffect(() => {
     if (!mapContainerRef.current || !MAPBOX_TOKEN) return;
@@ -50,18 +76,28 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: T.style,
-      center: PROPERTY_COORDS,
-      zoom: 13.5,
+      ...(dark
+        ? { bounds: CROP, fitBoundsOptions: { padding: CROP_PAD } }
+        : { center: PROPERTY_COORDS, zoom: 13.5 }),
       attributionControl: false,
       logoPosition: 'bottom-right',
     });
 
     mapRef.current = map;
+    map.on('load', () => setMapReady(map));
 
     map.on('style.load', () => {
       map.addSource('route', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
       map.addLayer({ id: 'route-line', type: 'line', source: 'route', layout: { 'line-join': 'round', 'line-cap': 'round' }, paint: { 'line-color': T.route, 'line-width': 2.5, 'line-opacity': 0.85 } });
 
+      if (dark) {
+        // real terrain colours stay; only the routes are ours
+        map.addSource('routes', { type: 'geojson', data: ROUTE_FC });
+        map.addLayer({ id: 'routes-glow', type: 'line', source: 'routes', layout: { 'line-join': 'round', 'line-cap': 'round' }, paint: { 'line-color': '#B05329', 'line-width': 9, 'line-opacity': 0.16, 'line-blur': 4 } });
+        map.addLayer({ id: 'routes-base', type: 'line', source: 'routes', layout: { 'line-join': 'round', 'line-cap': 'round' }, paint: { 'line-color': '#B05329', 'line-width': 3.5, 'line-opacity': 0.35 } });
+        map.addLayer({ id: 'routes-dash', type: 'line', source: 'routes', layout: { 'line-join': 'round' }, paint: { 'line-color': '#B05329', 'line-width': 3.5, 'line-dasharray': DASH_SEQ[0] } });
+        return;
+      }
       const layers = map.getStyle().layers;
       layers.forEach((layer: { id: string; type: string }) => {
         try {
@@ -104,14 +140,43 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
     new mapboxgl.Marker({ element: el }).setLngLat(PROPERTY_COORDS).addTo(map);
 
     map.scrollZoom.disable();
+
+    // flowing dashes on the dark-page routes
+    let antRaf = 0;
+    if (dark && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      let step = -1;
+      const tick = (now: number) => {
+        const s = Math.floor(now / 70) % DASH_SEQ.length;
+        if (s !== step && map.getLayer('routes-dash')) { step = s; map.setPaintProperty('routes-dash', 'line-dasharray', DASH_SEQ[s]); }
+        antRaf = requestAnimationFrame(tick);
+      };
+      antRaf = requestAnimationFrame(tick);
+    }
     map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'bottom-right');
 
-    return () => map.remove();
+    return () => { cancelAnimationFrame(antRaf); map.remove(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- tone is fixed per mount
   }, []);
 
+  /** Dark pages: highlight the picked route, dim the rest. */
+  useEffect(() => {
+    const map = mapReady;
+    if (!dark || !map || !map.getLayer('routes-dash')) return;
+    const pick = (on: number, off: number): mapboxgl.ExpressionSpecification | number =>
+      activeCity ? ['case', ['==', ['get', 'name'], activeCity], on, off] : on;
+    map.setPaintProperty('routes-dash', 'line-opacity', pick(1, 0.22));
+    map.setPaintProperty('routes-base', 'line-opacity', pick(0.45, 0.1));
+    map.setPaintProperty('routes-glow', 'line-opacity', pick(0.28, 0.05));
+    map.setPaintProperty('routes-dash', 'line-width', activeCity ? pick(5, 3) : 3.5);
+  }, [activeCity, mapReady, dark]);
+
   const resetRoute = () => {
     const map = mapRef.current;
+    if (dark && map) {
+      setActiveCity(null);
+      map.fitBounds(CROP, { padding: CROP_PAD, duration: 1000 });
+      return;
+    }
     if (!map || !map.getSource('route')) return;
     setActiveCity(null);
     (map.getSource('route') as mapboxgl.GeoJSONSource).setData({ type: 'FeatureCollection', features: [] });
@@ -132,6 +197,14 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
 
   const showRoute = async (town: typeof TOWNS[0]) => {
     const map = mapRef.current;
+    if (dark && map) {
+      if (activeCity === town.name) { resetRoute(); return; }
+      setActiveCity(town.name);
+      const b = new mapboxgl.LngLatBounds(PROPERTY_COORDS, PROPERTY_COORDS);
+      ROUTES[town.name].coords.forEach((c) => b.extend(c));
+      map.fitBounds(b, { padding: 70, duration: 1100, maxZoom: 11 });
+      return;
+    }
     if (!map || !map.getSource('route')) return;
 
     if (activeCity === town.name) {
@@ -203,7 +276,10 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
               boxShadow: dark ? '0 30px 80px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.25)' : '0 20px 60px rgba(31,36,32,0.18), 0 8px 24px rgba(31,36,32,0.10)',
               border: dark ? '1px solid rgba(231,222,199,0.10)' : undefined,
             }}>
-              <div ref={mapContainerRef} style={{ position: 'absolute', inset: 0 }} />
+              <div ref={mapContainerRef} className={dark ? 'gh-terrain' : undefined} style={{ position: 'absolute', inset: 0 }} />
+              {dark && (
+                <RouteChips map={mapReady} towns={TOWNS} routes={ROUTES} active={activeCity} onPick={showRoute} />
+              )}
               {!MAPBOX_TOKEN && (
                 <div
                   className="font-eyebrow"

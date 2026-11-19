@@ -9,7 +9,7 @@ const resort = {
   '@id': `${SITE_URL}/#resort`,
   name: 'Horizons Sandhills',
   description:
-    'Premium nature retreat on 126 private acres of longleaf pine savanna in the Carolina Sandhills. Private 18-acre lake, wood-fired sauna, six Forest Villas, and The House — 90 minutes from Charlotte.',
+    'Premium nature retreat on 126 private acres of longleaf pine savanna in the Carolina Sandhills. Private 18-acre lake, wood-fired sauna, six Forest Villas, and The House, 1 hr 40 from Charlotte.',
   url: SITE_URL,
   telephone: '+18035550180',
   address: {
@@ -22,8 +22,8 @@ const resort = {
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: 34.5734,
-    longitude: -80.038,
+    latitude: 34.605,
+    longitude: -80.0975,
   },
   priceRange: '$295–$1200',
   checkinTime: '15:00',
