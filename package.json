@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite",
     "prebuild": "node scripts/convert-to-webp.mjs && node scripts/check-segments.mjs",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/route-meta.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "build:segment-images": "node scripts/build-segment-images.mjs",

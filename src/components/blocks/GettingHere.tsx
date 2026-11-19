@@ -1,10 +1,18 @@
 import { useRef, useEffect, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import type { Map as MbMap, Marker as MbMarker, GeoJSONSource, ExpressionSpecification } from 'mapbox-gl';
 import RouteChips from './RouteChips';
 import { ROUTES } from '../data/routes';
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN as string;
+
+/** mapbox-gl (~465 KB gzipped) is loaded only when this section nears the viewport. */
+type MB = typeof import('mapbox-gl').default;
+let mb: MB | null = null;
+type Box = [[number, number], [number, number]];
+const bbox = (pts: [number, number][]): Box => [
+  [Math.min(...pts.map((p) => p[0])), Math.min(...pts.map((p) => p[1]))],
+  [Math.max(...pts.map((p) => p[0])), Math.max(...pts.map((p) => p[1]))],
+];
 const PROPERTY_COORDS: [number, number] = [-80.0975, 34.605]; // 423 Woodmen Rd (geocoded), not Patrick town centre
 
 const TOWNS = [
@@ -20,10 +28,7 @@ const TOWNS = [
  *  saved with each route's geometry in data/routes.ts (rounded to 5 min).
  *  Dark pages ("Every road leads here") frame the closer towns; Raleigh's
  *  route runs off the edge and RouteChips pins its chip where it enters. */
-const CROP = TOWNS.filter((t) => !t.name.startsWith('Raleigh')).reduce(
-  (b, t) => b.extend(t.coords),
-  new mapboxgl.LngLatBounds(PROPERTY_COORDS, PROPERTY_COORDS),
-);
+const CROP = bbox([PROPERTY_COORDS, ...TOWNS.filter((t) => !t.name.startsWith('Raleigh')).map((t) => t.coords)]);
 const CROP_PAD = { top: 40, bottom: 40, left: 40, right: 110 };
 const ROUTE_FC: GeoJSON.FeatureCollection<GeoJSON.LineString> = {
   type: 'FeatureCollection',
@@ -62,19 +67,21 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
   const dark = tone === 'dark';
   const T = TONES[tone];
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<mapboxgl.Map | null>(null);
-  const originMarkerRef = useRef<mapboxgl.Marker | null>(null);
+  const mapRef = useRef<MbMap | null>(null);
+  const originMarkerRef = useRef<MbMarker | null>(null);
   const townsRef = useRef<HTMLDivElement>(null);
   const [activeCity, setActiveCity] = useState<string | null>(null);
   const [hoveredCity, setHoveredCity] = useState<string | null>(null);
   const [routeLoading, setRouteLoading] = useState(false);
-  const [mapReady, setMapReady] = useState<mapboxgl.Map | null>(null);
+  const [mapReady, setMapReady] = useState<MbMap | null>(null);
 
   useEffect(() => {
-    if (!mapContainerRef.current || !MAPBOX_TOKEN) return;
-    mapboxgl.accessToken = MAPBOX_TOKEN;
-    const map = new mapboxgl.Map({
-      container: mapContainerRef.current,
+    const host = mapContainerRef.current;
+    if (!host || !MAPBOX_TOKEN) return;
+    const init = (gl: MB): (() => void) => {
+    gl.accessToken = MAPBOX_TOKEN;
+    const map = new gl.Map({
+      container: host,
       style: T.style,
       ...(dark
         ? { bounds: CROP, fitBoundsOptions: { padding: CROP_PAD } }
@@ -137,7 +144,7 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
 
     const el = document.createElement('div');
     el.style.cssText = `width:14px;height:14px;border-radius:50%;background:${T.route};border:2px solid ${T.halo};box-shadow:0 0 0 5px rgba(176,83,41,0.25)`;
-    new mapboxgl.Marker({ element: el }).setLngLat(PROPERTY_COORDS).addTo(map);
+    new gl.Marker({ element: el }).setLngLat(PROPERTY_COORDS).addTo(map);
 
     map.scrollZoom.disable();
 
@@ -152,9 +159,24 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
       };
       antRaf = requestAnimationFrame(tick);
     }
-    map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'bottom-right');
+    map.addControl(new gl.NavigationControl({ showCompass: false }), 'bottom-right');
 
     return () => { cancelAnimationFrame(antRaf); map.remove(); };
+    };
+
+    let cleanup = () => {};
+    let dead = false;
+    const io = new IntersectionObserver((es) => {
+      if (!es.some((e) => e.isIntersecting)) return;
+      io.disconnect();
+      Promise.all([import('mapbox-gl'), import('mapbox-gl/dist/mapbox-gl.css')]).then(([{ default: gl }]) => {
+        if (dead) return;
+        mb = gl;
+        cleanup = init(gl);
+      });
+    }, { rootMargin: '900px 0px' });
+    io.observe(host);
+    return () => { dead = true; io.disconnect(); cleanup(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- tone is fixed per mount
   }, []);
 
@@ -162,7 +184,7 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
   useEffect(() => {
     const map = mapReady;
     if (!dark || !map || !map.getLayer('routes-dash')) return;
-    const pick = (on: number, off: number): mapboxgl.ExpressionSpecification | number =>
+    const pick = (on: number, off: number): ExpressionSpecification | number =>
       activeCity ? ['case', ['==', ['get', 'name'], activeCity], on, off] : on;
     map.setPaintProperty('routes-dash', 'line-opacity', pick(1, 0.22));
     map.setPaintProperty('routes-base', 'line-opacity', pick(0.45, 0.1));
@@ -179,7 +201,7 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
     }
     if (!map || !map.getSource('route')) return;
     setActiveCity(null);
-    (map.getSource('route') as mapboxgl.GeoJSONSource).setData({ type: 'FeatureCollection', features: [] });
+    (map.getSource('route') as GeoJSONSource).setData({ type: 'FeatureCollection', features: [] });
     originMarkerRef.current?.remove();
     originMarkerRef.current = null;
     map.flyTo({ center: PROPERTY_COORDS, zoom: 13.5, duration: 1000 });
@@ -200,9 +222,7 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
     if (dark && map) {
       if (activeCity === town.name) { resetRoute(); return; }
       setActiveCity(town.name);
-      const b = new mapboxgl.LngLatBounds(PROPERTY_COORDS, PROPERTY_COORDS);
-      ROUTES[town.name].coords.forEach((c) => b.extend(c));
-      map.fitBounds(b, { padding: 70, duration: 1100, maxZoom: 11 });
+      map.fitBounds(bbox([PROPERTY_COORDS, ...ROUTES[town.name].coords]), { padding: 70, duration: 1100, maxZoom: 11 });
       return;
     }
     if (!map || !map.getSource('route')) return;
@@ -227,17 +247,15 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
       const geometry = data.routes?.[0]?.geometry;
       if (!geometry) { setActiveCity(null); return; }
 
-      (map.getSource('route') as mapboxgl.GeoJSONSource).setData({ type: 'Feature', properties: {}, geometry });
+      (map.getSource('route') as GeoJSONSource).setData({ type: 'Feature', properties: {}, geometry });
 
       originMarkerRef.current?.remove();
       const el = document.createElement('div');
       el.style.cssText = `width:10px;height:10px;border-radius:50%;background:${T.origin};border:2px solid ${T.halo};box-shadow:0 0 0 3px rgba(90,86,80,0.18)`;
-      originMarkerRef.current = new mapboxgl.Marker({ element: el }).setLngLat(town.coords).addTo(map);
+      if (!mb) return;
+      originMarkerRef.current = new mb.Marker({ element: el }).setLngLat(town.coords).addTo(map);
 
-      const bounds = new mapboxgl.LngLatBounds();
-      bounds.extend(town.coords);
-      bounds.extend(PROPERTY_COORDS);
-      map.fitBounds(bounds, { padding: 56, duration: 1100, maxZoom: 12 });
+      map.fitBounds(bbox([town.coords, PROPERTY_COORDS]), { padding: 56, duration: 1100, maxZoom: 12 });
     } catch (_) {
       setActiveCity(null);
     } finally {

@@ -11,7 +11,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('mapbox-gl')) return 'mapbox';
+          // mapbox-gl: no manual chunk; GettingHere imports it dynamically so it loads on scroll
           if (id.includes('framer-motion')) return 'motion';
           if (id.includes('node_modules/react') || id.includes('react-router-dom')) return 'react-vendor';
         },

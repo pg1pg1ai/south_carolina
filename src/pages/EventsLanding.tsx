@@ -118,12 +118,12 @@ function Hero() {
         <motion.p className="eb" initial={reduce ? false : { opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, ease: EASE, delay: 0.5 }}>{hero.eyebrow}</motion.p>
         <h1>
           {lines.map((l, i) => (
-            <span className="ln" key={i}>
+            <span className="ln" key={i}>{i > 0 && ' '}
               <motion.span initial={reduce ? false : { y: '110%' }} animate={{ y: 0 }} transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.2 + i * 0.12 }}>{l}</motion.span>
             </span>
           ))}
         </h1>
-        <motion.div className="hrow" initial={reduce ? false : { opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, ease: EASE, delay: 0.8 }}>
+        <motion.div className="hrow" initial={reduce ? false : { opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: EASE, delay: 0.25 }}>
           <p className="sub">{hero.sub}</p>
           <div className="btns">
             <button type="button" className="btn" onClick={scrollToPlan}>Plan Your Event <Arrow /></button>
@@ -135,6 +135,9 @@ function Hero() {
     </section>
   );
 }
+
+/** Same names as the format cards (values stay as sent in the lead email). */
+const label = (t: string) => t.replace(' or ', ' & ');
 
 type Plan = { type: EventType; dates: string; guests: number; note: string };
 
@@ -155,7 +158,7 @@ function FactsAndQuickCheck({ onCheck }: { onCheck: (p: Partial<Plan>) => void }
       <Rv>
         <form className="qc" onSubmit={(e) => { e.preventDefault(); onCheck({ type, dates, guests: guests ? Number(guests) : undefined }); scrollToPlan(); }}>
           <label><small>Your occasion</small>
-            <select value={type} onChange={(e) => setType(e.target.value as EventType)}>{EVENT_TYPES.map((t) => <option key={t}>{t}</option>)}</select>
+            <select value={type} onChange={(e) => setType(e.target.value as EventType)}>{EVENT_TYPES.map((t) => <option key={t} value={t}>{label(t)}</option>)}</select>
           </label>
           <label><small>Dates</small><input value={dates} onChange={(e) => setDates(e.target.value)} placeholder="Add dates" /></label>
           <label><small>Guests</small><input value={guests} onChange={(e) => setGuests(e.target.value.replace(/\D/g, ''))} inputMode="numeric" placeholder="How many" /></label>
@@ -167,8 +170,17 @@ function FactsAndQuickCheck({ onCheck }: { onCheck: (p: Partial<Plan>) => void }
   );
 }
 
+/** Moves only as the visitor scrolls (no autoplay), so nothing runs on its own. */
 function Marquee() {
-  return <div className="mq" aria-hidden="true"><div>{[...occasions, ...occasions].map((o, i) => <span key={i}>{o}</span>)}</div></div>;
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-28%']);
+  return (
+    <div className="mq" aria-hidden="true" ref={ref}>
+      <motion.div style={reduce ? undefined : { x }}>{[...occasions, ...occasions].map((o, i) => <span key={i}>{o}</span>)}</motion.div>
+    </div>
+  );
 }
 
 function Why() {
@@ -193,19 +205,23 @@ function Why() {
 
 function Reviews() {
   const [i, setI] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(false); // the visitor's own pause (button)
+  const [hover, setHover] = useState(false);
+  const [focus, setFocus] = useState(false);
   const reduce = useReducedMotion();
+  const stopped = paused || hover || focus || !!reduce;
   useEffect(() => {
-    if (paused || reduce) return;
+    if (stopped) return;
     const t = setInterval(() => setI((x) => (x + 1) % reviews.length), 6000);
     return () => clearInterval(t);
-  }, [paused, reduce]);
+  }, [stopped]);
   return (
     <section className="qb g" style={{ backgroundImage: 'linear-gradient(180deg,#141915,rgba(20,25,21,.7) 30%,rgba(20,25,21,.7) 70%,#141915),url(/images/sandhills/villa-golden-hour.webp)' }}>
       <div className="w">
         <p className="eb">Guest reviews on Google</p><span className="stars" aria-label="5 out of 5 stars">★★★★★</span>
-        <div className="qslides" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>{reviews.map((r, k) => <blockquote key={r.name} className={k === i ? 'on' : ''} aria-hidden={k !== i}>“{r.quote}”</blockquote>)}</div>
-        <div className="qmeta"><cite>{reviews[i].name} · Google review</cite><div className="qdots">{reviews.map((r, k) => <button key={r.name} type="button" className={k === i ? 'on' : ''} onClick={() => setI(k)} aria-label={`Show review ${k + 1}`} />)}</div></div>
+        <div className="qslides" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>{reviews.map((r, k) => <blockquote key={r.name} className={k === i ? 'on' : ''} aria-hidden={k !== i}>“{r.quote}”</blockquote>)}</div>
+        <div className="qmeta"><cite>{reviews[i].name} · Google review</cite><div className="qdots" onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}>{reviews.map((r, k) => <button key={r.name} type="button" className={k === i ? 'on' : ''} onClick={() => setI(k)} aria-label={`Show review ${k + 1}`} aria-current={k === i} />)}
+          {!reduce && <button type="button" className="qpause" onClick={() => setPaused(!paused)} aria-label={paused ? 'Play reviews' : 'Pause reviews'}>{paused ? '▶' : '❚❚'}</button>}</div></div>
       </div>
     </section>
   );
@@ -311,7 +327,7 @@ function Estimator({ onRequest }: { onRequest: (p: Partial<Plan>) => void }) {
     : g <= 100 ? `${g - 32} guests stay in RVs on the 16 hookups. We'll connect you with a trusted RV rental vendor.` : `Up to 100 stay overnight; the other ${g - 100} join for the day.`;
   const fit = g <= 30 ? 'The Lounge fits you, and the Event Hall is yours too.' : g <= 70 ? 'The Event Hall seats everyone indoors, with the Lounge for breakouts.'
     : 'Dinner moves outdoors to the fields, with both indoor spaces as the rain plan.';
-  const bars = [['Forest Villas', villas, 24], ['Guest House', house, 8], ['RV hookups', rv, 68], ['Day guests', day, 200]] as const;
+  const bars = [['Forest Villas', villas, 24], ['Guest House', house, 8], ['In RVs', rv, 68], ['Day guests', day, 200]] as const;
   return (
     <section className="g" style={{ paddingTop: 0 }} aria-labelledby="ev-est"><div className="w">
       <Rv><p className="eb">Build your event</p><h2 id="ev-est">See It Come <em>Together.</em></h2>
@@ -449,40 +465,40 @@ function PlanForm({ plan, setPlan }: { plan: Plan; setPlan: (p: Plan) => void })
         <div className="fcard">
           {step < 3 && <div className="fsteps"><span className="on">1 · Your event</span><span className={step === 2 ? 'on' : ''}>2 · Your details</span></div>}
           {step === 1 && (
-            <div>
+            <form onSubmit={(e) => { e.preventDefault(); setStep(2); }}>
               <h3>What are you planning?</h3>
               <div className="chips" role="radiogroup" aria-label="Type of event">
-                {EVENT_TYPES.map((t) => <button key={t} type="button" role="radio" aria-checked={plan.type === t} className={`chip${plan.type === t ? ' on' : ''}`} onClick={() => setPlan({ ...plan, type: t })}>{t === 'Other' ? 'Something else' : t}</button>)}
+                {EVENT_TYPES.map((t) => <button key={t} type="button" role="radio" aria-checked={plan.type === t} className={`chip${plan.type === t ? ' on' : ''}`} onClick={() => setPlan({ ...plan, type: t })}>{t === 'Other' ? 'Something else' : label(t)}</button>)}
               </div>
               <div className="fr">
-                <div className="fld"><small>Preferred dates</small><input value={plan.dates} onChange={(e) => setPlan({ ...plan, dates: e.target.value })} placeholder="e.g. May 15 to 17" /></div>
-                <div className="fld"><small>Guests</small><div className="stp"><span>{plan.guests}</span><span>
+                <div className="fld"><label htmlFor="ev-dates">Preferred dates</label><input id="ev-dates" value={plan.dates} onChange={(e) => setPlan({ ...plan, dates: e.target.value })} placeholder="e.g. May 15 to 17" /></div>
+                <div className="fld"><span className="flab" id="ev-guests-l">Guests</span><div className="stp" role="group" aria-labelledby="ev-guests-l"><span aria-live="polite">{plan.guests}</span><span>
                   <button type="button" aria-label="Fewer guests" onClick={() => setPlan({ ...plan, guests: Math.max(1, plan.guests - 5) })}>−</button>{' '}
                   <button type="button" aria-label="More guests" onClick={() => setPlan({ ...plan, guests: Math.min(200, plan.guests + 5) })}>+</button></span></div></div>
               </div>
               <label className="tog"><input type="checkbox" checked={flex} onChange={(e) => setFlex(e.target.checked)} /> My dates are flexible</label>
-              <div className="fld"><small>Tell us about your event (optional)</small><textarea value={plan.note} onChange={(e) => setPlan({ ...plan, note: e.target.value })} placeholder="Anything we should know" /></div>
-              <button type="button" className="btn" onClick={() => setStep(2)}>Continue <Arrow /></button>
-            </div>
+              <div className="fld"><label htmlFor="ev-note">Tell us about your event (optional)</label><textarea id="ev-note" value={plan.note} onChange={(e) => setPlan({ ...plan, note: e.target.value })} placeholder="Anything we should know" /></div>
+              <button type="submit" className="btn">Continue <Arrow /></button>
+            </form>
           )}
           {step === 2 && (
-            <div>
+            <form noValidate onSubmit={(e) => { e.preventDefault(); submit(); }}>
               <h3>Where should we send your proposal?</h3>
-              <div className="fld"><small>Name</small><input className={err && !name.trim() ? 'bad' : ''} value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" placeholder="Your name" /></div>
+              <div className="fld"><label htmlFor="ev-name">Name</label><input id="ev-name" className={err && !name.trim() ? 'bad' : ''} value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" placeholder="Your name" /></div>
               <div className="fr">
-                <div className="fld"><small>Email</small><input className={err && !emailOk ? 'bad' : ''} type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" placeholder="you@example.com" /></div>
-                <div className="fld"><small>Phone</small><input className={err && !phone.trim() ? 'bad' : ''} type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} autoComplete="tel" placeholder="For a quick call" /></div>
+                <div className="fld"><label htmlFor="ev-email">Email</label><input id="ev-email" className={err && !emailOk ? 'bad' : ''} type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" placeholder="you@example.com" /></div>
+                <div className="fld"><label htmlFor="ev-phone">Phone</label><input id="ev-phone" className={err && !phone.trim() ? 'bad' : ''} type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} autoComplete="tel" placeholder="For a quick call" /></div>
               </div>
               <ConsentCheckbox id="ev-consent" checked={consent} onChange={setConsent} err={err} />
               {failed && <p className="ferr">Sorry, that didn't go through. Please try again, or message us on WhatsApp.</p>}
-              <button type="button" className="btn" onClick={submit} disabled={sending}>{sending ? 'Sending…' : 'Send My Request'}</button>
+              <button type="submit" className="btn" disabled={sending}>{sending ? 'Sending…' : 'Send My Request'}</button>
               <button type="button" className="back" onClick={() => setStep(1)}>← Back</button>
-            </div>
+            </form>
           )}
           {step === 3 && (
             <div className="done" role="status"><div className="ok">✓</div><h3>Request received.</h3><p style={{ color: '#5A5650' }}>Our team will be in touch within the hour.</p></div>
           )}
-          <div className="alt"><WhatsAppIcon /><span>Prefer to talk it over? <a href={CONTACT_WHATSAPP_HREF} target="_blank" rel="noopener noreferrer">WhatsApp</a> or call <a href={CONTACT_PHONE_HREF}>+1 {CONTACT_PHONE_DISPLAY}</a></span></div>
+          <div className="alt"><WhatsAppIcon /><span>Prefer to talk it over? <a href={CONTACT_WHATSAPP_HREF} target="_blank" rel="noopener noreferrer">WhatsApp</a> or call <a href={CONTACT_PHONE_HREF} style={{ whiteSpace: 'nowrap' }}>+1 {CONTACT_PHONE_DISPLAY}</a></span></div>
         </div>
       </div>
     </section>
@@ -515,10 +531,13 @@ export default function EventsLanding() {
     const descTag = document.querySelector('meta[name="description"]');
     const prevDesc = descTag?.getAttribute('content') ?? null;
     descTag?.setAttribute('content', eventsSeo.description);
-    const canonical = document.createElement('link');
+    // dist/events/index.html already ships a canonical; add one only on client-side navigation
+    const existing = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    const canonical = existing ?? document.createElement('link');
+    const prevCanon = existing?.href ?? null;
     canonical.rel = 'canonical';
     canonical.href = `${SITE_ORIGIN}/events`;
-    document.head.appendChild(canonical);
+    if (!existing) document.head.appendChild(canonical);
     const ld = document.createElement('script');
     ld.type = 'application/ld+json';
     ld.text = JSON.stringify({
@@ -530,7 +549,7 @@ export default function EventsLanding() {
     return () => {
       document.title = prevTitle;
       if (prevDesc !== null) descTag?.setAttribute('content', prevDesc);
-      canonical.remove();
+      if (prevCanon === null) canonical.remove(); else canonical.href = prevCanon;
       ld.remove();
     };
   }, []);
