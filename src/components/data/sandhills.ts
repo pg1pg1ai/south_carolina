@@ -9,7 +9,7 @@ export const sandhillsData = {
     description: 'Escape to a private 126-acre South Carolina retreat with modern forest cabins, an 18-acre lake, a wood-fired sauna, kayaks, paddleboards and e-bikes.',
   },
   hero: {
-    eyebrow: 'Private lakefront villas · Just 90 minutes from Charlotte, NC',
+    eyebrow: 'Private lakefront villas · Just 1 hr 40 from Charlotte, NC',
     titleLine1: 'HORIZONS',
     titleLine2: 'Sandhills',
     subtitle: 'A hundred and twenty-six acres of longleaf pine, a private lake, and the seven rooms we built to give it back to you.',
@@ -192,9 +192,9 @@ export const sandhillsData = {
     image: '/images/sandhills/sustainability.webp',
   },
   directions: [
-    { from: 'From Charlotte, NC', time: '90 min', via: 'I-74 E → US-1 S → McBee' },
+    { from: 'From Charlotte, NC', time: '1 hr 40', via: 'I-74 E → US-1 S → McBee' },
     { from: 'From Charleston, SC', time: '2 hr 15', via: 'I-26 W → US-1 N → McBee' },
-    { from: 'From Raleigh-Durham', time: '2 hr 30', via: 'US-1 S, all the way' },
+    { from: 'From Raleigh-Durham', time: '2 hr 35', via: 'US-1 S, all the way' },
   ],
   gallery: [
     { src: '/images/villa/01_Exterior/1.webp', alt: 'Forest Villa exterior', aspect: 'landscape' },

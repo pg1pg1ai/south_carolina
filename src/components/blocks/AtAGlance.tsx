@@ -6,7 +6,7 @@ const items = [
   { value: '7',   category: 'Cabins & retreats',                      description: 'From intimate Casitas to a full estate house sleeping up to 14' },
   { value: '4',   category: 'Signature experiences',                  description: 'Barrel sauna · private lake · padel court · forest trails' },
   { value: '12',  category: 'Miles of forest trails',                 description: 'Marked paths through longleaf pine — hike, bike, or wander' },
-  { value: '≈ 90 min', category: 'From Charlotte, Raleigh & Columbia', description: 'Close enough for a weekend — far enough to feel worlds away' },
+  { value: '1 hr 40', category: 'From Charlotte', description: 'Close enough for a weekend — far enough to feel worlds away' },
 ];
 
 const motionList = {
