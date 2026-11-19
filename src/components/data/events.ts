@@ -23,7 +23,7 @@ export const DEPOSIT = '30%';
 export const eventsSeo = {
   title: 'Private Events & Full-Property Buyouts | Horizons Sandhills',
   description:
-    'Book all of Horizons Sandhills for your retreat, wedding or celebration: 126 private acres, an 18-acre lake, two indoor event spaces and room for 32 overnight (100 with RVs). All-inclusive from $1,770 per night.',
+    'Book all of Horizons Sandhills for your retreat, wedding or celebration: 126 private acres, an 18-acre lake, two indoor event spaces and room for 32 overnight (100 with RVs). All-inclusive from $1,770 per night, tax included.',
 };
 
 export const hero = {
@@ -40,7 +40,7 @@ export const facts = [
   { value: 200, label: 'Day guests' },
   { text: '32/100', label: 'Overnight / with RVs' },
   { value: 2, label: 'Indoor spaces' },
-  { text: '$1,770', label: 'Per night, all-inclusive' },
+  { text: '$1,770', label: 'Per night, tax included' },
 ] as const;
 
 export const occasions = ['Corporate Retreats', 'Weddings', 'Family Reunions', 'Wellness & Faith Retreats', 'Birthday Weekends', 'Bachelor & Bachelorette', 'Private Celebrations'];
@@ -112,7 +112,7 @@ export const included = ['All 6 Forest Villas', 'The Guest House', 'The Event Ha
 export const faq = [
   { q: 'How do I book the whole property?', a: 'Reserve all 6 Forest Villas and the property is yours during your dates. Group bookings are available year-round through our website or team: +1 (754) 667-9090.' },
   { q: 'How many guests can you host?', a: 'Up to 200 guests for day events and 32 overnight in our Villas and Guest House. With our 16 RV hookups, up to 100 guests can stay overnight.' },
-  { q: 'What is included in the price?', a: 'Everything on the property: all 6 Forest Villas, the Guest House, both indoor event spaces, the grounds, the lake and 20+ complimentary activities. Day events are priced at the same rate.' },
+  { q: 'What is included in the price?', a: 'Everything on the property: all 6 Forest Villas, the Guest House, both indoor event spaces, the grounds, the lake and 20+ complimentary activities. Tax is included, and there is no minimum stay. Day events are priced at the same rate.' },
   { q: 'Do you have indoor event spaces?', a: 'Yes, two. One for up to 70 guests with a professional kitchen and restroom, and one for up to 30 guests with a restroom, fireplace lounge and grill deck.' },
   { q: 'Are there noise restrictions?', a: 'No. Horizons Sandhills has no neighbors and no noise restrictions for group reservations.' },
   { q: 'Is there someone on-site during our event?', a: 'Yes. Our property manager is on site 24/7.' },

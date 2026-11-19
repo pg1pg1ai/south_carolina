@@ -139,6 +139,9 @@ function Hero() {
 /** Same names as the format cards (values stay as sent in the lead email). */
 const label = (t: string) => t.replace(' or ', ' & ');
 
+/** Google Business Profile, rating checked 2026-11-19 (5.0 from 72 reviews). */
+const GOOGLE_REVIEWS_URL = 'https://share.google/ZxCRq69n7m2e5cKKo';
+
 type Plan = { type: EventType; dates: string; guests: number; note: string };
 
 function FactsAndQuickCheck({ onCheck }: { onCheck: (p: Partial<Plan>) => void }) {
@@ -218,7 +221,7 @@ function Reviews() {
   return (
     <section className="qb g" style={{ backgroundImage: 'linear-gradient(180deg,#141915,rgba(20,25,21,.7) 30%,rgba(20,25,21,.7) 70%,#141915),url(/images/sandhills/villa-golden-hour.webp)' }}>
       <div className="w">
-        <p className="eb">Guest reviews on Google</p><span className="stars" aria-label="5 out of 5 stars">★★★★★</span>
+        <p className="eb">Guest reviews on Google</p><a className="rating" href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer"><span className="stars" aria-hidden="true">★★★★★</span><b>5.0</b><span>from 72 Google reviews</span></a>
         <div className="qslides" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>{reviews.map((r, k) => <blockquote key={r.name} className={k === i ? 'on' : ''} aria-hidden={k !== i}>“{r.quote}”</blockquote>)}</div>
         <div className="qmeta"><cite>{reviews[i].name} · Google review</cite><div className="qdots" onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}>{reviews.map((r, k) => <button key={r.name} type="button" className={k === i ? 'on' : ''} onClick={() => setI(k)} aria-label={`Show review ${k + 1}`} aria-current={k === i} />)}
           {!reduce && <button type="button" className="qpause" onClick={() => setPaused(!paused)} aria-label={paused ? 'Play reviews' : 'Pause reviews'}>{paused ? '▶' : '❚❚'}</button>}</div></div>
@@ -342,7 +345,7 @@ function Estimator({ onRequest }: { onRequest: (p: Partial<Plan>) => void }) {
             <button type="button" className={!over ? 'on' : ''} onClick={() => setOver(false)} aria-pressed={!over}>Day event only</button></div></div>
         </div>
         <div className="out">
-          <span className="k">All-inclusive, starting from</span>
+          <span className="k">All-inclusive, tax included, from</span>
           <div className="price">${(NIGHTLY_RATE * n).toLocaleString('en-US')}<small> for {n} {n > 1 ? 'nights' : 'night'}</small></div>
           <p className="incl">The whole property: 6 Forest Villas, the Guest House, both indoor spaces, the lake, the grounds and 20+ activities.</p>
           <div className="bars">{bars.map(([l, v, max]) => <div className="bar" key={l}><span>{l}</span><span className="t"><i style={{ width: `${(v / max) * 100}%` }} /></span><b>{v}</b></div>)}</div>
@@ -378,7 +381,7 @@ function HowItWorks() {
         {steps.map((s, i) => <Rv key={s.title} className="sp" delay={i * 0.08}><span className="n">{i + 1}</span><b>{s.title}</b><p>{s.body}</p></Rv>)}
       </div>
       <Rv className="allin">
-        <div className="p">${NIGHTLY_RATE.toLocaleString('en-US')}<small>Per night · whole property</small></div>
+        <div className="p">${NIGHTLY_RATE.toLocaleString('en-US')}<small>Per night · whole property · tax included</small></div>
         <ul>{included.map((x) => <li key={x}>{x}</li>)}</ul>
         <button type="button" className="btn" onClick={scrollToPlan}>Start With Your Dates <Arrow /></button>
       </Rv>
