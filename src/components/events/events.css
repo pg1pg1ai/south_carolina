@@ -241,3 +241,8 @@
 .ev .qb .rating b{font:400 22px/1 var(--disp);color:var(--bone)}
 .ev .qb .rating span:last-child{border-bottom:1px solid rgba(231,222,199,.35)}
 .ev .qb .rating:hover span:last-child{border-color:var(--ember);color:var(--bone)}
+.ev .seg.dayonly{display:flex;align-items:center;min-height:46px;padding:0 16px;border:1px dashed var(--line);border-radius:10px;color:var(--linen);font-size:14px}
+/* estimator: steady height, so the controls never move under the cursor */
+.ev .est .verdict{min-height:calc(4 * 1.35em)}
+.ev .seg.dayonly{min-height:52px}
+.ev .est .incl{min-height:calc(2 * 1.6em)}

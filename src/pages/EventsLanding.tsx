@@ -9,7 +9,7 @@ import ConsentCheckbox, { CONSENT_RECORD } from '../components/primitives/Consen
 import WhatsAppIcon from '../components/icons/WhatsAppIcon';
 import { guideData } from '../components/data/guide';
 import {
-  EVENT_TYPES, MAP_CROP, NIGHTLY_RATE, DEPOSIT, activities, eventsSeo, facts, faq, formats, hero, included,
+  EVENT_TYPES, MAP_CROP, NIGHTLY_RATE, DAY_RATE, DAY_HOURS, DEPOSIT, activities, eventsSeo, facts, faq, formats, hero, included,
   occasions, reviews, spaces, steps, why, type EventType,
 } from '../components/data/events';
 import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_HREF, CONTACT_WHATSAPP_HREF } from '../lib/contact';
@@ -339,18 +339,20 @@ function Estimator({ onRequest }: { onRequest: (p: Partial<Plan>) => void }) {
         <div className="ctl">
           <div className="row"><label htmlFor="ev-g">Guests <output>{g}</output></label>
             <input id="ev-g" type="range" min={10} max={200} step={5} value={g} onChange={(e) => setG(Number(e.target.value))} style={{ ['--p' as string]: `${((g - 10) / 190) * 100}%` }} /></div>
-          <div className="row"><div className="lab">Nights</div><div className="seg">{[1, 2, 3, 4, 5].map((x) => <button key={x} type="button" className={x === n ? 'on' : ''} onClick={() => setN(x)} aria-pressed={x === n}>{x}</button>)}</div></div>
+          <div className="row"><div className="lab">Nights</div>{over ? (
+            <div className="seg">{[1, 2, 3, 4, 5].map((x) => <button key={x} type="button" className={x === n ? 'on' : ''} onClick={() => setN(x)} aria-pressed={x === n}>{x}</button>)}</div>
+          ) : <div className="seg dayonly"><span>Day event, {DAY_HOURS}</span></div>}</div>
           <div className="row"><div className="lab">Everyone stays overnight</div><div className="seg">
             <button type="button" className={over ? 'on' : ''} onClick={() => setOver(true)} aria-pressed={over}>Yes</button>
             <button type="button" className={!over ? 'on' : ''} onClick={() => setOver(false)} aria-pressed={!over}>Day event only</button></div></div>
         </div>
         <div className="out">
           <span className="k">All-inclusive, tax included, from</span>
-          <div className="price">${(NIGHTLY_RATE * n).toLocaleString('en-US')}<small> for {n} {n > 1 ? 'nights' : 'night'}</small></div>
-          <p className="incl">The whole property: 6 Forest Villas, the Guest House, both indoor spaces, the lake, the grounds and 20+ activities.</p>
+          <div className="price">${(over ? NIGHTLY_RATE * n : DAY_RATE).toLocaleString('en-US')}<small>{over ? ` for ${n} ${n > 1 ? 'nights' : 'night'}` : ` for the day, ${DAY_HOURS}`}</small></div>
+          <p className="incl">{over ? 'The whole property: 6 Forest Villas, the Guest House, both indoor spaces, the lake, the grounds and 20+ activities.' : 'Both indoor spaces, the lake, the grounds and 20+ activities. The villas and the Guest House stay closed.'}</p>
           <div className="bars">{bars.map(([l, v, max]) => <div className="bar" key={l}><span>{l}</span><span className="t"><i style={{ width: `${(v / max) * 100}%` }} /></span><b>{v}</b></div>)}</div>
           <p className="verdict">{sleep} {fit}</p>
-          <button type="button" className="btn" onClick={() => { onRequest({ guests: g, note: `${n} ${n > 1 ? 'nights' : 'night'}, ${over ? 'everyone stays overnight' : 'day event'}.` }); scrollToPlan(); }}>Request This Event <Arrow /></button>
+          <button type="button" className="btn" onClick={() => { onRequest({ guests: g, note: over ? `${n} ${n > 1 ? 'nights' : 'night'}, everyone stays overnight.` : `Day event, ${DAY_HOURS}.` }); scrollToPlan(); }}>Request This Event <Arrow /></button>
         </div>
       </Rv>
     </div></section>
