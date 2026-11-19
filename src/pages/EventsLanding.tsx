@@ -92,7 +92,7 @@ function Header() {
         </nav>
         <div className="r">
           <a className="btn ghost wa" href={CONTACT_WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" aria-label="Text us on WhatsApp"><WhatsAppIcon /></a>
-          <button type="button" className="btn" onClick={scrollToPlan}>Plan Your Event</button>
+          <button type="button" className="btn hcta" onClick={scrollToPlan}>Plan Your Event</button>
           <button type="button" className="menu-btn" aria-label={menu ? 'Close menu' : 'Open menu'} aria-expanded={menu} onClick={() => setMenu(!menu)}>
             <span /><span />
           </button>
@@ -337,6 +337,7 @@ function Estimator({ onRequest }: { onRequest: (p: Partial<Plan>) => void }) {
         <p className="lead">Move the slider to see where everyone sleeps, which spaces fit, and where pricing starts. No forms, no commitment.</p></Rv>
       <Rv className="est">
         <div className="ctl">
+          <p className="mprice" aria-hidden="true">${(over ? NIGHTLY_RATE * n : DAY_RATE).toLocaleString('en-US')} <span>{over ? `· ${n} ${n > 1 ? 'nights' : 'night'}` : '· day event'}</span></p>
           <div className="row"><label htmlFor="ev-g">Guests <output>{g}</output></label>
             <input id="ev-g" type="range" min={10} max={200} step={5} value={g} onChange={(e) => setG(Number(e.target.value))} style={{ ['--p' as string]: `${((g - 10) / 190) * 100}%` }} /></div>
           <div className="row"><div className="lab">Nights</div>{over ? (
@@ -364,7 +365,7 @@ function Activities() {
     <section className="g" style={{ paddingTop: 0 }} aria-labelledby="ev-act"><div className="w">
       <Rv><p className="eb">Group activities</p><h2 id="ev-act">Your Activity Program <em>Is Already Here.</em></h2>
         <p className="lead">20+ complimentary activities come with your stay. Build your agenda around them, or leave the afternoon free and let your guests choose.</p></Rv>
-      <div className="bento">{activities.map((a) => (
+      <div className="bento" tabIndex={0} aria-label="Group activities, swipe for more">{activities.map((a) => (
         <article key={a.title} className={`bt ${a.size}`}><div className="ph" style={{ backgroundImage: `url(${a.image})` }} /><span className="inc">Included</span><div className="tx"><h3>{a.title}</h3><p>{a.body}</p></div></article>
       ))}</div>
     </div></section>
@@ -383,7 +384,7 @@ function HowItWorks() {
         {steps.map((s, i) => <Rv key={s.title} className="sp" delay={i * 0.08}><span className="n">{i + 1}</span><b>{s.title}</b><p>{s.body}</p></Rv>)}
       </div>
       <Rv className="allin">
-        <div className="p">${NIGHTLY_RATE.toLocaleString('en-US')}<small>Per night · whole property · tax included</small></div>
+        <div className="p">${NIGHTLY_RATE.toLocaleString('en-US')}<small><span>Per night · whole property</span> <span>Tax included</span></small></div>
         <ul>{included.map((x) => <li key={x}>{x}</li>)}</ul>
         <button type="button" className="btn" onClick={scrollToPlan}>Start With Your Dates <Arrow /></button>
       </Rv>
@@ -578,7 +579,7 @@ export default function EventsLanding() {
         <Faq />
         <PlanForm plan={plan} setPlan={setPlan} />
       </main>
-      <Footer />
+      <Footer cta={{ line: 'The whole property, for your group only.', label: 'Plan Your Event', onClick: scrollToPlan }} />
       <MobileBar />
       <BookingModal />
     </div>

@@ -75,7 +75,8 @@ const cols: { title: string; links: FooterLink[] }[] = [
 /** `compact` (segment landing pages): drops the booking block and the anchor
  *  links — those pages have their own CTA, which opens the request form rather
  *  than openBooking(), and none of the main page's anchors exist there. */
-export default function Footer({ compact = false }: { compact?: boolean } = {}) {
+/** `cta` swaps the booking line and primary button (the /events page sends people to its form). */
+export default function Footer({ compact = false, cta }: { compact?: boolean; cta?: { line: string; label: string; onClick: () => void } } = {}) {
   return (
     <footer data-zone="dark" className={`bg-nightWarm text-linen/70 px-6 ${compact ? 'pt-6 pb-10' : 'pt-16 pb-10'}`}>
       <div className="max-w-content mx-auto">
@@ -85,13 +86,17 @@ export default function Footer({ compact = false }: { compact?: boolean } = {}) 
           <p className="eyebrow text-linen/40 mb-3">Ready when you are</p>
           <p className="font-display font-light text-linen text-xl mb-6"
             style={{ fontVariationSettings: '"SOFT" 30, "opsz" 24', letterSpacing: '-0.01em' }}>
-            Your dates, and the whole lake to yourselves.
+            {cta?.line ?? 'Your dates, and the whole lake to yourselves.'}
           </p>
           <div className="flex flex-wrap items-center gap-3">
-            <Button onClick={openBooking} variant="primary">
-              <Calendar size={15} strokeWidth={2} style={{ marginRight: 10 }} />
-              Book Your Stay
-            </Button>
+            {cta ? (
+              <Button onClick={cta.onClick} variant="primary">{cta.label}</Button>
+            ) : (
+              <Button onClick={openBooking} variant="primary">
+                <Calendar size={15} strokeWidth={2} style={{ marginRight: 10 }} />
+                Book Your Stay
+              </Button>
+            )}
             <Button href={CONTACT_PHONE_HREF} variant="ghost-light">Call Us</Button>
             <Button href={CONTACT_WHATSAPP_HREF} variant="ghost-light" newTab>WhatsApp</Button>
           </div>
@@ -101,8 +106,8 @@ export default function Footer({ compact = false }: { compact?: boolean } = {}) 
           {cols.map((col) => (
             <div key={col.title}>
               <p className="eyebrow text-linen/40 mb-5">{col.title}</p>
-              {/* Desktop: links flow into 2 columns of 2; mobile keeps a single stack */}
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-y-3 md:gap-x-6 list-none p-0 m-0">
+              {/* Links flow into 2 columns of 2 at every width (a single stack ran ~1,100px on phones) */}
+              <ul className="grid grid-cols-2 gap-y-3 gap-x-6 list-none p-0 m-0">
                 {col.links.map((l) => (
                   <li key={l.label}>
                     <a

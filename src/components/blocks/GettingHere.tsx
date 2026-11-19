@@ -30,6 +30,8 @@ const TOWNS = [
  *  route runs off the edge and RouteChips pins its chip where it enters. */
 const CROP = bbox([PROPERTY_COORDS, ...TOWNS.filter((t) => !t.name.startsWith('Raleigh')).map((t) => t.coords)]);
 const CROP_PAD = { top: 40, bottom: 40, left: 40, right: 110 };
+/** Phones: less side padding so the towns spread over the whole small map. */
+const cropPad = (w: number) => (w < 520 ? { top: 46, bottom: 26, left: 18, right: 18 } : CROP_PAD);
 const ROUTE_FC: GeoJSON.FeatureCollection<GeoJSON.LineString> = {
   type: 'FeatureCollection',
   features: TOWNS.map((t) => ({
@@ -84,7 +86,7 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
       container: host,
       style: T.style,
       ...(dark
-        ? { bounds: CROP, fitBoundsOptions: { padding: CROP_PAD } }
+        ? { bounds: CROP, fitBoundsOptions: { padding: cropPad(host.clientWidth) } }
         : { center: PROPERTY_COORDS, zoom: 13.5 }),
       attributionControl: false,
       logoPosition: 'bottom-right',
@@ -196,7 +198,7 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
     const map = mapRef.current;
     if (dark && map) {
       setActiveCity(null);
-      map.fitBounds(CROP, { padding: CROP_PAD, duration: 1000 });
+      map.fitBounds(CROP, { padding: cropPad(map.getContainer().clientWidth), duration: 1000 });
       return;
     }
     if (!map || !map.getSource('route')) return;
@@ -267,7 +269,7 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
     <section
       id="getting-here"
       data-zone={dark ? 'dark' : 'light'}
-      className={`relative py-20 px-6 md:py-24 md:px-12 lg:px-16 ${dark ? '' : 'bg-bone'}`}
+      className={`relative py-20 px-6 md:py-24 md:px-12 lg:px-16 ${dark ? 'gh-dark' : 'bg-bone'}`}
       style={{ scrollMarginTop: '80px' }}
     >
       <div className="relative max-w-content mx-auto">
@@ -285,12 +287,13 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
 
           {/* Map + button */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div style={{
+            <div className="gh-map" style={{
               position: 'relative',
               borderRadius: '16px',
               overflow: 'hidden',
               flex: 1,
               minHeight: 'clamp(260px, 45vw, 480px)',
+              // phones: taller on dark pages (see .gh-dark .gh-map in index.css)
               boxShadow: dark ? '0 30px 80px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.25)' : '0 20px 60px rgba(31,36,32,0.18), 0 8px 24px rgba(31,36,32,0.10)',
               border: dark ? '1px solid rgba(231,222,199,0.10)' : undefined,
             }}>
@@ -332,7 +335,7 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
           </div>
 
           {/* Towns list */}
-          <div ref={townsRef}>
+          <div ref={townsRef} className="gh-list">
             {TOWNS.map((t) => {
               const isActive = activeCity === t.name;
               return (

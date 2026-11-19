@@ -138,3 +138,5 @@ details[open] summary .chev { transform: rotate(45deg); }
 }
 /* Getting Here on dark pages: real terrain map, softened to sit with the dark greens */
 .gh-terrain .mapboxgl-canvas{filter:saturate(.72) sepia(.14) brightness(.95) contrast(1.02)}
+/* Getting Here on dark pages, phones: taller map, no duplicate town list (the map chips are tappable) */
+@media (max-width:760px){.gh-dark .gh-map{min-height:380px !important}.gh-dark .gh-list{display:none}}

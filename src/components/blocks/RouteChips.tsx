@@ -48,14 +48,35 @@ export default function RouteChips({ map, towns, routes, active, onPick }: {
   }, [map, towns, routes]);
 
   if (!size.w) return null;
+  const small = size.w < 520;
+  const H = small ? 26 : 30;
+  // Place each chip on the first free side (right, left, then a row below/above), so none overlap.
+  const boxes: { l: number; r: number; t: number; b: number }[] = [];
+  const place = pos.map((p, i) => {
+    const t = towns[i];
+    const on = active === t.name;
+    if (p.x < -100 || (p.out && active && !on)) return null; // zoomed in: drop the others' edge chips
+    const label = `${t.name.split(',')[0]} ${t.time}${p.out ? ' ↗' : ''}`;
+    const w = Math.round(label.length * (small ? 6.3 : 6.9) + (small ? 20 : 26));
+    const tries: [number, number][] = [[1, 0], [-1, 0], [1, 1], [-1, 1], [1, -1], [-1, -1]];
+    let best: { side: number; dy: number } = { side: p.x > size.w - w - 30 ? -1 : 1, dy: 0 };
+    for (const [side, row] of tries) {
+      const l = side > 0 ? p.x + 12 : p.x - 12 - w;
+      const top = p.y - H / 2 + row * (H + 4);
+      const box = { l, r: l + w, t: top, b: top + H };
+      const inside = box.l >= 4 && box.r <= size.w - 4 && box.t >= 4 && box.b <= size.h - 4;
+      if (inside && !boxes.some((o) => box.l < o.r && o.l < box.r && box.t < o.b && o.t < box.b)) { best = { side, dy: row * (H + 4) }; boxes.push(box); break; }
+    }
+    return best;
+  });
   return (
     <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
       {pos.map((p, i) => {
         const t = towns[i];
         const on = active === t.name;
-        // zoomed onto one route: drop the edge chips of the others (they share highways and pile up)
-        if (p.x < -100 || (p.out && active && !on)) return null;
-        const flip = p.x > size.w - 190;
+        const pl = place[i];
+        if (!pl) return null;
+        const flip = pl.side < 0;
         return (
           <div key={t.name}>
             {!p.out && (
@@ -71,9 +92,9 @@ export default function RouteChips({ map, towns, routes, active, onPick }: {
               className="font-eyebrow"
               style={{
                 position: 'absolute', left: p.x, top: p.y,
-                transform: `translate(${flip ? 'calc(-100% - 14px)' : '14px'}, ${!p.out ? '-50%' : p.y > size.h / 2 ? 'calc(-100% - 6px)' : '6px'})`,
+                transform: `translate(${flip ? 'calc(-100% - 12px)' : '12px'}, calc(-50% + ${pl.dy}px))`,
                 pointerEvents: 'auto', cursor: 'pointer', whiteSpace: 'nowrap',
-                padding: '6px 12px', borderRadius: 999, fontSize: 12, letterSpacing: '0.03em',
+                height: H, padding: small ? '0 9px' : '0 12px', borderRadius: 999, fontSize: small ? 11 : 12, letterSpacing: '0.03em',
                 background: on ? 'rgba(212,128,78,0.95)' : 'rgba(20,25,21,0.78)',
                 border: `1px solid ${on ? EMBER : 'rgba(231,222,199,0.18)'}`,
                 color: '#F2EDE3', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)',
