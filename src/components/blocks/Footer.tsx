@@ -85,7 +85,7 @@ export default function Footer({ compact = false }: { compact?: boolean } = {}) 
           <p className="eyebrow text-linen/40 mb-3">Ready when you are</p>
           <p className="font-display font-light text-linen text-xl mb-6"
             style={{ fontVariationSettings: '"SOFT" 30, "opsz" 24', letterSpacing: '-0.01em' }}>
-            Pick your dates — the pines will handle the rest.
+            Choose your dates. The pines will take it from there.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <Button onClick={openBooking} variant="primary">

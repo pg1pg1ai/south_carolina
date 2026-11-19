@@ -376,7 +376,7 @@ function Faq() {
   );
 }
 
-const FAQ_FIRST = 6;
+const FAQ_FIRST = 4;
 function FaqList() {
   const [open, setOpen] = useState<number | null>(null);
   const [all, setAll] = useState(false);
@@ -401,9 +401,10 @@ function FaqList() {
           </div>
         );
       })}
-      {!all && faq.length > FAQ_FIRST && (
-        <button type="button" className="faq-more" onClick={() => setAll(true)}>
-          Show {faq.length - FAQ_FIRST} more questions
+      {faq.length > FAQ_FIRST && (
+        <button type="button" className="faq-more" aria-expanded={all}
+          onClick={() => { if (all) { setOpen((o) => (o !== null && o >= FAQ_FIRST ? null : o)); document.getElementById('ev-faq')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); } setAll(!all); }}>
+          {all ? 'Show fewer questions' : `Show ${faq.length - FAQ_FIRST} more questions`}
         </button>
       )}
     </div>
