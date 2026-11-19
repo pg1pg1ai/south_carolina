@@ -22,8 +22,8 @@ const resort = {
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: 34.5734,
-    longitude: -80.038,
+    latitude: 34.605,
+    longitude: -80.0975,
   },
   priceRange: '$295–$1200',
   checkinTime: '15:00',

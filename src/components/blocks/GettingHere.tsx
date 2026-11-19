@@ -3,7 +3,7 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN as string;
-const PROPERTY_COORDS: [number, number] = [-80.042, 34.576];
+const PROPERTY_COORDS: [number, number] = [-80.0975, 34.605]; // 423 Woodmen Rd (geocoded), not Patrick town centre
 
 const TOWNS = [
   { name: 'Cheraw, SC',        note: 'Nearest town',      time: '18 min',  coords: [-79.875, 34.700] as [number, number] },
