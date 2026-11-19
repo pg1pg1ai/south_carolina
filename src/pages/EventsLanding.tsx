@@ -4,6 +4,8 @@ import {
 } from 'framer-motion';
 import Footer from '../components/blocks/Footer';
 import BookingModal from '../components/blocks/BookingModal';
+import { openBooking } from '../components/data/booking';
+import { checkWholeProperty, iso, parseIso, rangeLabel, type Check, type Option } from '../lib/wholeProperty';
 import GettingHere from '../components/blocks/GettingHere';
 import ConsentCheckbox, { CONSENT_RECORD } from '../components/primitives/ConsentCheckbox';
 import WhatsAppIcon from '../components/icons/WhatsAppIcon';
@@ -146,8 +148,46 @@ type Plan = { type: EventType; dates: string; guests: number; note: string };
 
 function FactsAndQuickCheck({ onCheck }: { onCheck: (p: Partial<Plan>) => void }) {
   const [type, setType] = useState<EventType>('Corporate Retreat');
-  const [dates, setDates] = useState('');
+  const [arrive, setArrive] = useState('');
+  const [leave, setLeave] = useState('');
   const [guests, setGuests] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [res, setRes] = useState<(Check & { arrive: string; leave: string }) | null>(null);
+  const [failed, setFailed] = useState(false);
+  const today = iso(new Date());
+  const g = guests ? Number(guests) : undefined;
+  const push = (event: string, extra: Record<string, unknown> = {}) =>
+    (window as unknown as { dataLayer?: unknown[] }).dataLayer?.push({ event, ...extra });
+
+  const run = async (a: string, l: string) => {
+    setBusy(true); setFailed(false);
+    try {
+      const r = await checkWholeProperty(a, l);
+      setRes({ ...r, arrive: a, leave: l });
+      push('events_availability', { availability: r.status, nights: r.nights });
+    } catch { setFailed(true); setRes(null); }
+    setBusy(false);
+  };
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!arrive || !leave || leave <= arrive) { // no full dates: same as before, go to the form
+      onCheck({ type, dates: arrive ? rangeLabel(arrive, leave > arrive ? leave : arrive) : '', guests: g });
+      scrollToPlan(); return;
+    }
+    run(arrive, leave);
+  };
+  const toTeam = (a: string, l: string) => {
+    onCheck({ type, dates: `${rangeLabel(a, l)}, ${parseIso(a).getFullYear()}`, guests: g });
+    push('events_reserve_with_team');
+    scrollToPlan();
+  };
+  const bookOnline = (a: string, l: string) => {
+    push('events_book_online', { nights: res?.nights });
+    openBooking({ checkin: parseIso(a), checkout: parseIso(l) });
+  };
+  const pick = (o: Option) => { setArrive(o.arrive); setLeave(o.leave); run(o.arrive, o.leave); };
+  const usd = (n: number) => `$${n.toLocaleString('en-US')}`;
+
   return (
     <div className="g"><div className="w">
       <Rv className="facts">
@@ -159,15 +199,54 @@ function FactsAndQuickCheck({ onCheck }: { onCheck: (p: Partial<Plan>) => void }
         ))}
       </Rv>
       <Rv>
-        <form className="qc" onSubmit={(e) => { e.preventDefault(); onCheck({ type, dates, guests: guests ? Number(guests) : undefined }); scrollToPlan(); }}>
+        <form className="qc qc2" onSubmit={submit}>
           <label><small>Your occasion</small>
             <select value={type} onChange={(e) => setType(e.target.value as EventType)}>{EVENT_TYPES.map((t) => <option key={t} value={t}>{label(t)}</option>)}</select>
           </label>
-          <label><small>Dates</small><input value={dates} onChange={(e) => setDates(e.target.value)} placeholder="Add dates" /></label>
+          <label><small>Arrive</small><input type="date" min={today} value={arrive} onChange={(e) => { setArrive(e.target.value); setRes(null); if (leave && e.target.value >= leave) setLeave(''); }} /></label>
+          <label><small>Leave</small><input type="date" min={arrive || today} value={leave} onChange={(e) => { setLeave(e.target.value); setRes(null); }} /></label>
           <label><small>Guests</small><input value={guests} onChange={(e) => setGuests(e.target.value.replace(/\D/g, ''))} inputMode="numeric" placeholder="How many" /></label>
-          <button className="btn" type="submit">Check My Dates <Arrow /></button>
+          <button className="btn" type="submit" disabled={busy}>{busy ? 'Checking…' : <>Check Availability <Arrow /></>}</button>
         </form>
-        <p className="qcn">No commitment. Our team replies within an hour.</p>
+        <div className="qcr" aria-live="polite">
+          {failed && <p className="qcr-msg">We couldn't reach the calendar just now. <button type="button" className="lnk" onClick={() => toTeam(arrive, leave)}>Ask our team instead</button>.</p>}
+          {res?.status === 'open' && (
+            <div className="qcr-card ok">
+              <p className="qcr-k">✓ The whole property is free</p>
+              <p className="qcr-h">{rangeLabel(res.arrive, res.leave)} · {res.nights} {res.nights > 1 ? 'nights' : 'night'} · {usd(res.total)} <span>+ tax</span></p>
+              <div className="qcr-b">
+                <button type="button" className="btn" onClick={() => bookOnline(res.arrive, res.leave)}>Book Online <Arrow /></button>
+                <button type="button" className="btn ghost" onClick={() => toTeam(res.arrive, res.leave)}>Reserve With Our Team</button>
+              </div>
+              <p className="qcr-n">
+                Booking online: choose 6 Forest Villas, full payment at checkout. Reserving with our team: a {DEPOSIT} deposit, and we add the Guest House, RV spots or a day event.
+                {g && g > 24 ? ' For more than 24 guests, reserve with our team so we can add the Guest House and RV spots.' : ''}
+              </p>
+            </div>
+          )}
+          {res?.status === 'taken' && (
+            <div className="qcr-card">
+              <p className="qcr-k">Those dates are taken</p>
+              {res.alts.length ? (
+                <>
+                  <p className="qcr-h">The nearest open {res.nights > 1 ? `${res.nights}-night stays` : 'nights'}:</p>
+                  <div className="qcr-alts">{res.alts.map((o) => (
+                    <button key={o.arrive} type="button" onClick={() => pick(o)}><b>{rangeLabel(o.arrive, o.leave)}</b><span>{usd(o.total)} + tax</span></button>
+                  ))}</div>
+                </>
+              ) : <p className="qcr-h">Nothing close is fully free.</p>}
+              <p className="qcr-n">Flexible on dates? <button type="button" className="lnk" onClick={() => toTeam(res.arrive, res.leave)}>Our team can find you a weekend</button>.</p>
+            </div>
+          )}
+          {res?.status === 'notyet' && (
+            <div className="qcr-card">
+              <p className="qcr-k">Not open for online booking yet</p>
+              <p className="qcr-h">{rangeLabel(res.arrive, res.leave)} is further out than our online calendar.</p>
+              <div className="qcr-b"><button type="button" className="btn" onClick={() => toTeam(res.arrive, res.leave)}>Hold These Dates With Our Team <Arrow /></button></div>
+            </div>
+          )}
+          {!res && !failed && <p className="qcn">Live availability for the whole property. No commitment.</p>}
+        </div>
       </Rv>
     </div></div>
   );
