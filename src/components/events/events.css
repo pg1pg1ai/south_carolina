@@ -223,3 +223,5 @@
 .ev .faq-more:hover{border-color:var(--ember);color:#fff}
 /* estimator: controls spread over the full panel height, no empty lower half */
 @media (min-width:901px){.ev .est .ctl{display:flex;flex-direction:column;justify-content:space-between}.ev .ctl .row{margin-bottom:0}}
+/* Getting Here (shared block) follows a section that already has bottom padding: no extra top padding on /events */
+.ev section.relative.py-20{padding-top:0!important}
