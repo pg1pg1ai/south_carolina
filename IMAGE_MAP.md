@@ -253,6 +253,18 @@ posters are self-labelling.
 - `public/map.svg` is an earlier, now-**unreferenced** vector version of the same
   map (recolored to our tokens); safe to delete or keep as a source.
 
+## Other live route: `/events` (EventsLanding)
+
+Real property photos added 2026-11-19 (client supplied, 2048px PNG → webp):
+
+| Where | File | Code |
+|---|---|---|
+| Under "One Place. One Group." (Why) | `public/images/sandhills/villas-in-the-pines.webp` (1920w) | `EventsLanding.tsx` `Why()` → `.whyph` |
+| Guest reviews quote band background | `public/images/sandhills/villa-golden-hour.webp` | `EventsLanding.tsx` `Reviews()` inline `backgroundImage` |
+| "Let's Plan Your Event" form background | `public/images/sandhills/sauna-by-the-lake.webp` | `EventsLanding.tsx` `#plan` inline `backgroundImage` |
+
+These replaced `waiting.webp` (reviews) and `final_image.webp` (form) on this page only; both files are still used elsewhere (`final_image.webp` by `SegmentCta.tsx`).
+
 ## Other live route: `/blog` and `/blog/:slug`
 
 - **Pages:** `src/pages/BlogIndex.tsx` (grid), `src/pages/ArticlePage.tsx` (article)

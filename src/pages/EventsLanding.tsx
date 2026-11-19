@@ -183,6 +183,10 @@ function Why() {
           ))}
         </ul>
       </div>
+      <Rv className="whyph">
+        <img src="/images/sandhills/villas-in-the-pines.webp" alt="Two Forest Villas among tall longleaf pines, with the lake through the trees" loading="lazy" width={1920} height={1072} />
+        <span>The Forest Villas, a short walk through the pines to the lake.</span>
+      </Rv>
     </div></section>
   );
 }
@@ -197,7 +201,7 @@ function Reviews() {
     return () => clearInterval(t);
   }, [paused, reduce]);
   return (
-    <section className="qb g" style={{ backgroundImage: 'linear-gradient(180deg,#141915,rgba(20,25,21,.55) 30%,rgba(20,25,21,.55) 70%,#141915),url(/images/sandhills/waiting.webp)' }}>
+    <section className="qb g" style={{ backgroundImage: 'linear-gradient(180deg,#141915,rgba(20,25,21,.7) 30%,rgba(20,25,21,.7) 70%,#141915),url(/images/sandhills/villa-golden-hour.webp)' }}>
       <div className="w">
         <p className="eb">Guest reviews on Google</p><span className="stars" aria-label="5 out of 5 stars">★★★★★</span>
         <div className="qslides" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>{reviews.map((r, k) => <blockquote key={r.name} className={k === i ? 'on' : ''} aria-hidden={k !== i}>“{r.quote}”</blockquote>)}</div>
@@ -437,7 +441,7 @@ function PlanForm({ plan, setPlan }: { plan: Plan; setPlan: (p: Plan) => void })
     } else setFailed(true);
   };
   return (
-    <section id="plan" className="g fsec" style={{ backgroundImage: 'linear-gradient(90deg,rgba(14,18,15,.97) 0%,rgba(14,18,15,.86) 48%,rgba(14,18,15,.55)),url(/images/sandhills/final_image.webp)' }} aria-labelledby="ev-plan">
+    <section id="plan" className="g fsec" style={{ backgroundImage: 'linear-gradient(90deg,rgba(14,18,15,.97) 0%,rgba(14,18,15,.86) 48%,rgba(14,18,15,.55)),url(/images/sandhills/sauna-by-the-lake.webp)' }} aria-labelledby="ev-plan">
       <div className="w fg">
         <Rv><p className="eb">Your event</p><h2 id="ev-plan">Let's Plan <em>Your Event.</em></h2>
           <p className="lead" style={{ color: '#d9d0bd' }}>Share a few details and our team will get back to you with availability and a proposal.</p>
