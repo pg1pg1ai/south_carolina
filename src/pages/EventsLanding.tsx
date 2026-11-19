@@ -336,7 +336,7 @@ function Estimator({ onRequest }: { onRequest: (p: Partial<Plan>) => void }) {
 
 function Activities() {
   return (
-    <section className="g" aria-labelledby="ev-act"><div className="w">
+    <section className="g" style={{ paddingTop: 0 }} aria-labelledby="ev-act"><div className="w">
       <Rv><p className="eb">Group activities</p><h2 id="ev-act">Your Activity Program <em>Is Already Here.</em></h2>
         <p className="lead">20+ complimentary activities come with your stay. Build your agenda around them, or leave the afternoon free and let your guests choose.</p></Rv>
       <div className="bento">{activities.map((a) => (

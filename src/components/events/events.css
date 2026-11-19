@@ -221,3 +221,5 @@
 /* FAQ: first questions, then the rest on request */
 .ev .faq-more{margin-top:28px;padding:14px 26px;border-radius:999px;border:1px solid rgba(242,237,227,.3);background:transparent;color:var(--bone);font:500 11px var(--lab);letter-spacing:.2em;text-transform:uppercase;cursor:pointer}
 .ev .faq-more:hover{border-color:var(--ember);color:#fff}
+/* estimator: controls spread over the full panel height, no empty lower half */
+@media (min-width:901px){.ev .est .ctl{display:flex;flex-direction:column;justify-content:space-between}.ev .ctl .row{margin-bottom:0}}
