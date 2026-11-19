@@ -68,8 +68,18 @@ function Count({ to }: { to: number }) {
 }
 
 /* ---------------- header + progress ---------------- */
+// Same tabs as the main site's header (StickyHeader pageLinks).
+const NAV = [
+  { label: 'Stays', href: '/#stays' },
+  { label: 'The Land', href: '/#land' },
+  { label: 'Gallery', href: '/#gallery' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Reserve', href: '/#reserve' },
+];
+
 function Header() {
   const [solid, setSolid] = useState(false);
+  const [menu, setMenu] = useState(false);
   const { scrollY, scrollYProgress } = useScroll();
   useMotionValueEvent(scrollY, 'change', (y) => setSolid(y > 40));
   return (
@@ -77,12 +87,22 @@ function Header() {
       <motion.div className="prog" style={{ scaleX: scrollYProgress }} />
       <header className={`hd g${solid ? ' solid' : ''}`}>
         <a className="logo" href="/" aria-label="Horizons Sandhills home"><img src="/logo.svg" alt="Horizons Getaways" /></a>
-        <span className="mid">Private Events · Horizons Sandhills</span>
+        <nav className="mid" aria-label="Main">
+          {NAV.map((l) => <a key={l.label} href={l.href}>{l.label}</a>)}
+        </nav>
         <div className="r">
           <a className="btn ghost wa" href={CONTACT_WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" aria-label="Text us on WhatsApp"><WhatsAppIcon /></a>
           <button type="button" className="btn" onClick={scrollToPlan}>Plan Your Event</button>
+          <button type="button" className="menu-btn" aria-label={menu ? 'Close menu' : 'Open menu'} aria-expanded={menu} onClick={() => setMenu(!menu)}>
+            <span /><span />
+          </button>
         </div>
       </header>
+      {menu && (
+        <nav className="mnav" aria-label="Main">
+          {NAV.map((l) => <a key={l.label} href={l.href} onClick={() => setMenu(false)}>{l.label}</a>)}
+        </nav>
+      )}
     </>
   );
 }
@@ -94,7 +114,6 @@ function Hero() {
   return (
     <section className="hero g">
       <div className="bg" style={{ backgroundImage: `url(${hero.image})` }} />
-      <span className="coord">34.6046° N · 80.0974° W</span>
       <div className="in w">
         <motion.p className="eb" initial={reduce ? false : { opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, ease: EASE, delay: 0.5 }}>{hero.eyebrow}</motion.p>
         <h1>
@@ -357,12 +376,15 @@ function Faq() {
   );
 }
 
+const FAQ_FIRST = 6;
 function FaqList() {
   const [open, setOpen] = useState<number | null>(null);
+  const [all, setAll] = useState(false);
   const reduce = useReducedMotion();
+  const list = all ? faq : faq.slice(0, FAQ_FIRST);
   return (
     <div className="faq">
-      {faq.map((f, i) => {
+      {list.map((f, i) => {
         const on = open === i;
         return (
           <div key={f.q} className={`fq${on ? ' on' : ''}`}>
@@ -379,6 +401,11 @@ function FaqList() {
           </div>
         );
       })}
+      {!all && faq.length > FAQ_FIRST && (
+        <button type="button" className="faq-more" onClick={() => setAll(true)}>
+          Show {faq.length - FAQ_FIRST} more questions
+        </button>
+      )}
     </div>
   );
 }
