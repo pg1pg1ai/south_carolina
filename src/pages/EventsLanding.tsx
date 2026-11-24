@@ -453,7 +453,7 @@ function Activities() {
 
 function Villas() {
   return (
-    <section className="g vil" aria-labelledby="ev-vil"><div className="w">
+    <section className="g vil" style={{ paddingTop: 0 }} aria-labelledby="ev-vil"><div className="w">
       <div className="vil-hd">
         <Rv><p className="eb">Where everyone sleeps</p><h2 id="ev-vil">Six Forest Villas, <em>One Clearing.</em></h2></Rv>
         <Rv><p className="lead"><b className="vil-own">The whole property, only your group.</b> Each villa sleeps four, with a king bed and a sofa bed, Brooklinen linens, a SMEG and Nespresso kitchen, and a private deck with a Weber grill. E-bikes wait at the door. The Guest House takes eight more, and 16 RV hookups bring the property to 100 guests overnight.</p></Rv>
