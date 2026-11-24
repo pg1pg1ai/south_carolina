@@ -12,8 +12,7 @@ import WhatsAppIcon from '../components/icons/WhatsAppIcon';
 import { guideData } from '../components/data/guide';
 import {
   EVENT_TYPES, MAP_CROP, NIGHTLY_RATE, WEEKEND_RATE, DAY_RATE, DAY_RATE_WEEKEND, DAY_HOURS, DEPOSIT, activities, eventsSeo, facts, faq, formats, hero, included,
-  occasions, reviews, spaces, steps, why, type EventType,
-} from '../components/data/events';
+  occasions, reviews, spaces, steps, why, type EventType, villaGallery, villaFacts } from '../components/data/events';
 import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_HREF, CONTACT_WHATSAPP_HREF } from '../lib/contact';
 import { sendInquiry } from '../lib/sendInquiry';
 import { SITE_ORIGIN } from '../lib/site';
@@ -88,7 +87,7 @@ function Header() {
     <>
       <motion.div className="prog" style={{ scaleX: scrollYProgress }} />
       <header className={`hd g${solid ? ' solid' : ''}`}>
-        <a className="logo" href="/" aria-label="Horizons Sandhills home"><img src="/logo.svg" alt="Horizons Getaways" /></a>
+        <a className="logo" href="/" aria-label="Horizons Sandhills home"><img src="/logo-sandhills.svg" alt="Horizons Sandhills" /></a>
         <nav className="mid" aria-label="Main">
           {NAV.map((l) => <a key={l.label} href={l.href}>{l.label}</a>)}
         </nav>
@@ -442,12 +441,36 @@ function Estimator({ onRequest }: { onRequest: (p: Partial<Plan>) => void }) {
 
 function Activities() {
   return (
-    <section className="g" style={{ paddingTop: 0 }} aria-labelledby="ev-act"><div className="w">
-      <Rv><p className="eb">Group activities</p><h2 id="ev-act">Your Activity Program <em>Is Already Here.</em></h2>
+    <section className="g" aria-labelledby="ev-act"><div className="w">
+      <Rv><p className="eb">On the property</p><h2 id="ev-act">Your Activity Program <em>Is Already Here.</em></h2>
         <p className="lead">20+ complimentary activities come with your stay. Build your agenda around them, or leave the afternoon free and let your guests choose.</p></Rv>
-      <div className="bento" tabIndex={0} aria-label="Group activities, swipe for more">{activities.map((a) => (
-        <article key={a.title} className={`bt ${a.size}`}><div className="ph" style={{ backgroundImage: `url(${a.image})` }} /><span className="inc">Included</span><div className="tx"><h3>{a.title}</h3><p>{a.body}</p></div></article>
+      <div className="bento" tabIndex={0} aria-label="Spaces and activities, swipe for more">{activities.map((a) => (
+        <article key={a.title} className={`bt ${a.size}${a.image ? '' : ' noimg'}`}>{a.image ? <div className="ph" style={{ backgroundImage: `url(${a.image})` }} /> : <div className="ph soonph" aria-hidden="true" />}<span className={`inc${a.soon ? ' soon' : ''}`}>{a.soon ? 'Under construction' : 'Included'}</span><div className="tx"><h3>{a.title}</h3><p>{a.body}</p></div></article>
       ))}</div>
+    </div></section>
+  );
+}
+
+function Villas() {
+  return (
+    <section className="g vil" aria-labelledby="ev-vil"><div className="w">
+      <div className="vil-hd">
+        <Rv><p className="eb">Where everyone sleeps</p><h2 id="ev-vil">Six Forest Villas, <em>One Clearing.</em></h2></Rv>
+        <Rv><p className="lead">Each villa sleeps four, with a king bed and a sofa bed, Brooklinen linens, a SMEG and Nespresso kitchen, and a private deck with a Weber grill. E-bikes wait at the door. The Guest House takes eight more, and 16 RV hookups bring the property to 100 guests overnight.</p></Rv>
+      </div>
+      <Rv className="vil-facts">{villaFacts.map((f) => <div key={f.v}><b>{f.k}</b><span>{f.v}</span></div>)}</Rv>
+      <div className="vil-grid">{villaGallery.map((g, i) => (
+        <Rv key={g.image} className={`vg vg${i}`}><img src={g.image} alt={g.alt} loading="lazy" decoding="async" /></Rv>
+      ))}</div>
+    </div></section>
+  );
+}
+
+function VideoTour() {
+  return (
+    <section className="g" style={{ paddingTop: 0 }} aria-labelledby="ev-vid"><div className="w">
+      <Rv><p className="eb">See the place</p><h2 id="ev-vid">Walk the Property <em>Before You Book.</em></h2></Rv>
+      <Rv className="vid-ph"><div className="vid-in"><span className="vid-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg></span><p>Film coming soon</p></div></Rv>
     </div></section>
   );
 }
@@ -647,13 +670,15 @@ export default function EventsLanding() {
       <main>
         <Hero />
         <FactsAndQuickCheck onCheck={merge} />
+        <Formats onPick={(t) => merge({ type: t })} />
+        <Activities />
+        <Villas />
+        <VideoTour />
         <Marquee />
         <Why />
         <Reviews />
-        <Formats onPick={(t) => merge({ type: t })} />
         <Estate />
         <Estimator onRequest={merge} />
-        <Activities />
         <HowItWorks />
         <GettingHere tone="dark" />
         <Faq />
