@@ -328,11 +328,18 @@ export const guideData = {
             'Please be mindful of other guests using the lake and maintain a safe distance from kayaks, paddleboards, water bikes, and fishing areas.',
           ],
         },
+        {
+          title: 'Cabana Safety',
+          paras: [
+            'For your safety, jumping or diving from the cabana into the lake is strictly prohibited due to submerged obstructions that pose a risk of serious injury.',
+          ],
+        },
       ],
       safety: [
         'Use the lake, swimming areas, and recreational equipment at your own risk.',
         'Children must be supervised by an adult at all times.',
         'Life jackets should be worn while using kayaks, paddleboards, and water bikes.',
+        'No jumping or diving from the floating cabana into the lake.',
         'Please return all recreational equipment after use.',
         'Do not leave equipment unattended in the water.',
         'Please respect other guests and keep noise to a reasonable level.',
