@@ -29,7 +29,7 @@ import StackCard from '../components/primitives/StackCard';
 import RoundedEntry from '../components/primitives/RoundedEntry';
 
 
-export default function SandhillsLanding() {
+export default function SandhillsLanding({ heroImage }: { heroImage?: { desktop: string; mobile: string; position?: string } } = {}) {
   const [bookingBarVisible, setBookingBarVisible] = useState(false);
   const [landStoryOpen, setLandStoryOpen] = useState(false);
   const mobileGlanceRef = useRef<HTMLDivElement>(null);
@@ -83,6 +83,7 @@ export default function SandhillsLanding() {
         <HeroImmersive
           primaryCta={d.hero.primaryCta}
           secondaryCta={d.hero.secondaryCta}
+          heroImage={heroImage}
         />
 
         {/* Mobile: GLANCE + PRESS — same cards as desktop, light bg */}

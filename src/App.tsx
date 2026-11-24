@@ -5,6 +5,7 @@ import GuestGuide from './pages/GuestGuide';
 import BlogIndex from './pages/BlogIndex';
 import ArticlePage from './pages/ArticlePage';
 import PreviewHomepageWidgets from './pages/PreviewHomepageWidgets';
+import PreviewHeroTest from './pages/PreviewHeroTest';
 import PrivacyPolicy, { PRIVACY_POLICY_PATH } from './pages/PrivacyPolicy';
 import { segments } from './components/data/segments';
 import PrivacyChoicesModal from './components/blocks/PrivacyChoicesModal';
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/blog" element={<BlogIndex />} />
         <Route path="/blog/:slug" element={<ArticlePage />} />
         <Route path="/preview/homepage-widgets" element={<PreviewHomepageWidgets />} />
+        <Route path="/preview/hero/:id" element={<PreviewHeroTest />} />
         <Route path={PRIVACY_POLICY_PATH} element={<PrivacyPolicy />} />
         <Route path="/events" element={<EventsLanding />} />
         {segments.map((s) => (

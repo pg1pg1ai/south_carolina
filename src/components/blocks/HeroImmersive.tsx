@@ -102,9 +102,11 @@ function HeroLabel({ progress, index }: { progress: MotionValue<number>; index: 
 interface Props {
   primaryCta: { label: string; href: string };
   secondaryCta: { label: string; href: string };
+  /** Preview only (/preview/hero/:id): swap the top photo without touching the live homepage. */
+  heroImage?: { desktop: string; mobile: string; position?: string };
 }
 
-export default function HeroImmersive({ primaryCta, secondaryCta }: Props) {
+export default function HeroImmersive({ primaryCta, secondaryCta, heroImage }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollY } = useScroll();
   const h = typeof window !== 'undefined' ? window.innerHeight : 800;
@@ -215,13 +217,13 @@ export default function HeroImmersive({ primaryCta, secondaryCta }: Props) {
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 'calc(75% + 75px)' }}>
             <div style={{ position: 'absolute', inset: 0 }}>
               <picture>
-                <source media="(max-width: 767px)" srcSet="/images/sandhills/mobile.webp" />
-                <source media="(min-width: 768px)" srcSet="/images/sandhills/desktop.webp" />
+                <source media="(max-width: 767px)" srcSet={heroImage?.mobile ?? '/images/sandhills/mobile.webp'} />
+                <source media="(min-width: 768px)" srcSet={heroImage?.desktop ?? '/images/sandhills/desktop.webp'} />
                 <img
-                  src="/images/sandhills/desktop.webp"
+                  src={heroImage?.desktop ?? '/images/sandhills/desktop.webp'}
                   alt="" aria-hidden="true" fetchPriority="high"
                   className="w-full h-full object-cover"
-                  style={{ objectPosition: '70% 100%' }}
+                  style={{ objectPosition: heroImage?.position ?? '70% 100%' }}
                   width={2400} height={1600}
                 />
               </picture>
