@@ -92,7 +92,7 @@ export const spaces = [
   { key: 'villas', pins: ['forest-villa-1', 'forest-villa-2', 'forest-villa-3', 'forest-villa-4', 'forest-villa-5', 'forest-villa-6'], cat: 'Stay', title: '6 Forest Villas', cap: 'Up to 4 guests each', body: 'King bed and sofa bed, Brooklinen linens, a SMEG and Nespresso kitchen, a private deck with a Weber grill, cornhole, and e-bikes at the door.' },
   { key: 'house', pins: ['guest-house-1'], cat: 'Stay', title: 'The Guest House', cap: 'Up to 8 guests', body: 'Room for the organizers, the family elders or the people who want to stay up talking.' },
   { key: 'rv', pins: ['rv-hookups'], cat: 'Stay', title: '16 RV Hookups', cap: 'Up to 100 guests overnight', body: "Bringing a bigger group? We'll recommend a reliable RV vendor to keep everyone on-site." },
-  { key: 'sauna', pins: ['sauna'], cat: 'Included', title: 'Sauna & Cold Plunge', cap: 'Groups of six', body: 'Heated to 194°F, right on the water. Take turns, then cool off by jumping off the dock into the lake.' },
+  { key: 'sauna', pins: ['sauna'], cat: 'Included', title: 'Sauna & Cold Plunge', cap: 'Groups of six', body: 'Heated to 194°F, right on the water. Take turns, then cool off in the lake.' },
 ] as const;
 
 /** The map shows only the developed part of the aerial: this % box of property-map.webp. */

@@ -87,7 +87,7 @@ function Header() {
     <>
       <motion.div className="prog" style={{ scaleX: scrollYProgress }} />
       <header className={`hd g${solid ? ' solid' : ''}`}>
-        <a className="logo" href="/" aria-label="Horizons Sandhills home"><img src="/logo.svg" alt="Horizons Getaways" /></a>
+        <a className="logo" href="/" aria-label="Horizons Sandhills home"><img src="/logo-sandhills.svg" alt="Horizons Sandhills" /></a>
         <nav className="mid" aria-label="Main">
           {NAV.map((l) => <a key={l.label} href={l.href}>{l.label}</a>)}
         </nav>

@@ -22,7 +22,7 @@
 .ev .prog{position:fixed;left:0;top:0;height:2px;width:100%;transform-origin:0 50%;background:var(--ember);z-index:120}
 .ev .hd{position:fixed;left:0;right:0;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:84px;transition:background .5s,height .5s}
 .ev .hd.solid{height:68px;background:rgba(20,25,21,.72);backdrop-filter:blur(16px) saturate(130%);border-bottom:1px solid var(--line)}
-.ev .hd .logo img{height:40px;display:block;transition:height .5s}.ev .hd.solid .logo img{height:32px}
+.ev .hd .logo img{height:44px;width:auto;display:block;transition:height .5s}.ev .hd.solid .logo img{height:36px}
 .ev .hd .mid{font:500 11px var(--lab);letter-spacing:.3em;text-transform:uppercase;color:var(--linen);opacity:.75}
 .ev .hd .r{display:flex;gap:10px;align-items:center}.ev .hd .btn{height:44px;padding:0 22px;font-size:11px}
 .ev .hd .wa{width:44px;padding:0}
