@@ -277,8 +277,8 @@ function Why() {
         </ul>
       </div>
       <Rv className="whyph">
-        <img src="/images/sandhills/villas-in-the-pines.webp" alt="Two Forest Villas among tall longleaf pines, with the lake through the trees" loading="lazy" width={1920} height={1072} />
-        <span>The Forest Villas, a short walk through the pines to the lake.</span>
+        <img src="/images/sandhills/events/lake-sunset-dock.webp" alt="Sunset over the private lake from the dock" loading="lazy" width={1402} height={1122} />
+        <span>The private lake at sunset, 18 acres and nobody else on it.</span>
       </Rv>
     </div></section>
   );
@@ -297,7 +297,7 @@ function Reviews() {
     return () => clearInterval(t);
   }, [stopped]);
   return (
-    <section className="qb g" style={{ backgroundImage: 'linear-gradient(180deg,#141915,rgba(20,25,21,.7) 30%,rgba(20,25,21,.7) 70%,#141915),url(/images/sandhills/villa-golden-hour.webp)' }}>
+    <section className="qb g" style={{ backgroundImage: 'linear-gradient(180deg,#141915,rgba(20,25,21,.7) 30%,rgba(20,25,21,.7) 70%,#141915),url(/images/sandhills/events/firepit-lake.webp)' }}>
       <div className="w">
         <p className="eb">Guest reviews on Google</p><a className="rating" href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer"><span className="stars" aria-hidden="true">★★★★★</span><b>5.0</b><span>from 72 Google reviews</span></a>
         <div className="qslides" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>{reviews.map((r, k) => <blockquote key={r.name} className={k === i ? 'on' : ''} aria-hidden={k !== i}>“{r.quote}”</blockquote>)}</div>
@@ -456,10 +456,10 @@ function Villas() {
     <section className="g vil" aria-labelledby="ev-vil"><div className="w">
       <div className="vil-hd">
         <Rv><p className="eb">Where everyone sleeps</p><h2 id="ev-vil">Six Forest Villas, <em>One Clearing.</em></h2></Rv>
-        <Rv><p className="lead">Each villa sleeps four, with a king bed and a sofa bed, Brooklinen linens, a SMEG and Nespresso kitchen, and a private deck with a Weber grill. E-bikes wait at the door. The Guest House takes eight more, and 16 RV hookups bring the property to 100 guests overnight.</p></Rv>
+        <Rv><p className="lead"><b className="vil-own">The whole property, only your group.</b> Each villa sleeps four, with a king bed and a sofa bed, Brooklinen linens, a SMEG and Nespresso kitchen, and a private deck with a Weber grill. E-bikes wait at the door. The Guest House takes eight more, and 16 RV hookups bring the property to 100 guests overnight.</p></Rv>
       </div>
       <Rv className="vil-facts">{villaFacts.map((f) => <div key={f.v}><b>{f.k}</b><span>{f.v}</span></div>)}</Rv>
-      <div className="vil-grid">{villaGallery.map((g, i) => (
+      <div className="vil-grid" tabIndex={0} aria-label="Forest Villa photos, swipe for more">{villaGallery.map((g, i) => (
         <Rv key={g.image} className={`vg vg${i}`}><img src={g.image} alt={g.alt} loading="lazy" decoding="async" /></Rv>
       ))}</div>
     </div></section>
@@ -470,7 +470,7 @@ function VideoTour() {
   return (
     <section className="g" style={{ paddingTop: 0 }} aria-labelledby="ev-vid"><div className="w">
       <Rv><p className="eb">See the place</p><h2 id="ev-vid">Walk the Property <em>Before You Book.</em></h2></Rv>
-      <Rv className="vid-ph"><div className="vid-in"><span className="vid-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg></span><p>Film coming soon</p></div></Rv>
+      <Rv className="vid-ph"><div className="vid-in"><span className="vid-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg></span><p>Property film, coming soon</p></div></Rv>
     </div></section>
   );
 }
@@ -684,7 +684,7 @@ export default function EventsLanding() {
         <Faq />
         <PlanForm plan={plan} setPlan={setPlan} />
       </main>
-      <Footer cta={{ line: 'The whole property, for your group only.', label: 'Plan Your Event', onClick: scrollToPlan }} />
+      <Footer logo="/logo-sandhills.svg" cta={{ line: 'The whole property, for your group only.', label: 'Plan Your Event', onClick: scrollToPlan }} />
       <MobileBar />
       <BookingModal />
     </div>

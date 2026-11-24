@@ -76,7 +76,7 @@ const cols: { title: string; links: FooterLink[] }[] = [
  *  links — those pages have their own CTA, which opens the request form rather
  *  than openBooking(), and none of the main page's anchors exist there. */
 /** `cta` swaps the booking line and primary button (the /events page sends people to its form). */
-export default function Footer({ compact = false, cta }: { compact?: boolean; cta?: { line: string; label: string; onClick: () => void } } = {}) {
+export default function Footer({ compact = false, cta, logo }: { compact?: boolean; cta?: { line: string; label: string; onClick: () => void }; logo?: string } = {}) {
   return (
     <footer data-zone="dark" className={`bg-nightWarm text-linen/70 px-6 ${compact ? 'pt-6 pb-10' : 'pt-16 pb-10'}`}>
       <div className="max-w-content mx-auto">
@@ -127,6 +127,7 @@ export default function Footer({ compact = false, cta }: { compact?: boolean; ct
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8">
           <a href={compact ? '/' : '#'} className="inline-flex items-center" aria-label="Horizons Sandhills">
+            {logo ? <img src={logo} alt="Horizons Sandhills" style={{ height: 40, width: 'auto', display: 'block' }} /> : (
             <div
               role="img"
               aria-label="Horizons Sandhills"
@@ -144,6 +145,7 @@ export default function Footer({ compact = false, cta }: { compact?: boolean; ct
                 maskPosition: 'left center',
               }}
             />
+            )}
           </a>
 
           <ul className="flex items-center gap-2 list-none p-0 m-0">
