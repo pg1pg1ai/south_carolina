@@ -99,12 +99,29 @@ export const spaces = [
 export const MAP_CROP = { x0: 30, y0: 38, x1: 86, y1: 100 };
 
 export const activities = [
-  { image: '/images/experience/01-sauna.webp', title: 'Wood-Fired Sauna & Cold Plunge', body: 'Heated to 194°F, right on the water. Take turns in groups of six, then cool off by jumping off the dock into the lake.', size: 'wide' },
-  { image: '/images/experience/04-ready-for-the-water.webp', title: 'The Lake', body: '18 acres for swimming, fishing, kayaks, paddleboards and water bikes.', size: '' },
-  { image: '/images/sandhills/twelve_miles.webp', title: 'Trails & E-Bikes', body: '12 miles of trails through the forest.', size: 'tall' },
-  { image: '/images/experience/05-the-open-field.webp', title: 'Fields & Games', body: 'Beach volleyball, beach soccer, beach tennis, badminton, table tennis and cornhole.', size: '' },
-  { image: '/images/experience/honey-from-the-land.webp', title: 'Hive Walks', body: 'Meet our bees and taste the honey from our own hives. By prior notice.', size: '' },
-  { image: '/images/sandhills/fire_pit2.webp', title: 'Firepit Evenings', body: 'BBQ on the grill deck, a fire, and the night sky.', size: '' },
+  { image: '/images/sandhills/events/lounge-deck.webp', title: 'The Big Deck', body: 'A covered deck with a stone fireplace and grills, for dinners, toasts and late evenings.', size: 'wide', soon: true },
+  { image: '', title: 'The Stage', body: 'An outdoor stage for ceremonies, speeches and live music.', size: '', soon: true },
+  { image: '/images/experience/04-ready-for-the-water.webp', title: 'The Lake', body: '18 acres for swimming, fishing, kayaks, paddleboards and water bikes.', size: 'tall', soon: false },
+  { image: '/images/sandhills/events/fields-volley.webp', title: 'Fields & Games', body: 'Beach volleyball, beach soccer, beach tennis, badminton, table tennis and cornhole.', size: '', soon: false },
+  { image: '/images/experience/01-sauna.webp', title: 'Wood-Fired Sauna & Cold Plunge', body: 'Heated to 194°F, right on the water. Take turns in groups of six, then cool off in the lake.', size: 'wide', soon: false },
+  { image: '/images/sandhills/twelve_miles.webp', title: 'Trails & E-Bikes', body: '12 miles of trails through the forest.', size: '', soon: false },
+  { image: '/images/experience/honey-from-the-land.webp', title: 'Hive Walks', body: 'Meet our bees and taste the honey from our own hives. By prior notice.', size: '', soon: false },
+  { image: '/images/sandhills/fire_pit2.webp', title: 'Firepit Evenings', body: 'BBQ on the grill deck, a fire, and the night sky.', size: '', soon: false },
+] as const;
+
+export const villaGallery = [
+  { image: '/images/sandhills/events/villa-golden-hour.webp', alt: 'A Forest Villa at golden hour with its firepit' },
+  { image: '/images/sandhills/events/villa-bedroom.webp', alt: 'King bed with Brooklinen linens' },
+  { image: '/images/sandhills/events/villa-kitchen.webp', alt: 'Kitchen with island seating' },
+  { image: '/images/sandhills/events/villa-deck-lake.webp', alt: 'Private deck looking through the pines to the lake' },
+  { image: '/images/sandhills/events/villa-bath.webp', alt: 'Bathroom with a lit mirror' },
+] as const;
+
+export const villaFacts = [
+  { k: '6', v: 'Forest Villas' },
+  { k: '24', v: 'guests in the villas' },
+  { k: '+8', v: 'in the Guest House' },
+  { k: '16', v: 'RV hookups' },
 ] as const;
 
 export const steps = [
