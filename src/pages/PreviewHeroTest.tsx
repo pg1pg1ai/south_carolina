@@ -24,7 +24,7 @@ export default function PreviewHeroTest() {
   return (
     <>
       <SandhillsLanding key={id} heroImage={opt} />
-      <div style={{ position: 'fixed', left: '50%', bottom: 16, transform: 'translateX(-50%)', zIndex: 9999, display: 'flex', gap: 6, padding: 6, borderRadius: 999, background: 'rgba(16,13,9,.82)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', boxShadow: '0 8px 28px rgba(0,0,0,.35)', fontFamily: 'Inter, system-ui, sans-serif' }}>
+      <div className="max-md:!top-[72px] max-md:!bottom-auto" style={{ position: 'fixed', left: '50%', bottom: 16, transform: 'translateX(-50%)', zIndex: 9999, display: 'flex', gap: 6, padding: 6, borderRadius: 999, background: 'rgba(16,13,9,.82)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', boxShadow: '0 8px 28px rgba(0,0,0,.35)', fontFamily: 'Inter, system-ui, sans-serif' }}>
         {Object.entries(OPTIONS).map(([k, o]) => (
           <Link key={k} to={`/preview/hero/${k}`} style={{ padding: '8px 14px', borderRadius: 999, fontSize: 13, whiteSpace: 'nowrap', textDecoration: 'none', color: k === id ? '#100D09' : 'rgba(242,237,227,.9)', background: k === id ? '#F2EDE3' : 'transparent' }}>
             <span className="hidden md:inline">{o.label}</span><span className="md:hidden">{k.toUpperCase()}</span>
