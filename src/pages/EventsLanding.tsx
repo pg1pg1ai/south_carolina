@@ -202,8 +202,8 @@ function FactsAndQuickCheck({ onCheck }: { onCheck: (p: Partial<Plan>) => void }
           <label><small>Your occasion</small>
             <select value={type} onChange={(e) => setType(e.target.value as EventType)}>{EVENT_TYPES.map((t) => <option key={t} value={t}>{label(t)}</option>)}</select>
           </label>
-          <label><small>Arrive</small><input type="date" min={today} value={arrive} onChange={(e) => { setArrive(e.target.value); setRes(null); if (leave && e.target.value >= leave) setLeave(''); }} /></label>
-          <label><small>Leave</small><input type="date" min={arrive || today} value={leave} onChange={(e) => { setLeave(e.target.value); setRes(null); }} /></label>
+          <label><small>Arrive</small>{!arrive && <span className="dph" aria-hidden="true">Add date</span>}<input type="date" min={today} value={arrive} onChange={(e) => { setArrive(e.target.value); setRes(null); if (leave && e.target.value >= leave) setLeave(''); }} /></label>
+          <label><small>Leave</small>{!leave && <span className="dph" aria-hidden="true">Add date</span>}<input type="date" min={arrive || today} value={leave} onChange={(e) => { setLeave(e.target.value); setRes(null); }} /></label>
           <label><small>Guests</small><input value={guests} onChange={(e) => setGuests(e.target.value.replace(/\D/g, ''))} inputMode="numeric" placeholder="How many" /></label>
           <button className="btn" type="submit" disabled={busy}>{busy ? 'Checking…' : <>Check Availability <Arrow /></>}</button>
         </form>
@@ -395,7 +395,7 @@ function Estate() {
 
 /* ---------------- estimator ---------------- */
 function Estimator({ onRequest }: { onRequest: (p: Partial<Plan>) => void }) {
-  const [g, setG] = useState(40);
+  const [g, setG] = useState(30);
   const [n, setN] = useState(2);
   const [over, setOver] = useState(true);
   const villas = over ? Math.min(g, 24) : 0, house = over ? Math.min(Math.max(g - 24, 0), 8) : 0;
@@ -466,7 +466,7 @@ function VideoTour() {
   return (
     <section className="g" style={{ paddingTop: 0 }} aria-labelledby="ev-vid"><div className="w">
       <Rv><p className="eb">See the place</p><h2 id="ev-vid">Walk the Property <em>Before You Book.</em></h2></Rv>
-      <Rv className="vid-ph"><div className="vid-in"><span className="vid-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg></span><p>Property film, coming soon</p></div></Rv>
+      <Rv className="vid-ph"><div className="vid-in"><p>Property film, coming soon</p></div></Rv>
     </div></section>
   );
 }
@@ -676,7 +676,7 @@ export default function EventsLanding() {
         <Estate />
         <Estimator onRequest={merge} />
         <HowItWorks />
-        <GettingHere tone="dark" />
+        <GettingHere tone="dark" title={<>Closer Than <em>You Think.</em></>} />
         <Faq />
         <PlanForm plan={plan} setPlan={setPlan} />
       </main>

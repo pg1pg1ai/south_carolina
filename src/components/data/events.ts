@@ -73,7 +73,7 @@ export const formats: { type: EventType; title: string; body: string; image: str
   { type: 'Wedding', title: 'Weddings', body: 'Say your vows by the water. Celebrate under the stars.', image: '/images/sandhills/Guided_sunrise_paddle.webp' },
   { type: 'Family Reunion', title: 'Family Reunions', body: 'Every generation, finally under one roof.', image: '/images/b2b/family-reunions.webp' },
   { type: 'Wellness or Faith Retreat', title: 'Wellness & Faith Retreats', body: 'Space to slow down, with nothing pulling you back.', image: '/images/b2b/wellness-retreats.webp' },
-  { type: 'Birthday', title: 'Birthday Weekends', body: 'Your celebration. Your timeline.', image: '/images/b2b/birthday-weekends.webp' },
+  { type: 'Birthday', title: 'Birthday Weekends', body: 'Your celebration. Your timeline.', image: '/images/sandhills/events/villa-deck.webp' },
   { type: 'Bachelor or Bachelorette', title: 'Bachelor & Bachelorette', body: 'Your crew, your rules, complete privacy.', image: '/images/b2b/bachelor-bachelorette.webp' },
   { type: 'Private Celebration', title: 'Private Celebrations', body: 'Enjoy the moment without sharing the space.', image: '/images/b2b/private-celebrations.webp' },
 ];
@@ -84,9 +84,9 @@ export const formats: { type: EventType; title: string; body: string; image: str
  * (confirmed by the owner, 2026-11-18). Several pins (villas) are averaged into one marker.
  */
 export const spaces = [
-  { key: 'hall', pins: ['kitchen-dining'], cat: 'Indoor', title: 'The Event Hall', cap: 'Up to ~70 guests', body: 'Our largest indoor space, with a professional kitchen and restroom. For dinners, workshops, presentations and dance floors.' },
-  { key: 'lounge', pins: ['fireplace-lounge-deck'], cat: 'Indoor', title: 'The Lounge', cap: 'Up to ~30 guests', body: 'A smaller indoor space with a restroom, fireplace lounge and a deck with grills. For breakout sessions, welcome drinks and cozy evenings.' },
-  { key: 'gazebo', pins: ['gazebo'], cat: 'Outdoor', title: 'The Lakeside Gazebo', cap: 'Up to ~10 guests', body: 'Shaded seating right by the 18-acre lake. For ceremonies, toasts, morning practice and golden-hour photos.' },
+  { key: 'hall', pins: ['kitchen-dining'], cat: 'Indoor', title: 'The Event Hall', cap: 'Up to 70 guests', body: 'Our largest indoor space, with a professional kitchen and restroom. For dinners, workshops, presentations and dance floors.' },
+  { key: 'lounge', pins: ['fireplace-lounge-deck'], cat: 'Indoor', title: 'The Lounge', cap: 'Up to 30 guests', body: 'A smaller indoor space with a restroom, fireplace lounge and a deck with grills. For breakout sessions, welcome drinks and cozy evenings.' },
+  { key: 'gazebo', pins: ['gazebo'], cat: 'Outdoor', title: 'The Lakeside Gazebo', cap: 'Up to 10 guests', body: 'Shaded seating right by the 18-acre lake. For ceremonies, toasts, morning practice and golden-hour photos.' },
   { key: 'dock', pins: ['dock'], cat: 'Outdoor', title: 'The Dock & Lake', cap: 'Swimming, kayaks, paddleboards', body: 'Water bikes too. For group activities and the lake days everyone remembers.' },
   { key: 'fields', pins: ['beach-sports-courts'], cat: 'Outdoor', title: 'The Fields', cap: 'Open lawn and sports fields', body: 'Beach volleyball, beach soccer, beach tennis and open space. For team games, tournaments and large outdoor setups.' },
   { key: 'villas', pins: ['forest-villa-1', 'forest-villa-2', 'forest-villa-3', 'forest-villa-4', 'forest-villa-5', 'forest-villa-6'], cat: 'Stay', title: '6 Forest Villas', cap: 'Up to 4 guests each', body: 'King bed and sofa bed, Brooklinen linens, a SMEG and Nespresso kitchen, a private deck with a Weber grill, cornhole, and e-bikes at the door.' },
@@ -99,15 +99,15 @@ export const spaces = [
 export const MAP_CROP = { x0: 30, y0: 38, x1: 86, y1: 100 };
 
 export const activities = [
-  { image: '', title: 'The Big Deck', body: 'A large deck for dinners, toasts and late evenings, opening soon.', size: '', soon: true },
-  { image: '', title: 'The Stage', body: 'An outdoor stage for ceremonies, speeches and live music.', size: '', soon: true },
   { image: '/images/sandhills/events/lake-sunset-dock.webp', title: 'The Lake', body: '18 acres for swimming, fishing, kayaks, paddleboards and water bikes.', size: 'wide', soon: false },
   { image: '/images/sandhills/events/fields-volley.webp', title: 'Fields & Games', body: 'Beach volleyball, beach soccer, beach tennis, badminton, table tennis and cornhole.', size: '', soon: false },
-  { image: '/images/experience/01-sauna.webp', title: 'Wood-Fired Sauna & Cold Plunge', body: 'Heated to 194°F, right on the water. Take turns in groups of six, then cool off in the lake.', size: 'wide', soon: false },
   { image: '/images/sandhills/events/water-bikes.webp', title: 'Water Bikes & Paddleboards', body: 'Out on the lake at golden hour, no experience needed.', size: '', soon: false },
+  { image: '/images/experience/01-sauna.webp', title: 'Wood-Fired Sauna & Cold Plunge', body: 'Heated to 194°F, right on the water. Take turns in groups of six, then cool off in the lake.', size: 'wide', soon: false },
   { image: '/images/sandhills/twelve_miles.webp', title: 'Trails & E-Bikes', body: '12 miles of trails through the forest.', size: '', soon: false },
   { image: '/images/experience/honey-from-the-land.webp', title: 'Hive Walks', body: 'Meet our bees and taste the honey from our own hives. By prior notice.', size: '', soon: false },
   { image: '/images/sandhills/fire_pit2.webp', title: 'Firepit Evenings', body: 'BBQ on the grill deck, a fire, and the night sky.', size: 'wide', soon: false },
+  { image: '', title: 'The Big Deck', body: 'A large deck for dinners, toasts and late evenings, opening soon.', size: '', soon: true },
+  { image: '', title: 'The Stage', body: 'An outdoor stage for ceremonies, speeches and live music.', size: '', soon: true },
 ] as const;
 
 export const villaGallery = [

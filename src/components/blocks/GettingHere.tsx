@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, type ReactNode } from 'react';
 import type { Map as MbMap, Marker as MbMarker, GeoJSONSource, ExpressionSpecification } from 'mapbox-gl';
 import RouteChips from './RouteChips';
 import { ROUTES } from '../data/routes';
@@ -65,7 +65,7 @@ const TONES = {
   },
 } as const;
 
-export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark' } = {}) {
+export default function GettingHere({ tone = 'light', title }: { tone?: 'light' | 'dark'; title?: ReactNode } = {}) {
   const dark = tone === 'dark';
   const T = TONES[tone];
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -274,7 +274,7 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
     >
       <div className="relative max-w-content mx-auto">
         {dark ? (
-          <p className="eyebrow mb-8 flex items-center gap-3 text-ember">
+          <p className={`eyebrow ${title ? 'mb-5' : 'mb-8'} flex items-center gap-3 text-ember`}>
             <span aria-hidden="true" className="h-px w-8 bg-ember/70" />
             Getting Here
           </p>
@@ -283,6 +283,7 @@ export default function GettingHere({ tone = 'light' }: { tone?: 'light' | 'dark
             Getting here
           </p>
         )}
+        {title && <h2 className="gh-title" style={{ marginBottom: 'clamp(28px, 4vw, 48px)' }}>{title}</h2>}
         <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]" style={{ gap: 'clamp(28px, 5vw, 64px)', alignItems: 'stretch' }}>
 
           {/* Map + button */}
