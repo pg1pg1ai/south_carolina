@@ -276,10 +276,6 @@ function Why() {
           ))}
         </ul>
       </div>
-      <Rv className="whyph">
-        <img src="/images/sandhills/events/lake-sunset-dock.webp" alt="Sunset over the private lake from the dock" loading="lazy" width={1402} height={1122} />
-        <span>The private lake at sunset, 18 acres and nobody else on it.</span>
-      </Rv>
     </div></section>
   );
 }

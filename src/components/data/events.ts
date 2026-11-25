@@ -101,7 +101,7 @@ export const MAP_CROP = { x0: 30, y0: 38, x1: 86, y1: 100 };
 export const activities = [
   { image: '', title: 'The Big Deck', body: 'A large deck for dinners, toasts and late evenings, opening soon.', size: '', soon: true },
   { image: '', title: 'The Stage', body: 'An outdoor stage for ceremonies, speeches and live music.', size: '', soon: true },
-  { image: '/images/experience/04-ready-for-the-water.webp', title: 'The Lake', body: '18 acres for swimming, fishing, kayaks, paddleboards and water bikes.', size: 'wide', soon: false },
+  { image: '/images/sandhills/events/lake-sunset-dock.webp', title: 'The Lake', body: '18 acres for swimming, fishing, kayaks, paddleboards and water bikes.', size: 'wide', soon: false },
   { image: '/images/sandhills/events/fields-volley.webp', title: 'Fields & Games', body: 'Beach volleyball, beach soccer, beach tennis, badminton, table tennis and cornhole.', size: '', soon: false },
   { image: '/images/experience/01-sauna.webp', title: 'Wood-Fired Sauna & Cold Plunge', body: 'Heated to 194°F, right on the water. Take turns in groups of six, then cool off in the lake.', size: 'wide', soon: false },
   { image: '/images/sandhills/events/water-bikes.webp', title: 'Water Bikes & Paddleboards', body: 'Out on the lake at golden hour, no experience needed.', size: '', soon: false },
